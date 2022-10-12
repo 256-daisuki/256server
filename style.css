@@ -113,6 +113,10 @@ a {
     color: #333;
  }
 
+.a {
+  color: #0000ff;
+}
+
 .titel {
     font-size: 512%;
     font-family: 'Zen Maru Gothic', sans-serif;
