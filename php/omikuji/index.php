@@ -11,6 +11,6 @@ if($omikuji == 1) {
     } elseif ($omikuji <= 7) { // 5,6,7を末吉に
         echo "末吉";
     } else {
-        echo "凶";
+        echo "凶"; // 8を凶に
     }
 ?>
