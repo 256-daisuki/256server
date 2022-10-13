@@ -38,7 +38,7 @@ p {
 }
 
 small {
-  color:#fff;
+  color:#333;
   display: block;
   text-align: center;
 }
@@ -59,8 +59,8 @@ section:nth-child(2n) {
 }
 
 #footer {
-  background:#333;
-  padding:20px;
+  background: transparent;
+  /* padding:1px; */
 }
 
 /* スクロールダウン！！！！ */
