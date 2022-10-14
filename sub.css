@@ -14,7 +14,7 @@ h2 {
     font-size: 20px;
 }
 
-a {	
+.a {	
     text-decoration: none;
     color: #333;
  }
@@ -111,8 +111,4 @@ section:nth-child(2n) {
       transform: scale(1, 0);
       transform-origin: 0 100%;
     }
-  }
-
-  .a {
-    color: blue;
   }

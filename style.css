@@ -108,14 +108,10 @@ h2 {
     font-size: 20px;
 }
 
-a {	
+.a {	
     text-decoration: none;
     color: #333;
  }
-
-.a {
-  color: #0000ff;
-}
 
 .titel {
     font-size: 512%;
