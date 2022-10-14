@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>ネイピア数を計算するよ</h1>
-    <h2>下のところに数字を入れてね（できれば100以上）</h2>
+    <h2>下のところに数字を入れてね　できれば100以上　大きければ大きいほど正確になるよ</h2>
     <form method="post">
         <input type="text" name="num" value="">
         <input type="submit">
