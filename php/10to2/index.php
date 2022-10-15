@@ -12,10 +12,12 @@
       <input type="submit" value="変換">
     </form>
     <?php
-    $num = $_GET["num"];
-    echo $num . "は2進数で" . decbin($num);
-    echo "<br/>";
-    echo $num . "は10進数で" . dechex($num);
+    $num = filter_input(INPUT_GET, "num");
+    if($num >= 1) {
+      echo $num . "は2進数で" . decbin($num);
+      echo "<br/>";
+      echo $num . "は10進数で" . dechex($num);
+    }
     ?>
   </body>
 </html>
