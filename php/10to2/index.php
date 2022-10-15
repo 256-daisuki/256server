@@ -16,7 +16,7 @@
     if($num >= 1) {
       echo $num . "は2進数で" . decbin($num);
       echo "<br/>";
-      echo $num . "は10進数で" . dechex($num);
+      echo $num . "は16進数で" . dechex($num);
     }
     ?>
   </body>
