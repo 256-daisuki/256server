@@ -1,0 +1,59 @@
+body {
+    background-color: #c6daf1;
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 34px;
+  }
+  
+  .boardWrapper {
+    /* background-color: #b3eeb3; */
+    background-color: #f3eded;
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    border: 1px solid black;
+    margin-bottom: 20px;
+  }
+  
+  section {
+    padding: 0px 10px;
+  }
+  
+  section .username {
+    color: green !important;
+    font-weight: 700;
+  }
+  
+  section .nameArea {
+    display: flex;
+    align-items: center;
+    margin-bottom: -14px;
+  }
+  
+  section .comment {
+    margin-top: 0;
+    margin-left: 20px;
+  }
+  
+  .success_message {
+    color: green;
+    padding-left: 10px;
+  }
+  
+  .error_message {
+    color: red;
+    padding-left: 10px;
+  }
+  
+  .formWrapper {
+    padding: 16px;
+    margin-left: 20px;
+  }
+  
+  .commentTextArea {
+    margin-top: 10px;
+    width: 500px;
+    height: 90px;
+  }
