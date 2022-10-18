@@ -3,6 +3,9 @@
         echo $_POST["username"];
         echo $_POST["comment"];
     }
+
+    //データベース接続
+    $pdo =  new PDO('mysql:host=192.168.3.13;dbname=bbs',"root","");
 ?>
 
 <!DOCTYPE html>
