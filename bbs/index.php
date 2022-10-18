@@ -5,7 +5,12 @@
     }
 
     //データベース接続
-    $pdo =  new PDO('mysql:host=localhost;dbname=bbs',"root","");
+    try {
+        $pdo =  new PDO('mysql:host=localhost;dbname=bbs',"root","");
+    } catch (PDOException $e){
+        echo $e->getMessage();
+    }
+    
 ?>
 
 <!DOCTYPE html>
