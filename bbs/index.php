@@ -10,7 +10,8 @@
     } catch (PDOException $e){
         echo $e->getMessage();
     }
-    
+    //データベースからコメントデータを取得する
+    $sql = "SELECT `id`, `usemane`"
 ?>
 
 <!DOCTYPE html>
