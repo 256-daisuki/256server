@@ -1,5 +1,8 @@
 <?php
-    echo $_POST["username"];
+    if(!empty($_POST["submitButton"])) {
+        echo $_POST["username"];
+        echo $_POST["comment"];
+    }
 ?>
 
 <!DOCTYPE html>
@@ -27,14 +30,14 @@
                 </div>
             </article>
         </section>
-        <form class="formWrapper">
+        <form class="formWrapper" method="POST">
             <div>
-                <input type="submit" value="書き込む">
+                <input type="submit" value="書き込む" name="submitButton">
                 <label for="">名前:</label>
                 <input type="text" name="username">
             </div>
             <div>
-                <textarea class="commentTextArea"></textarea>
+                <textarea class="commentTextArea" name="comment"></textarea>
             </div>
             </div>
         </form>
