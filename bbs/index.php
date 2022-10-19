@@ -1,4 +1,6 @@
 <?php
+    $comment_array = array();
+
     if(!empty($_POST["submitButton"])) {
         echo $_POST["username"];
         echo $_POST["comment"];
@@ -11,7 +13,11 @@
         echo $e->getMessage();
     }
     //データベースからコメントデータを取得する
-    $sql = "SELECT `id`, `usemane`"
+    $sql = "SELECT `id`, `usemane`, `comment`, `postDate` FROM `bbs-table`;";
+    $comment_array = $pdo->query($sql);
+
+    //データベースの接続を閉じる
+    $pdo = null;
 ?>
 
 <!DOCTYPE html>
@@ -28,16 +34,18 @@
     <hr>
     <div class="boardWrapper">
         <section>
+            <?php foreach($comment_array as $comment); ?>
             <article>
                 <div class="wrapper">
                     <div class="nameArea">
                         <span>名前:</span>
-                        <p class="username">256daisuke</p>
+                        <p class="username"><?php echo $commentp["usemane"]; ?></p>
                         <time>:2022/10/17</time>
                     </div>
                     <p class="comment">hello world</p>
                 </div>
             </article>
+            <?php endforeach; ?>
         </section>
         <form class="formWrapper" method="POST">
             <div>
