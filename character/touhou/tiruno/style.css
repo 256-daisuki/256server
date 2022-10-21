@@ -1,0 +1,212 @@
+.main {
+    position:  relative;        /* 要素の配置方法をと子要素の起点を指定 */
+    border: solid 2px red;      /* 枠線指定 */
+    height:  520px;             /* 高さ指定 */
+    width: 500px;               /* 幅指定 */
+}
+
+
+.iceL1 {
+    position:  absolute;
+    transform: rotate(25deg);
+    left: 5px;
+    top: 200px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-left: 70px solid #7ca5e6;
+    border-right: 0;
+}
+
+.iceL2 {
+    position:  absolute;
+    left: 0px;
+    top: 230px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-left: 70px solid #7ca5e6;
+    border-right: 0;
+}
+
+.iceL3 {
+    position:  absolute;
+    transform: rotate(-25deg);
+    left: 5px;
+    top: 260px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-left: 70px solid #7ca5e6;
+    border-right: 0;
+}
+
+.iceR1 {
+    position:  absolute;
+    transform: rotate(-25deg);
+    left: 425px;
+    top: 200px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-right: 70px solid #7ca5e6;
+    border-left: 0;
+}
+
+.iceR2 {
+    position:  absolute;
+    left: 430px;
+    top: 230px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-right: 70px solid #7ca5e6;
+    border-left: 0;
+}
+
+.iceR3 {
+    position:  absolute;
+    transform: rotate(25deg);
+    left: 425px;
+    top: 260px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-right: 70px solid #7ca5e6;
+    border-left: 0;
+}
+
+.body {
+    position:  absolute;
+    background-color: #4982dc;
+    width: 100px;
+    height: 100px;
+    left: 200px;
+    top: 190px;
+}
+
+.collar {
+    position:  absolute;
+    background-color: #fff;
+    width: 60px;
+    height: 20px;
+    left: 220px;
+    top: 190px;
+    z-index: 40;
+}
+
+.ribbon {
+    position:  absolute;
+    background-color: red;
+    width: 30px;
+    height: 60px;
+    left: 235px;
+    top: 210px;
+}
+
+.neck {
+    position:  absolute;
+    background-color: #fff;
+    width: 100px;
+    height: 20px;
+    left: 200px;
+    top: 170px;
+}
+
+.head1 {
+    position:  absolute;
+    border-style: solid;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    border-bottom: 20px solid #2169b5;
+    border-top: 0;
+    left: 185px;
+    top: 0px;
+}
+
+.head2 {
+    position:  absolute;
+    border-style: solid;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    border-bottom: 20px solid #2169b5;
+    border-top: 0;
+    left: 285px;
+    top: 0px;
+}
+
+.hair {
+    position:  absolute;
+    background-color: #99c2fa;
+    width: 150px;
+    height: 150px;
+    left: 175px;
+    top: 20px;
+}
+
+.head {
+    position:  absolute;
+    background-color: #fff0d7;
+    width: 100px;
+    height: 100px;
+    left: 200px;
+    top: 70px;
+}
+
+.shirt {
+    position:  absolute;
+    background-color: #fff;
+    width: 100px;
+    height: 10px;
+    left: 200px;
+    top: 290px;
+}
+
+.skirt {
+    position:  absolute;
+    background-color: #4982dc;
+    width: 100px;
+    height: 100px;
+    left: 200px;
+    top: 295px;
+}
+
+.skirt1 {
+    position:  absolute;
+    background-color: #4982dc;
+    transform: rotate(45deg);
+    width: 150px;
+    height: 150px;
+    left: 175px;
+    top: 332px;
+}
+
+.handL {
+    position:  absolute;
+    background-color: #fff0d7;
+    width: 50px;
+    height: 50px;
+    left: 125px;
+    top: 275px;
+}
+
+.handR {
+    position:  absolute;
+    background-color: #fff0d7;
+    width: 50px;
+    height: 50px;
+    left: 325px;
+    top: 275px;
+}
