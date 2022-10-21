@@ -1,125 +1,138 @@
+body {
+    margin: 0px;
+}
+
 .main {
-    position:  relative;        /* 要素の配置方法をと子要素の起点を指定 */
-    border: solid 2px red;      /* 枠線指定 */
-    height:  700px;             /* 高さ指定 */
-    width: 700px;               /* 幅指定 */
-}
- 
-.a {
-    position:  absolute;        /* 要素の配置方法を指定 */
-    background-color: #000;     /* 背景色指定 */
-    width: 100px;
-    height: 100px;         
-    left: 300px;                /* 右からの位置指定 */
-    top: 300px;                  /* 上からの位置指定 */
+    position:  relative;         /* 要素の配置方法をと子要素の起点を指定 */
+    width: 100vw;               /* 幅指定 */
+    height: 100vw;             /* 高さ指定 */
+    background-color: #f3d8df;
 }
 
-.b {
+.handL {
     position:  absolute;
-    left: 315px;
-    top: 250px;
+    background-color: #fff0d7;
+    width: 20vw;
+    height: 10vw;
+    left: 0vw;
+    top: 40vw;
+}
+
+.handR {
+    position:  absolute;
+    background-color: #fff0d7;
+    width: 20vw;
+    height: 10vw;
+    left: 80vw;
+    top: 40vw;
+}
+
+.handL1 {
+    position:  absolute;
     background-color: #fff;
-    width: 70px;
-    height: 70px;
-    transform: rotate(45deg);
+    width: 20vw;
+    height: 10vw;
+    left: 20vw;
+    top: 40vw;
 }
 
-.c {
+.handR1 {
     position:  absolute;
-    left: 335px;
-    top: 320px;
+    background-color: #fff;
+    width: 20vw;
+    height: 10vw;
+    left: 60vw;
+    top: 40vw;
+}
+
+.body {
+    position:  absolute;
+    background-color: #000;
+    width: 20vw;
+    height: 20vw;
+    left: 40vw;
+    top: 35vw;
+}
+
+.ribbon {
+    position:  absolute;
     background-color: red;
-    width: 30px;
-    height: 60px;
+    width: 5vw;
+    height: 10vw;
+    left: 47.5vw;
+    top: 38.5vw;
 }
 
-.d {
+.collar {
     position:  absolute;
-    background-color: #000;
-    width: 100px;
-    height: 100px;
-    left: 300px;
-    top: 410px;
-}
-
-.e {
-    position:  absolute;
-    background-color: #000;
-    width: 200px;
-    height: 200px;
-    left: 250px;
-    top: 455px;
+    background-color: #fff;
+    width: 14vw;
+    height: 14vw;
+    left: 43vw;
+    top: 23.9vw;
     transform: rotate(45deg);
 }
 
-.f {
+.neck {
     position:  absolute;
-    background-color: #fff0d7;
-    width: 100px;
-    height: 50px;
-    left: 100px;
-    top: 320px;
+    background-color: #f3d8df;
+    width: 20vw;
+    height: 2vw;
+    left: 40vw;
+    top: 33vw;
 }
 
-.g {
+.hairOrnaments {
     position:  absolute;
-    background-color: #fff0d7;
-    width: 100px;
-    height: 50px;
-    left: 500px;
-    top: 320px;
+    background-color: red;
+    width: 15vw;
+    height: 15vw;
+    left: 50vw;
+    top: 5vw;
 }
 
-.i {
-    position:  absolute;
-    background-color: #fff;
-    width: 100px;
-    height: 50px;
-    left: 200px;
-    top: 320px;
-}
-
-.j {
-    position:  absolute;
-    background-color: #fff;
-    width: 100px;
-    height: 50px;
-    left: 400px;
-    top: 320px;
-}
-
-.k {
-    position:  absolute;
-    background-color: #fff;
-    width: 100px;
-    height: 10px;
-    left: 300px;
-    top: 400px;
-}
-
-.l {
+.hair {
     position:  absolute;
     background-color: #ffefb1;
-    width: 150px;
-    height: 150px;
-    left: 275px; 
-    top: 130px;
+    width: 25vw;
+    height: 25vw;
+    left: 37.5vw;
+    top: 8vw;
 }
 
-.m {
+.head {
     position:  absolute;
     background-color: #fff0d7;
-    width: 100px;
-    height: 100px;
-    left: 300px; 
-    top: 181px;
+    width: 18vw;
+    height: 18vw;
+    left: 41vw;
+    top: 15vw;
 }
 
-.h {
+.shirt {
     position:  absolute;
-    background-color: red;
-    width: 60px;
-    height: 60px;
-    left:385px; 
-    top: 110px;
+    background-color: #fff;
+    width: 20vw;
+    height: 2vw;
+    left: 40vw;
+    top: 55vw;
+}
+
+.skirt {
+    position:  absolute;
+    background-color: #000;
+    width: 20vw;
+    height: 20vw;
+    left: 40vw;
+    top: 57vw;
+}
+
+.skirt1 {
+    position:  absolute;
+    background-color: #000;
+    transform: rotate(45deg);
+    width: 25vw;
+    height: 25vw;
+    left: 37.5vw;
+    top: 64vw;
 }
