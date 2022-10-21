@@ -3,7 +3,7 @@ session_start();            //セッションを開始
 require('dbconnect.php');   //dbconnect.phpのファイル読み込めよ！
 if (!empty($_POST) ){
         $_SESSION['join'] = $_POST;
-        header('Location: test3.php');
+        header('Location: index3.php');
         exit();
     }
 ?>
