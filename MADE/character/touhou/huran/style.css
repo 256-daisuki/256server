@@ -31,10 +31,10 @@ body {
 .ribbon {
     position:  absolute;
     background-color: #eded7b;
-    width: 3vw;
-    height: 6vw;
-    left: calc(50vw - 3vw / 2);
-    top: 45vw;
+    width: 2.5vw;
+    height: 5vw;
+    left: calc(50vw - 2.5vw / 2);
+    top: 47vw;
 }
 
 .neck {
