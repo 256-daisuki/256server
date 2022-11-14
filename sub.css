@@ -112,3 +112,7 @@ section:nth-child(2n) {
       transform-origin: 0 100%;
     }
   }
+
+.a404 {
+  font-size: 40vw;
+}
