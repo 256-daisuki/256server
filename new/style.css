@@ -1,0 +1,62 @@
+/* レイアウトのためのCSS */
+
+h1 {
+    font-size:16px;
+  }
+  
+  .h2 {
+    font-size:1.2rem;
+    text-align: center;
+    margin: 0 0 30px 0;
+  }
+  
+  h2 {
+      font-size: 20px;
+  }
+  
+  .a {	
+      text-decoration: none;
+      color: #333;
+   }
+  
+  .titel {
+      font-size: 512%;
+  }
+  
+  .logo {
+      font-size: 320%;
+  }
+  
+  li {
+      font-size: 128%;
+  }
+  
+  p {
+    margin-top:20px;  
+  }
+  
+  small {
+    color:#333;
+    display: block;
+    text-align: center;
+  }
+  
+  #header {
+    background:#333;
+    color:#fff;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  section { /*                             */
+    padding:5% 5%;
+  }
+  
+  section:nth-child(2n) {
+    background:#f3f3f3;
+  }
+  
+  #footer {
+    background: transparent;
+    /* padding:1px; */
+  }
