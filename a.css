@@ -1,0 +1,88 @@
+*, *:before, *:after {
+  box-sizing: border-box;
+  outline: none;
+}
+
+html {
+  font-family: "Helvetica", sans-serif;
+  font-size: 16px;
+  font-smooth: auto;
+  font-weight: bold;
+  line-height: 1.5;
+  color: #000;
+}
+
+body {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+}
+
+div {
+  font-size: 108px;
+}
+div:hover:before, div:hover:after {
+  position: absolute;
+  content: "256server";
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+div:hover:before {
+  top: 49.5%;
+  left: 49.5%;
+  color: rgba(233, 30, 99, 0.8);
+  -webkit-animation: distort1 200ms linear infinite;
+          animation: distort1 200ms linear infinite;
+}
+div:hover:after {
+  top: 50.5%;
+  left: 50.5%;
+  color: rgba(3, 169, 244, 0.8);
+  -webkit-animation: distort2 200ms linear infinite;
+          animation: distort2 200ms linear infinite;
+}
+@-webkit-keyframes distort1 {
+  0% {top: 49.5%; left: 49.5%;}
+  12.5% {top: 49.5%; left: 50%;}
+  25% {top: 49.5%; left: 50.5%;}
+  37.5% {top: 50%; left: 50.5%;}
+  50% {top: 50.5%; left: 50. }
+  62.5% { top: 50.5%; left: 50%;}
+  75% { top: 50.5%; left: 49.5%;}
+  87.5% { top: 50%; left: 49.5%;}
+  100% { top: 49.5%; left: 49.5%;}}
+@keyframes distort1 {
+  0% {top: 49.5%; left: 49.5%;}
+  12.5% {top: 49.5%; left: 50%;}
+  25% {top: 49.5%; left: 50.5%;}
+  37.5% {top: 50%; left: 50.5%;}
+  50% {top: 50.5%; left: 50.5%;}
+  62.5% {top: 50.5%; left: 50%;}
+  75% {top: 50.5%; left: 49.5%;}
+  87.5% {top: 50%;left: 49.5%;}
+  100% {top: 49.5%; left: 49.5%;}}
+@-webkit-keyframes distort2 {
+  0% {top: 50.5%; left: 50.5%;}
+  12.5% {top: 50%; left: 50.5%;}
+  25% {top: 49.5%; left: 50.5%;}
+  37.5% {top: 49.5%; left: 50%;}
+  50% {top: 49.5%; left: 49.5%;}
+  62.5% {top: 50%; left: 49.5%;}
+  75% {top: 50.5%; left: 49.5%;}
+  87.5% {top: 50.5%; left: 50%;}
+  100% {top: 50.5%; left: 50.5%;}
+}
+@keyframes distort2 {
+  0% {top: 50.5%; left: 50.5%;}
+  12.5% {top: 50%; left: 50.5%;}
+  25% {top: 49.5%; left: 50.5%;}
+  37.5% {top: 49.5%; left: 50%;}
+  50% {top: 49.5%; left: 49.5%;}
+  62.5% {top: 50%; left: 49.5%;}
+  75% {top: 50.5%; left: 49.5%;}
+  87.5% {top: 50.5%; left: 50%;}
+  100% {top: 50.5%; left: 50.5%;}
+}/*# sourceMappingURL=a.css.map */
