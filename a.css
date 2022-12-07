@@ -4,10 +4,10 @@
 }
 
 html {
-  font-family: "Helvetica", sans-serif;
+  font-family: 'Bahnschrift', sans-serif;
+  font-weight: 200;
   font-size: 16px;
   font-smooth: auto;
-  font-weight: bold;
   line-height: 1.5;
   color: #000;
 }
