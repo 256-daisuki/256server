@@ -11,21 +11,35 @@
     <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@300&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="full">
-        <nav>
-            <ul>
-                <li><a class="nav" href="#">hoge</a></li>
-                <li><a class="nav" href="#">hoge</a></li>
-                <li><a class="nav" href="#">hoge</a></li>
-                <li><a class="nav" href="#">hoge</a></li>
-                <li><a class="nav" href="#">hoge</a></li>
-            </ul>
-        </nav>
+    <div class="full"><!-- ここの中に書くと、なんと一番上に入るよ！！！　すごいね！！！！！-->
+        <div class="container">
+            <header class="header">
+                <div class="header__inner">
+                    <h1 class="header__title header-title">
+                        <a href="#" class="header_a">256</a>
+                    </h1>
+                <nav class="header__nav nav" id="js-nav">
+                    <ul class="nav__items nav-items">
+                        <li class="nav-items__item"><a href="">メニュー</a></li>
+                        <li class="nav-items__item"><a href="">メニュー</a></li>
+                        <li class="nav-items__item"><a href="">メニュー</a></li>
+                        <li class="nav-items__item"><a href="">メニュー</a></li>
+                    </ul>
+                </nav>
+                
+                <button class="header__hamburger hamburger" id="js-hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </header>
+        </div>
+    </div>
         <h1 class="h1">256server</h1>
     </header>
     <section>
         <h2>SAMPLE TEXT</h2>
-      </section>
+    </section>
     <div class="top">256server</div>
 </body>
 </html>
