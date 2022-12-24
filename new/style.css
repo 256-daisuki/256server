@@ -10,6 +10,15 @@ body { /*背景の設定*/
     min-height: 100vh;
 }
 
+section { /*                             */
+  padding:5% 5%;
+  
+}
+
+p {
+  margin-top:20px;  
+}
+
 .header__inner {
   background-color: whitesmoke;
 }
@@ -32,7 +41,7 @@ a {
 
 .h1 {
   font-family: 'Bahnschrift', sans-serif;
-  font-size: 512%;
+  font-size: 10vw;
   font-weight: 200;
   letter-spacing: 0.05en;
   margin: 0;
