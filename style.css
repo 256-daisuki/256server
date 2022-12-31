@@ -19,7 +19,7 @@ p {
   margin-top:20px;  
 }
 
-.header__inner {
+.header_inner {
   background-color: whitesmoke;
 }
 
@@ -157,7 +157,7 @@ main {
 }
 
 
-.header__inner {
+.header_inner {
   padding: 0 20px;
   display: flex;
   align-items: center;
@@ -168,23 +168,23 @@ main {
 
 
 /* ヘッダーのロゴ部分 */
-.header__title {
+.header_title {
   width: 80px;
 }
 
 
-.header__title:hover {
+.header_title:hover {
   opacity: 0.8;
 }
 
 
 @media screen and (min-width: 960px) {
-  .header__title {
+  .header_title {
     width: 140px;
   }
 }
 
-.header__title img {
+.header_title img {
   display: block;
   width: 100%;
   height: 100%;
@@ -192,7 +192,7 @@ main {
 
 /* ヘッダーのナビ部分 */
 
-.header__nav {
+.header_nav {
   position: absolute;
   right: 0;
   left: 0;
@@ -208,7 +208,7 @@ main {
 
 
 @media screen and (min-width: 960px) {
-  .header__nav {
+  .header_nav {
     position: static;
     transform: initial;
     background-color: inherit;
@@ -220,12 +220,12 @@ main {
 }
 
 
-.nav__items {
+.nav_items {
   margin: auto;
 }
 
 @media screen and (min-width: 960px) {
-  .nav__items {
+  .nav_items {
     margin: initial;
     width: 100%;
     display: flex;
@@ -236,7 +236,7 @@ main {
 }
 
 
-.nav-items__item {
+.nav-items_item {
   cursor: pointer;
   position: relative;
   height: 100%;
@@ -247,7 +247,7 @@ main {
 
 @media screen and (min-width: 960px) {
 
-  .nav-items__item:before {
+  .nav-items_item:before {
     position: absolute;
     content: "";
     bottom: -1px;
@@ -259,7 +259,7 @@ main {
 
   }
 
-  .nav-items__item:hover:before {
+  .nav-items_item:hover:before {
     opacity: 1;
   }
 
@@ -268,7 +268,7 @@ main {
 
 
 /* ナビのリンク */
-.nav-items__item a {
+.nav-items_item a {
   color: black;
   width: 100%;
   display: block;
@@ -277,12 +277,12 @@ main {
   margin-bottom: 24px;
 }
 
-.nav-items__item:last-child a {
+.nav-items_item:last-child a {
   margin-bottom: 0;
 }
 
 @media screen and (min-width: 960px) {
-  .nav-items__item a {
+  .nav-items_item a {
     margin-bottom: 0;
     font-size: 18px;
   }
@@ -290,7 +290,7 @@ main {
 
 
 /* ハンバーガーメニュー */
-.header__hamburger {
+.header_hamburger {
   width: 48px;
   height: 100%;
 }
@@ -334,7 +334,7 @@ main {
 
 
 /* ハンバーガーメニュークリック後のスタイル */
-.header__nav.active {
+.header_nav.active {
   transform: translateX(0);
 }
 
