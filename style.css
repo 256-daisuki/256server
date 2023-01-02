@@ -52,6 +52,10 @@ a {
   line-height: 1;
 }
 
+.banner {
+  display:flex;
+}
+
 /* change colours to suit your needs */
 ins {
   background-color: #ff9;
