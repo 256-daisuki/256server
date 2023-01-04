@@ -1,0 +1,23 @@
+{
+  "name": "256server",
+  "version": "1.0.0",
+  "description": "あまり書くことないね\r って言うか何書いたらいいの\r 汚いコードだけど許してね\r えっと　©256大好き!\r 誰かPHPが分かる方いたらBBSの作り方教えて…　私の技術力じゃ足りないの…（勉強すれば解決）\r ©256大好き!　（これいる？）",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/256-daisuki/256server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/256-daisuki/256server/issues"
+  },
+  "homepage": "https://github.com/256-daisuki/256server#readme"
+}
