@@ -1,0 +1,37 @@
+<!--<style>body{left: auto;}.box{margin:auto;width:150px;height:150px;background:linear-gradient(to bottom,#225566,#ffffef)};</style><div class="box"></div>-->
+<style>
+    button a {
+    background: #eee;
+    border-radius: 3px;
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0 auto;
+    max-width: 280px;
+    padding: 10px 25px;
+    color: #313131;
+    transition: 0.3s ease-in-out;
+    font-weight: 500;
+    }
+    button a:hover {
+    background: #313131;
+    color: #FFF;
+    }
+    button a:after {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-top: 3px solid #313131;
+    border-right: 3px solid #313131;
+    transform: rotate(45deg) translateY(-50%);
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    border-radius: 1px;
+    transition: 0.3s ease-in-out;
+    }
+    button a:hover:after {
+    border-color: #FFF;
+    }
+</style>
