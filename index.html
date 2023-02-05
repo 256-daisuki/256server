@@ -1,81 +1,92 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <!--最初の初期設定系-->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>256server</title>
-    <!--CSS系の読み込み。-->
-    <link rel="stylesheet" href="style.css" class="css">
-    <!--ここからフォント系-->
+    <title>256server-UNION</title>
 </head>
 <body>
-    <div class="full"><!--ちなみにここの中に書くと、TOPに表示されます。-->
-        <h1 class="h1">256server</h1>
-        <header class="header">
-            <div class="header_inner">
-                <h1 class="header_title header-title">
-                    <a href="https://256server.com" alt="256serverのリンク">
-                        <div class="logo">256</div>
-                    </a>
-                </h1>
-                <nav class="header_nav nav" id="js-nav">
-                    <ul class="nav_items nav-items">
-                        <li class="nav-items_item"><a href="#" alt="256server">TOP</a></li>
-                        <li class="nav-items_item"><a href="/UNION/index.html" alt="256server UNION">UNION</a></li>
-                        <li class="nav-items_item"><a href="/MADE/index.html" alt="256server MADE">MADE</a></li>
-                        <li class="nav-items_item"><a href="https://blog.256server.com">BLOG</a></li>
-                    </ul>
-                </nav>
-
-                <button class="header_hamburger hamburger" id="js-hamburger"><!--汚いクラス名ですね。-->
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>   
+    <meta name="description"  content="256server">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--==============CSSの読み込みだお====================================-->
+    <link rel="stylesheet" type="text/css"  href="../header.css">
+    <link rel="stylesheet" type="text/css"  href="../sub.css">
+    <!--==============ファビコンちゃんを設定してあげようね==================-->
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <!--==============フォントの導入だお===================================-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@300&display=swap" rel="stylesheet">
+    </head>
+    <body>
+    <div id="container">
+        <header>
+            <div class="logo">
+               <a class="a" href="/index.html">256</a>
             </div>
-
+            <nav class="pc-nav">
+                <ul>
+                    <li><a class="a" href="../index.html">HOME</a></li>
+                    <li><a class="a" href="#">UNION</a></li>
+                    <li><a class="a" href="../MADE/index.html">MADE</a></li>
+                    <li><a class="a" href="#">BLOG</a></li>
+                </ul>
+            </nav>
         </header>
-    </div>
-        <main>
-            <div class="main">
-                <section>
-                    <img src="https://count.getloli.com/get/@:256server" alt="アクセスカウンター">
-                    <h2 class="h2">Hello</h2>
-                    <p>こんにちはー　256serverへようこそー　ここはラズパイで動いているサーバーです！　ノリで作ったのでここに何を書いたらいいのやら</p>
-                    <p>じゃあこの鯖の紹介でもしようかな　この鯖は家にあるラズパイ4君で動いてるよ！（ラズパイはもともと0.8万円ぐらいで買えた手のひらサイズのPCだよ）</p>
-                    <h2 class="h2">鯖の歴史？</h2>
-                    <p>一応この形に行きつくのにそこそこかかっているのでそれを書こうかなと思って</p>
-                    <p>1.fc2さんのサーバーを借りて作った奴　黒歴史だったりする　5月12日に公開</p>
-                    <p>2.初のラズパイサーバー　bootstrapを使って作ったもの　DNSとかを勉強しながら丸々一日かけて完成　8月8日に公開</p>
-                    <p>3.それっぽいデザインになった　2.をガラリと変えたもの　かなりデザインが変わった。　9月14日に公開</p>
-                    <p>4.前のデザインをシンプルにした感じ　jsとかをめっちゃ使ってたけど減らしたりして動きを減らした。　一番はスマホに対応したことかな。</p>
-                    <h2 class="h2">この鯖を作った人の自己紹介？</h2>
-                    <p>256が大好きな人　名前は256大好き!　ずっと前からラズパイでwebサーバーを立てたかった人　ゲームをあまりしなかったり(2048はやるよ)　好きなものはLinuxとか　嫌いなものは自己紹介　眼鏡つけてる　好きなアーティストさんは平沢進さんとgroup_inouさん　どうも馬の骨です（）</p>
-                    <p>今PHPを勉強しているよ　いつかBBSをつくる！　<a href="https://twitter.com/256_daisuki" alt="256大好き!のTwitter">Twitter</a>フォローして！</p>
-                    <p>最近はjsも少し勉強してるよ</p>
-                    <h2 class="h2">このサーバーのこと</h2>
-                    <p>このサーバーのgithubがあるからそれ貼るか<a href="https://github.com/256-daisuki/256server" alt="256server github">リンク</a></p>
-                    <p>@有識者 ちょっとPHP教えて…　もしいたのなら<a href="https://twitter.com/256_daisuki" alt="256大好き! Twitter">私のツイッター</a>のDMに連絡をお願いします…　<a href="/php/index.html">ちなみにPHPで書いたコードを公開しているところあるよ</a>暇だったら見ていってね</p>
-                    <p>このPHPのコードもgithubにあるよ　PHPってフォルダの中にあるよ</p>
-                    <p>そういえば90年代っぽいサイトも作ってみたんだよね<a href="https://256server.com/90/index.html" alt="256server 90">リンク</a>なんか動く絵文字入れるだけでそれっぽくなるもんなんだね　あとアクセスカウンターって絶対あったらしいね　相互リンクとか実物5回しか見たことないよ 同盟バナーなんて1回だけ　なのに作ってるよ　何やってんだろうねマジで</p>
-                    <h2>相互リンク&おすすめのサイト</h2>
-                    <p>私の友達のサイトとかを貼るページ</p>
-                    <h3>相互リンク</h3>
-                    <p><a href="https://www.activetk.jp/" alt="activetk">activetk</a>いろいろなwebツールを公開している優良サイト。　絶対にアクセスしたほうがいい</p>
-                    <p><a href="https://doremire-server.com">doremire-server</a>私の友達のサーバー　いろんな技術があるから見ておいた方がいい　家の古いノートPCで動いてるらしい　私と同じ自宅鯖</p>
-                    <h3>おすすめのサイト</h3>
-                    <p><a href="https://rumiserver.com/" alt="rumiserver">rumiserver</a>私の師匠のサーバー　丸々一日は遊べる　ラズパイ3で動いてるとか</p>
-                    <p><a href="https://sites.google.com/view/kamera-room/%E3%83%9B%E3%83%BC%E3%83%A0">かめらのおへや</a>写真がとにかくかわいい！！！Twitterをフォローしましょうね</p>
-                </section>
-            </div>
-        </main>
-        <footer>
-            <p>&copy; 256大好き! 2022~2023. こんな一番下まで読んでくれたキミへ　この鯖の豆知識：コード全部手書き</p>
-        </footer>
-    </div>
-    <!--ここからjs-->
-    <script src="index.js"></script>
+        <!--<div class="main-visual">
+            <h2 class="titel">256server</h2>
+        </div>-->
+        <!--<a href="#" class="nun">Scroll</a>-->
+    <main>
+        <section>
+            <h2 class="h2"></h2>
+            <h2 class="h2">UNION(同盟バナー)</h2>
+            <p>SNSとかが無い時代はWEBサーバーの管理者さんと同盟を組んでお互に広告を出し合っていたらしいよ　私はその時代には生きていないわけで本物は1回しか見たことが無いけど、残っているスクショとかを参考に作ってみた。まあ、この鯖のコンセプトはネット黎明期にあったけど消滅したものを2020年っぽくするのが目標だからね。　デザイン力皆無だけど頑張っているから文句は受け付けない!!</p>
+            <p>もしもこの同盟バナーを掲載したいとかなら<a href="https://twitter.com/256_daisuki">私のTwitter(リンク)</a>のDMに連絡してね　youtubeのチャンネルとかTwitterのアカウントとかでもいいよ～　解像度は高さ40px横200でお願いね～ 誰でも歓迎！（SNSで消滅したものを再現してSNSで人を集めるのなんか草）</p>
+            <p>バナーを貼るときは下のコードを書いてね　できればバナーはお持ち帰りしてほしい　まあ直リンでもいいけど</p>
+            <p>
+                <code>
+                    &lt;a href="https://256server.com" alt="256server"&gt;&lt;img src="ohttps://256server.com/image/UNION/256server.png" alt="256server"&gt;&lt;/a&gt;
+                </code>
+            </p>
+        </section>
+        <!--/area1-->
+        <section>
+            <h2>バナー一覧</h2>
+            <ul class="banner">
+                <li><a href="https://rumiserver.com"><img class="img" src="../image/UNION/BANNR.png" alt="rumiserver"></a></li>
+                <li><a href="https://tomisuke.jp"><img class="img" src="../image/UNION/Tomisuke.png" alt="tomisuke"></a></li>
+                <li><a href="https://youtube.com/@jyeku"><img class="img" src="../image/UNION/jyeku.png" alt="jyeku"></a></li>
+            </ul>
+            <ul class="banner">
+                <li><a href="https://sites.google.com/view/kamera-room/%E3%83%9B%E3%83%BC%E3%83%A0"><img class="img" src="../image/UNION/Tosi_Siori_D3s.png" alt="かめらのおへや"></a></li>
+                <li><a href="https://doremire-server.com"><img class="img" src="../image/UNION/doremire.jpg" alt="doremire"></a></li>
+                <li><a href="https://www.aozora.gr.jp/"><img class="img" width="125%" src="../image/UNION/azbtn.gif" alt="青空文庫"></a></li>
+                <li><a href="https://onigiru.wixsite.com/onigiri"><img class="img" width="125%" src="../image/UNION/onigiri.gif" alt="おにぎり同盟"></a></li>
+            </ul>
+            <style>
+                .banner{
+	                display: flex;
+	                flex-wrap:wrap;
+                }
+                .img {
+                    margin: -5px;
+                }
+            </style>
+        </section>
+    </main>
+    
+    <footer id="footer">
+    <small>&copy;256大好き!</small>
+    </footer>
+        
+    <!--/contaier--></div>
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/4-2-3/js/4-2-3.js"></script>
+    </body>
+    </html>
 </body>
 </html>
