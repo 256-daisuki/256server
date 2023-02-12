@@ -1,0 +1,35 @@
+.body {
+    position:  absolute;
+    background-color: #000000;
+    width: 32vw;
+    height: 33.6vw;
+    left: 0vw;
+    top: 0vw;
+}
+
+.a {
+    position:  absolute;
+    background-color: #fff;
+    width: 26vw;
+    height: 16vw;
+    left: 3vw;
+    top: 0vw;
+}
+
+.c {
+    position:  absolute;
+    background-color: red;
+    width: 9.2vw;
+    height: 3vw;
+    left: 3vw;
+    top: 0vw;
+}
+
+.d {
+    position:  absolute;
+    background-color: #fff;
+    width: 26vw;
+    height: 16vw;
+    left: 3vw;
+    top: 0vw;
+}
