@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/256-daisuki/256server/issues"
   },
-  "homepage": "https://github.com/256-daisuki/256server#readme"
+  "homepage": "https://github.com/256-daisuki/256server#readme",
+  "dependencies": {
+    "usage": "^0.7.1"
+  }
 }
