@@ -1,7 +1,15 @@
+//server
 const http = require("http");
-const PORT = 8000;
+const server = http.createServer();
 
-svr.listen(8081);
+server.on("request", function( request, response ) {
+    response.writeHead(200, {"Content-Type" : "text/plain"});
+    response.write( "Node.js Web Server" );
+    response.end();
+});
+
+//main
+server.listen(3001);
 
 const os = require('os');
 
@@ -17,8 +25,11 @@ const totalMem = os.totalmem();
 const freeMem = os.freemem();
 const memUsage = ((totalMem - freeMem) / totalMem) * 100;
 
-var CPU = (`CPU使用率: ${cpuUsage}%`);
+var cpu = (`CPU使用率: ${cpuUsage}%`);
 var MEM = (`メモリ使用率: ${memUsage}%`);
 
+var str = cpu;
+var CPU = str.split(',');
 console.log(CPU);
+
 console.log(MEM);

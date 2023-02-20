@@ -2,14 +2,19 @@
   "name": "ai",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "./app.js",
   "scripts": {
-    "test": "node app.js"
+    "test": "node ./app.jso",
+    "sv": "lite-server"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "ejs": "^3.1.8",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "os-utils": "^0.0.14"
+  },
+  "devDependencies": {
+    "lite-server": "^2.6.1"
   }
 }
