@@ -31,7 +31,7 @@ server.listen(3000, () => {
       const memUsage = ((totalMem - freeMem) / totalMem) * 100;
 
       const html = `
-        <p>CPU使用率: ${cpuUsage.toFixed(2) * 100}%</p>
+        <p>CPU使用率: ${Math.floor(cpuUsage.toFixed(2) * 100) }%</p>
         <p>メモリ使用率: ${memUsage.toFixed(2)}%</p>
       `;
       fs.writeFile('a.html', html, (err) => {
@@ -40,5 +40,5 @@ server.listen(3000, () => {
         }
       });
     });
-  }, 5000);
+  }, 3000);
 });
