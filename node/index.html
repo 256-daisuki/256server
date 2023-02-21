@@ -7,6 +7,14 @@
     <title>Document</title>
 </head>
 <body>
-    <script src="./cpumem.js"></script>
+    <iframe id="my-iframe" src="a.html"></iframe>
+
+    <script>
+    // 5秒ごとにiframeを更新する
+    setInterval(() => {
+        const iframe = document.getElementById("my-iframe");
+        iframe.src = iframe.src;
+    }, 3000);
+</script>
 </body>
 </html>
