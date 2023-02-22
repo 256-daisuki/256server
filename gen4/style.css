@@ -1,0 +1,359 @@
+body { /*背景の設定*/
+  margin: auto;
+  background-color: white;
+  background-image: url(data:image/png;base64,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);
+}
+
+.full {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+}
+
+section { /*                             */
+  padding:5% 5%;
+  
+}
+
+p {
+  margin-top:20px;  
+}
+
+.header_inner {
+  background-color: whitesmoke;
+}
+
+a {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+
+.logo {
+  font-family: 'Bahnschrift', sans-serif;
+  font-weight: 100;
+  font-size: 3.3vw;
+  margin-top: 0.5vw;
+  color: #000;
+}
+
+.h1 {
+  font-family: quasimoda, sans-serif;
+  font-size: 10vw;
+  font-weight: 200;
+  letter-spacing: 0.05en;
+  margin: 0;
+  position: absolute;
+  top: calc(50% - 0.5em);
+  width: 100%;
+  text-align: center;
+  line-height: 1;
+}
+
+.banner {
+  display: flex;
+}
+
+/* change colours to suit your needs */
+ins {
+  background-color: #ff9;
+  color: #000;
+  text-decoration: none;
+}
+
+/* change colours to suit your needs */
+mark {
+  background-color: #ff9;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+
+del {
+  text-decoration: line-through;
+}
+
+abbr[title],
+dfn[title] {
+  border-bottom: 1px dotted;
+  cursor: help;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* change border colour to suit your needs */
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #cccccc;
+  margin: 1em 0;
+  padding: 0;
+}
+
+input,
+select {
+  vertical-align: middle;
+}
+
+
+/* 調整用スタイル */
+
+a {
+  text-decoration: none;
+}
+
+
+
+ul,
+li {
+  list-style: none;
+}
+
+
+main {
+  background-color: #f1f1f1;
+  /*height: 800px;*/
+  display: flex;
+}
+
+
+.main {
+  margin: auto;
+}
+
+.footer {
+  background-color: #f6f6f6;
+  height: 200px;
+  display: flex;
+}
+
+.footer div {
+  margin: auto;
+}
+
+
+/* ヘッダー */
+
+
+.header {
+  background-color: white;
+  width: 100%;
+  height: 50px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+}
+
+
+@media screen and (min-width: 700px) {
+  .header {
+    height: 80px;
+
+  }
+}
+
+
+.header_inner {
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: inherit;
+  position: relative;
+}
+
+
+/* ヘッダーのロゴ部分 */
+.header_title {
+  width: 80px;
+}
+
+
+.header_title:hover {
+  opacity: 0.8;
+}
+
+
+@media screen and (min-width: 960px) {
+  .header_title {
+    width: 140px;
+  }
+}
+
+.header_title img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ヘッダーのナビ部分 */
+
+.header_nav {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  transform: translateX(100%);
+  background-color: #fff;
+  transition: ease .4s;
+
+  display: flex;
+}
+
+
+@media screen and (min-width: 960px) {
+  .header_nav {
+    position: static;
+    transform: initial;
+    background-color: inherit;
+    height: inherit;
+    display: flex;
+    justify-content: end;
+    width: 40%;
+  }
+}
+
+
+.nav_items {
+  margin: auto;
+}
+
+@media screen and (min-width: 960px) {
+  .nav_items {
+    margin: initial;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: initial;
+    justify-content: space-between;
+  }
+}
+
+
+.nav-items_item {
+  cursor: pointer;
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+}
+
+@media screen and (min-width: 960px) {
+
+  .nav-items_item:before {
+    position: absolute;
+    content: "";
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: orange;
+    opacity: 0;
+
+  }
+
+  .nav-items_item:hover:before {
+    opacity: 1;
+  }
+
+}
+
+
+
+/* ナビのリンク */
+.nav-items_item a {
+  color: black;
+  width: 100%;
+  display: block;
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 24px;
+}
+
+.nav-items_item:last-child a {
+  margin-bottom: 0;
+}
+
+@media screen and (min-width: 960px) {
+  .nav-items_item a {
+    margin-bottom: 0;
+    font-size: 18px;
+  }
+}
+
+
+/* ハンバーガーメニュー */
+.header_hamburger {
+  width: 48px;
+  height: 100%;
+}
+
+.hamburger {
+  background-color: transparent;
+  border-color: transparent;
+  z-index: 9999;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 960px) {
+  .hamburger {
+    display: none;
+  }
+}
+
+
+/* ハンバーガーメニューの線 */
+.hamburger span {
+  width: 100%;
+  height: 1px;
+  background-color: #000;
+  position: relative;
+  transition: ease .4s;
+  display: block;
+}
+
+.hamburger span:nth-child(1) {
+  top: 0;
+}
+
+.hamburger span:nth-child(2) {
+  margin: 8px 0;
+}
+
+
+.hamburger span:nth-child(3) {
+  top: 0;
+}
+
+
+/* ハンバーガーメニュークリック後のスタイル */
+.header_nav.active {
+  transform: translateX(0);
+}
+
+.hamburger.active span:nth-child(1) {
+  top: 5px;
+  transform: rotate(45deg);
+}
+
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+
+.hamburger.active span:nth-child(3) {
+  top: -13px;
+  transform: rotate(-45deg);
+}

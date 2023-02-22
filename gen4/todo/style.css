@@ -1,0 +1,74 @@
+button {
+    border-radius: 8px;
+    border: none;
+    padding: 5px 10px;
+    margin-left: 10px;
+    background: #ff6565;
+    color: #fff;
+    cursor: pointer;
+}
+
+button.incomplete-button {
+    background-color: #858585;
+}
+
+li {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dotted #ccc;
+}
+
+li p {
+    margin: 0;
+    flex: 0 1 820px;
+}
+
+.add-item-area {
+    background: #e7e7e7;
+    padding: 10px;
+    margin: 20px 0;
+    border-radius: 10px;
+}
+
+.item-area-incomplete {
+    background: #edffe5;
+    padding: 10px;
+    margin: 20px 0;
+    border-radius: 10px 10px 0 0;
+    min-height: 200px;
+}
+
+.item-area-incomplete .ttl {
+    color: #fff;
+    font-weight: bold;
+    border-radius: 10px 10px 0 0;
+    margin: -10px;
+    background: #04945d;
+    padding: 10px;
+}
+
+.item-area-incomplete button {
+    flex: 1 0 60px;
+}
+
+.item-area-complete {
+    background: #fff3e3;
+    padding: 10px;
+    margin: 20px 0;
+    border-radius: 10px 10px 0 0;
+    min-height: 200px;
+}
+
+.item-area-complete .ttl {
+    color: #fff;
+    font-weight: bold;
+    border-radius: 10px 10px 0 0;
+    margin: -10px;
+    background: #c79b49;
+    padding: 10px;
+}
+
+.item-area-complete button {
+    flex: 1 0 60px;
+}
