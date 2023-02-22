@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>アクセスカウンター</title>
+  <script>
+    window.onload = function() {
+      // カウンターを初期化する
+      var count = localStorage.getItem('count');
+      if (!count) {
+        count = 0;
+      }
+      document.getElementById('counter').innerHTML = count;
+      
+      // カウンターを1ずつ増やす
+      count++;
+      localStorage.setItem('count', count);
+      document.getElementById('counter').innerHTML = count;
+    };
+  </script>
+</head>
+<body>
+  <h1>アクセスカウンター</h1>
+  <p>現在のアクセス数: <span id="counter"></span></p>
+</body>
+</html>
