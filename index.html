@@ -4,11 +4,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>256srerverの使用率は？</title>
+    <title>256srerver</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BN5KGMB0GN"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-BN5KGMB0GN');
+    </script>
 </head>
 <body>
     <h1>256server.comへようこそ</h1>
     <p>256大好き!の趣味程度のサイト</p>
+
+    <p>現在のアクセス数: <span id="counter"></span></p>
+
     <h2>このサイトについて。</h2>
     <p>twitterが大好きな中学生のサイト、このサイトは一応2022年の8月8日（末広がりぃ）の夕方あたりに公開を初めたよ。サーバーは家のラズパイ君、ラズパイくんは小6のときに買った思い出のマイコン。家のmacでイメージを焼こうとしたけど知識が皆無だったから（今もほとんどないけど）できなくて自分用のPCを買うまではずっとホコリかぶってたりした。そのときに買ったPCだけどヤフオクさんで4.5万で落札したryzen5 3500UなRAM8GBのよわよわPCだったりする。 よわよわでもWEB系ならできるし、余ってるラズパイがあるからそれを使ってWEBサーバーを立ててもいいなって思いついて半年ぐらいHTMLとCSSとPHPを勉強して夏休みネット系勉強してなんとかサーバーを立てた感じだね、うーん これ以上書くことも無い気がする。</p>
     <h2>私について</h2>
@@ -22,17 +34,46 @@
     <p>3.それっぽいデザインになった　2.をガラリと変えたもの　かなりデザインが変わった。　9月14日に公開</p>
     <p>4.前のデザインをシンプルにした感じ　jsとかをめっちゃ使ってたけど減らしたりして動きを減らした。　一番はスマホに対応したことかな。</p>
     <p>5.コピペ多様して作ったゴミページ 面白さがないし、ぐちゃぐちゃだし、面白さがとにかくない。</p>
+    <p>6.今のサイト chatGPT君と一緒に作ったサイト jsは私が書くとぐちゃぐちゃになっちゃうからAIに HTML,CSSは私が書く そんな感じでできました。 ちなみに文全部書き直したよ 馬鹿らしいね</p>
+    <h2>相互リンクとおすすめサイト</h2>
+    <h3>相互リンク</h3>
+    <p><a href="https://www.activetk.jp">activeTK</a> 一時期ツイッターで有名になった中学生プログラマーの中身だよー</p>
+    <p><a href="https://doremire-server.com/">doremire-server</a> 私の友達のサーバー この人も自宅鯖 古いノートパソコンでサーバーを立ててるらしいよ すごいよね</p>
+    <h3>おすすめリンク</h3>
+    <p><a href="https://rumiserver.com/">rumiserver</a>私の師匠のサーバー この256serverはここから来てる。内容がとても濃いから見るときは覚悟が必要</p>
+    <p><a href="https://sites.google.com/view/kamera-room/%E3%83%9B%E3%83%BC%E3%83%A0">かめらのおへや</a> ツイッターで人気な鳥ちゃんを撮ってる人のサイト ここからツイッターに行きましょう。</p>
+    <h3>相互リンク募集してます。</h3>
+    <p>ここをたくさんのリンクでやっぱり埋め尽くしたいって言う私の願望を叶えさせてくれ！ このサイト一日に100ぐらいしかアクセスないけど、少しは宣伝になると思うからもしサイト持ってたりしたらツイッターの@256_daisuki にDMちょうだいね！</p>
     <footer>
-        <p>256server.comの使用率は？</p>
+        <p>このWEBページはgoogleアナリティクスを使用しています。</p>
+        <p>256server.comの使用率 5秒に一回更新されるはず。</p>
+        <a href="https://twitter.com/256_daisuki">twitter</a>
+        <a href="http://youtube.com/@_256">youtube(タイピング用になってる)</a>
+        <a href="github.com/256-daisuki">github</a>
     <iframe id="my-iframe" src="a.html"></iframe>
     <script>
-    // 1秒ごとにiframeを更新する
+    // 5秒ごとにiframeを更新する
     setInterval(() => {
         const iframe = document.getElementById("my-iframe");
         iframe.src = iframe.src;
     }, 5000);
     </script>
     </footer>
-   
+
+    <script>
+        window.onload = function() {
+            // カウンターを初期化する
+            var count = localStorage.getItem('count');
+            if (!count) {
+                count = 0;
+            }
+            document.getElementById('counter').innerHTML = count;
+          
+            // カウンターを1ずつ増やす
+            count++;
+            localStorage.setItem('count', count);
+            document.getElementById('counter').innerHTML = count;
+        };
+      </script>
 </body>
 </html>
