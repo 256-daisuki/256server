@@ -1,81 +1,56 @@
-body {
-    background-color: #fff;
-    margin: auto;
-}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+   <meta charset="utf-8">
+   <meta name="robots" content="noindex,nofollow">
+   <title>HTMLベーステンプレート</title>
 
-nav {
-   margin: auto;
-}
-.title {
-    text-align: center;
-    margin-top: 10vw;
-    font-size: 256%;
-}
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-.sub-title {
-    text-align: center;
-    margin-bottom: 100px;
-}
+   <link rel="stylesheet" href="style.css">
 
-h2 {
-    margin-left: 2%;
-}
-
-.sentence {
-    margin-left: 5%;
-}
-
-/*フッター */
-
-.footer03 {
-    color: #808080;
-    background: #e5e5e5;
-    padding: 30px;
-}
-
-.footer03 a {
-    color: #808080;
-    text-decoration: none;
-}
-
-.footer03 a:hover {
-    text-decoration: underline;
-}
-
-.footer03 .menu {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.footer03 .menu li {
-    margin: 0;
-    padding: 0 20px;
-    border-left: 1px #808080 solid;
-}
-
-.footer03 .menu li:first-child {
-    padding-left: 0;
-    border: none;
-}
-
-.footer03 .copyright {
-    margin: 0;
-    padding: 20px 0 0 0;
-}
-
-@media only screen and (max-width: 599px) {
-    .footer03 .menu li {
-        width: 50%;
-        padding: 0 20px 0 0;
-        box-sizing: border-box;
-        border: none;
-    }
-}
-
-/*nav*/
+   <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+   <script>
+   $(function() {
+      const hum = $('#hamburger, .close')
+      const nav = $('.sp-nav')
+      hum.on('click', function(){
+         nav.toggleClass('toggle');
+      });
+   });
+   </script>
+</head>
+<body>
+   <header>
+      <h1>
+         <a href="/">RICO NOTES</a>
+      </h1>
+      <nav class="pc-nav">
+         <ul>
+            <li><a href="#">ABOUT</a></li>
+            <li><a href="#">SERVICE</a></li>
+            <li><a href="#">COMPANY</a></li>
+            <li><a href="#">CONTACT</a></li>
+         </ul>
+      </nav>
+      <nav class="sp-nav">
+         <ul>
+            <li><a href="#">ABOUT</a></li>
+            <li><a href="#">SERVICE</a></li>
+            <li><a href="#">COMPANY</a></li>
+            <li><a href="#">CONTACT</a></li>
+            <li class="close"><span>閉じる</span></li>
+         </ul>
+      </nav>
+      <div id="hamburger">
+         <span></span>
+      </div>
+   </header>
+   <div class="main-visual">
+      <h2>WEB DESIGN <span>IS</span> YOUR FUTURE</h2>
+   </div>
+   <style>
+      @charset "utf-8";
 * {
    box-sizing: border-box;
 }
@@ -209,7 +184,7 @@ h2 {
       display: block;
       padding: 20px 0;
    }
-   /*閉じるアイコン*/
+   /*-閉じるアイコンー*/
    .sp-nav .close {
       position: relative;
       padding-left: 20px;
@@ -248,3 +223,6 @@ h2 {
       text-align: center;
    }
 }
+   </style>
+</body>
+</html>
