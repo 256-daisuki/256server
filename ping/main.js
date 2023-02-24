@@ -1,12 +1,13 @@
 const http = require('http');
 const { exec } = require('child_process');
+const fs = require('fs');
 
 const hostname = '127.0.0.1';
 const port = 3000;
 const sites = [
   { name: '256server.com', status: 'unknown' },
   { name: 'doremire-server.com', status: 'unknown' },
-  { name: 'koeniaydkoluaesr-pdyaeul.com', status: 'unknown' }
+  { name: 'rumiserver.com', status: 'unknown' }
 ];
 
 function checkStatus(site) {
@@ -39,9 +40,13 @@ const server = http.createServer((req, res) => {
     html += `<li>${site.name}: ${site.status}</li>`;
   });
   html += '</ul></body></html>';
+  fs.writeFile('a.html', html, (err) => {
+    if (err) throw err;
+    console.log('File saved successfully');
+  });
   res.end(html);
 });
 
 server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+  console.log(`Server runn g at http://${hostname}:${port}/`);
 });
