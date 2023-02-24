@@ -7,7 +7,11 @@ const port = 3000;
 const sites = [
   { name: '256server.com', status: 'unknown' },
   { name: 'doremire-server.com', status: 'unknown' },
-  { name: 'rumiserver.com', status: 'unknown' }
+  { name: 'rumiserver.com', status: 'unknown' },
+  { name: 'discord.com', status: 'unknown' },
+  { name: '5ch.net', status: 'unknown' },
+  { name: 'twitter.com', status: 'unknown' },
+  { name: 'facebook.com', status: 'unknown' },
 ];
 
 function checkStatus(site) {
@@ -34,12 +38,12 @@ setInterval(() => {
 const server = http.createServer((req, res) => {
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/html');
-  let html = '<html><head><title>Site Status</title></head><body>';
-  html += '<h1>Site Status</h1><ul>';
+  let html = '<body>';
+  html += '<h1>Site Status</h1><table><tr><th>サイト</th><th>稼働状況</th>';
   sites.forEach(site => {
-    html += `<li>${site.name}: ${site.status}</li>`;
+    html += `<tr><td>${site.name}</td><td>${site.status}</td></tr>`;
   });
-  html += '</ul></body></html>';
+  html += '</body></html>';
   fs.writeFile('a.html', html, (err) => {
     if (err) throw err;
     console.log('File saved successfully');
