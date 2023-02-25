@@ -30,7 +30,7 @@ server.listen(3000, () => {
       const freeMem = osUtils.freemem();
       const memUsage = ((totalMem - freeMem) / totalMem) * 100;
 
-      const html = `<o style="color: #808080;">CPU: ${Math.floor(cpuUsage.toFixed(2) * 100) }% MEM: ${memUsage.toFixed(2)}%</o>`;
+      const html = `ページをリロードすると、更新されます。DoS掛けないでね（）<o style="color: #808080;">CPU: ${Math.floor(cpuUsage.toFixed(2) * 100) }% MEM: ${memUsage.toFixed(2)}%</o>`;
       fs.writeFile('a.html', html, (err) => {
         if (err) {
           console.error(err);
