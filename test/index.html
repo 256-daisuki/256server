@@ -1,228 +1,180 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
+
 <head>
-   <meta charset="utf-8">
-   <meta name="robots" content="noindex,nofollow">
-   <title>HTMLベーステンプレート</title>
-
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-   <link rel="stylesheet" href="style.css">
-
-   <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
-   <script>
-   $(function() {
-      const hum = $('#hamburger, .close')
-      const nav = $('.sp-nav')
-      hum.on('click', function(){
-         nav.toggleClass('toggle');
-      });
-   });
-   </script>
-</head>
-<body>
-   <header>
-      <h1>
-         <a href="/">RICO NOTES</a>
-      </h1>
-      <nav class="pc-nav">
-         <ul>
-            <li><a href="#">ABOUT</a></li>
-            <li><a href="#">SERVICE</a></li>
-            <li><a href="#">COMPANY</a></li>
-            <li><a href="#">CONTACT</a></li>
-         </ul>
-      </nav>
-      <nav class="sp-nav">
-         <ul>
-            <li><a href="#">ABOUT</a></li>
-            <li><a href="#">SERVICE</a></li>
-            <li><a href="#">COMPANY</a></li>
-            <li><a href="#">CONTACT</a></li>
-            <li class="close"><span>閉じる</span></li>
-         </ul>
-      </nav>
-      <div id="hamburger">
-         <span></span>
-      </div>
-   </header>
-   <div class="main-visual">
-      <h2>WEB DESIGN <span>IS</span> YOUR FUTURE</h2>
-   </div>
+   <meta charset="UTF-8">
+   <title>TODO List</title>
    <style>
-      @charset "utf-8";
-* {
-   box-sizing: border-box;
-}
-body {
-   margin: 0;
-   padding: 0;
-   font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", メイリオ, Meiryo, "ＭＳ Ｐゴシック", "Helvetica Neue", Helvetica, Arial, sans-serif;
-   background-color: #e6e6e6;
-   letter-spacing : 0.2em;
-}
-header {
-   padding: 30px 4% 10px;
-   position: fixed;
-   top: 0;
-   width: 100%;
-   background-color: transparent;
-   display: flex;
-   align-items: center;
-}
-h1 {
-   margin: 0; padding: 0;
-   font-size: 20px;
-}
-a {	
-   text-decoration: none;
-   color: #fff;
-}
-nav {
-   margin: 0 0 0 auto;
-}
-ul {
-   list-style: none;
-   margin: 0;
-   display: flex;
-}
-li {
-   margin: 0 0 0 15px;
-   font-size: 14px;
-}
-.main-visual {
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   height: 100vh;
-   background: url('main_visual.jpg') top center / cover no-repeat;
-}
-h2 {
-   margin: 0;
-   font-size: 30px;
-   font-weight: normal;
-   color: #fff;
-}
+      /* ページ全体 */
+      body {
+         font-family: Arial, sans-serif;
+         margin: 5%;
+         padding: 0;
+      }
 
-.sp-nav {
-   display: none;
-}
+      /* ヘッダー */
+      h1 {
+         text-align: center;
+         margin-top: 40px;
+         margin-bottom: 20px;
+      }
 
-@media screen and (max-width: 640px) {
-   .pc-nav {
-      display: none;
-   }
-   .sp-nav {
-      z-index: 1;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      display: block;
-      width: 100%;
-      background: rgba(0, 0, 0, .8);
-      opacity: 0;
-      transform: translateY(-100%);
-      transition: all .2s ease-in-out;
-   }
-   #hamburger {
-      position: relative;
-      display: block;
-      width: 30px;
-      height: 25px;
-      margin: 0 0 0 auto;
-   }
-   #hamburger span {
-      position: absolute;
-      top: 50%;
-      left: 0;
-      display: block;
-      width: 100%;
-      height: 2px;
-      background-color: #fff;
-      transform: translateY(-50%);
-   }
-   #hamburger::before {
-      content: '';
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background-color: #fff;
-   }
-   #hamburger::after {
-      content: '';
-      display: block;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 70%;
-      height: 2px;
-      background-color: #fff;
-   }
-   /*スマホメニュー*/
-   .sp-nav ul {
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-   }
-   .sp-nav li {
-      margin: 0;
-      padding: 0;
-   }
-   .sp-nav li span {
-      font-size: 15px;
-      color: #fff;
-   }
-   .sp-nav li a, .sp-nav li span {
-      display: block;
-      padding: 20px 0;
-   }
-   /*-閉じるアイコンー*/
-   .sp-nav .close {
-      position: relative;
-      padding-left: 20px;
-   }
-   .sp-nav .close::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 0;
-      display: block;
-      width: 16px;
-      height: 1px;
-      background: #fff;
-      transform: rotate( 45deg );
-   }
-   .sp-nav .close::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 0;
-      display: block;
-      width: 16px;
-      height: 1px;
-      background: #fff;
-      transform: rotate( -45deg );
-   }
-   .toggle {
-      transform: translateY( 0 );
-      opacity: 1;
-   }
-   .main-visual {
-      padding: 0 4%;
-   }
-   h2 {
-      line-height: 1.6;
-      text-align: center;
-   }
-}
+      /* 入力フォーム */
+      input[type="text"],
+      input[type="datetime-local"] {
+         padding: 10px;
+         margin-right: 10px;
+         border: none;
+         border-radius: 5px;
+         box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+         font-size: 16px;
+         outline: none;
+      }
+
+      /* 追加ボタン */
+      button#addButton {
+         background-color: #007bff;
+         color: #fff;
+         border: none;
+         border-radius: 5px;
+         padding: 10px 20px;
+         font-size: 16px;
+         cursor: pointer;
+         transition: background-color 0.3s ease;
+      }
+
+      button#addButton:hover {
+         background-color: #0062cc;
+      }
+
+      /* テーブル */
+      table#todoList {
+         width: 100%;
+         border-collapse: collapse;
+         margin-top: 20px;
+      }
+
+      table#todoList td {
+         padding: 10px;
+         border-bottom: 1px solid #ccc;
+      }
+
+      table#todoList td span {
+         display: block;
+      }
+
+      /* 締め切りが過ぎたTODO項目 */
+      table#todoList tr.overdue {
+         color: #c00;
+      }
+
+      /* 削除ボタン */
+      table#todoList button {
+         background-color: #dc3545;
+         color: #fff;
+         border: none;
+         border-radius: 5px;
+         padding: 5px 10px;
+         font-size: 14px;
+         cursor: pointer;
+         transition: background-color 0.3s ease;
+      }
+
+      table#todoList button:hover {
+         background-color: #c82333;
+      }
    </style>
+</head>
+
+<body>
+   <h1>TODO List</h1>
+   <input type="text" id="todoInput">
+   <input type="datetime-local" id="dueDateInput">
+   <button id="addButton">Add</button>
+   <table id="todoList">
+   </table>
+
+   <script>
+      const todoList = document.getElementById("todoList");
+      const todoInput = document.getElementById("todoInput");
+      const dueDateInput = document.getElementById("dueDateInput");
+      const addButton = document.getElementById("addButton");
+
+      // ページ読み込み時にlocalstorageからTODOリストを復元する
+      window.addEventListener("load", () => {
+         const todos = JSON.parse(localStorage.getItem("todos")) || [];
+         for (let i = 0; i < todos.length; i++) {
+            addTodoToList(todos[i]);
+         }
+      });
+
+      // TODO項目をリストに追加する関数
+      function addTodoToList(todo) {
+         const table = document.createElement("tr");
+         const textCell = document.createElement("td");
+         const dueDateCell = document.createElement("td");
+         const deleteCell = document.createElement("td");
+         const span = document.createElement("span");
+         const dueDate = document.createElement("span");
+         const deleteButton = document.createElement("button");
+
+         span.innerText = todo.text;
+         dueDate.innerText = new Date(todo.dueDate).toLocaleString();
+         deleteButton.innerText = "Delete";
+
+         textCell.appendChild(span);
+         dueDateCell.appendChild(dueDate);
+         deleteCell.appendChild(deleteButton);
+         table.appendChild(textCell);
+         table.appendChild(dueDateCell);
+         table.appendChild(deleteCell);
+         todoList.appendChild(table);
+
+         // 削除ボタンがクリックされたときにTODO項目を削除する
+         deleteButton.addEventListener("click", () => {
+            table.parentNode.removeChild(table);
+
+            // localstorageからTODO項目を削除する
+            const todos = JSON.parse(localStorage.getItem("todos")) || [];
+            const index = todos.findIndex((t) => t.text === todo.text && t.dueDate === todo.dueDate);
+            if (index >= 0) {
+               todos.splice(index, 1);
+               localStorage.setItem("todos", JSON.stringify(todos));
+            }
+         });
+
+         // 現在時刻と期限の比較
+         const now = new Date();
+         const due = new Date(todo.dueDate);
+         if (now > due) {
+            table.style.color = "blue";
+         }
+
+         // テーブルスタイルの設定
+         table.style.borderCollapse = "collapse";
+         table.style.width = "100%";
+         dueDateCell.style.textAlign = "right";
+      }
+
+
+      // 追加ボタンがクリックされたときにTODO項目を追加する
+      addButton.addEventListener("click", () => {
+         const text = todoInput.value.trim();
+         const dueDate = dueDateInput.value;
+         if (text === "") {
+            return;
+         }
+         const todo = { text: text, dueDate: dueDate };
+         addTodoToList(todo);
+         todoInput.value = "";
+         dueDateInput.value = "";
+
+         // localstorageにTODO項目を追加する
+         const todos = JSON.parse(localStorage.getItem("todos")) || [];
+         todos.push(todo);
+         localStorage.setItem("todos", JSON.stringify(todos));
+      });
+   </script>
 </body>
+
 </html>
