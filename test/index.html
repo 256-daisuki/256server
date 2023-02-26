@@ -3,7 +3,7 @@
 
 <head>
    <meta charset="UTF-8">
-   <title>TODO List</title>
+   <title>TODOリスト</title>
    <style>
       /* ページ全体 */
       body {
@@ -83,14 +83,100 @@
       table#todoList button:hover {
          background-color: #c82333;
       }
+
+      @media(min-wideth:800px) {
+         body {
+            font-family: Arial, sans-serif;
+            margin: 2%;
+            padding: 0;
+         }
+
+         /* ヘッダー */
+         h1 {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 24px;
+         }
+
+         /* 入力フォーム */
+         input[type="text"],
+         input[type="datetime-local"] {
+            padding: 10px;
+            margin-right: 5px;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+            outline: none;
+            width: 60%;
+            margin-bottom: 10px;
+         }
+
+         /* 追加ボタン */
+         button#addButton {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 35%;
+         }
+
+         button#addButton:hover {
+            background-color: #0062cc;
+         }
+
+         /* テーブル */
+         table#todoList {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 14px;
+         }
+
+         table#todoList td {
+            padding: 8px;
+            border-bottom: 1px solid #ccc;
+         }
+
+         table#todoList td span {
+            display: block;
+         }
+
+         /* 締め切りが過ぎたTODO項目 */
+         table#todoList tr.overdue {
+            color: #c00;
+         }
+
+         /* 削除ボタン */
+         table#todoList button {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 3px 8px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-left: 5px;
+         }
+
+         table#todoList button:hover {
+            background-color: #c82333;
+         }
+      }
    </style>
 </head>
 
 <body>
-   <h1>TODO List</h1>
-   <input type="text" id="todoInput">
-   <input type="datetime-local" id="dueDateInput">
-   <button id="addButton">Add</button>
+   <h1>TODOリスト</h1>
+   <input type="text" id="todoInput" placeholder="やること">
+   <input type="datetime-local" id="dueDateInput" placeholder="日にち">
+   <button id="addButton">追加</button>
    <table id="todoList">
    </table>
 
@@ -120,7 +206,7 @@
 
          span.innerText = todo.text;
          dueDate.innerText = new Date(todo.dueDate).toLocaleString();
-         deleteButton.innerText = "Delete";
+         deleteButton.innerText = "削除";
 
          textCell.appendChild(span);
          dueDateCell.appendChild(dueDate);
@@ -155,8 +241,6 @@
          table.style.width = "100%";
          dueDateCell.style.textAlign = "right";
       }
-
-
       // 追加ボタンがクリックされたときにTODO項目を追加する
       addButton.addEventListener("click", () => {
          const text = todoInput.value.trim();

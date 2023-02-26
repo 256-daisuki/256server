@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 	<meta charset="UTF-8">
 	<title>TODOリスト</title>
@@ -88,8 +87,8 @@
 
 <body>
 	<h1>TODOリスト</h1>
-	<input type="text" id="todoInput">
-	<input type="datetime-local" id="dueDateInput">
+	<input type="text" id="todoInput" placeholder="やること">
+	<input type="datetime-local" id="dueDateInput" placeholder="日にち">
 	<button id="addButton">追加</button>
 	<table id="todoList">
 	</table>
@@ -155,8 +154,6 @@
 			table.style.width = "100%";
 			dueDateCell.style.textAlign = "right";
 		}
-
-
 		// 追加ボタンがクリックされたときにTODO項目を追加する
 		addButton.addEventListener("click", () => {
 			const text = todoInput.value.trim();
@@ -176,5 +173,4 @@
 		});
 	</script>
 </body>
-
 </html>
