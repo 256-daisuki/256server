@@ -18,7 +18,7 @@ nav {
 }
 
 .top-h2 {
-   margin-top: 100px;
+   margin-top: 30px;
 }
 
 h2 {
@@ -40,7 +40,8 @@ header {
 }
 
 .counter {
-   padding: 25px;
+   padding-left: 25px;
+   padding-top: 80px;
 }
 
 /*フッター */
@@ -106,6 +107,10 @@ header {
 
    .top-h2 {
       margin-top: 20px;
+   }
+
+   .counter {
+      padding-top: 10px;
    }
 }
 
@@ -178,7 +183,7 @@ header {
    opacity: 0.7;
 }
 /* ========== sp ========== */
-@media (max-width: 480px) {
+@media (max-width: 500px) {
    .box-nav {
       width: 100%;
       height: 40px;
