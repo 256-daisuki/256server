@@ -7,19 +7,229 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="" />
     <title>256server</title>
-    <!--css読み込み-->
-    <link rel="stylesheet" href="style.css">
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BN5KGMB0GN"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
+    <!--css読み込み
+    <link rel="stylesheet" href="style.css">-->
+    <style>
+        body {
+            background-color: #fff;
+            margin: 0;
+        }
 
-        gtag('config', 'G-BN5KGMB0GN');
-    </script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5856031137941875"
-        crossorigin="anonymous"></script>
+        nav {
+            margin: 0;
+        }
+
+        .title {
+            margin-top: 100px;
+            text-align: center;
+            margin-top: 5vw;
+        }
+
+        .sub-title {
+            text-align: center;
+        }
+
+        .top-h2 {
+            margin-top: 30px;
+        }
+
+        h2 {
+            margin-left: 2%;
+        }
+
+        .sentence {
+            margin-left: 5%;
+            padding-right: 5%;
+        }
+
+        .li-a {
+            color: #000;
+        }
+
+        header {
+            margin: 0;
+            padding: 0;
+        }
+
+        .counter {
+            padding-left: 25px;
+            padding-top: 80px;
+        }
+
+        /*フッター */
+
+        .footer03 {
+            color: #808080;
+            background: #e5e5e5;
+            padding: 30px;
+        }
+
+        .footer03 a {
+            color: #808080;
+            text-decoration: none;
+        }
+
+        .footer03 a:hover {
+            text-decoration: underline;
+        }
+
+        .footer03 .menu {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .footer03 .menu li {
+            margin: 0;
+            padding: 0 20px;
+            border-left: 1px #808080 solid;
+        }
+
+        .footer03 .menu li:first-child {
+            padding-left: 0;
+            border: none;
+        }
+
+        .footer03 .copyright {
+            margin: 0;
+            padding: 20px 0 0 0;
+        }
+
+        @media only screen and (max-width: 599px) {
+            .footer03 .menu li {
+                width: 50%;
+                padding: 0 20px 0 0;
+                box-sizing: border-box;
+                border: none;
+            }
+        }
+
+        @media (min-width: 500px)
+
+        /*PC用*/
+            {
+            .title {
+                text-align: center;
+                margin-top: 5vw;
+                font-size: 256%;
+            }
+
+            .sub-title {
+                text-align: center;
+            }
+
+            .top-h2 {
+                margin-top: 20px;
+            }
+
+            .counter {
+                padding-top: 10px;
+            }
+        }
+        
+        /*FontAwesomeを使用しています。*/
+        .header-8 {
+            box-sizing: border-box;
+            width: 100%;
+            height: 120px;
+        }
+
+        .box {
+            box-sizing: border-box;
+        }
+
+        /* ========== header ========== */
+        .box-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 80px;
+        }
+
+        .logo-img {
+            width: 100px;
+        }
+
+        .sp-nav {
+            display: none;
+        }
+
+        /* ========== nav ========== */
+        .box-nav {
+            width: 100%;
+            height: 40px;
+        }
+
+        .inner-nav {
+            display: flex;
+            justify-content: center;
+            max-width: 1024px;
+            padding: 0;
+            margin: 0 auto;
+            line-height: 40px;
+            list-style: none;
+        }
+
+        .menu {
+            position: relative;
+            padding: 0 4em;
+            cursor: pointer;
+        }
+
+        .menu:not(:first-of-type)::before {
+            position: absolute;
+            top: 25%;
+            left: 0;
+            width: 1px;
+            height: 50%;
+            content: '';
+            background: #3a3a3a;
+        }
+
+        .menu:hover {
+            opacity: 0.7;
+        }
+
+        /* ========== sp ========== */
+        @media (max-width: 500px) {
+            .box-nav {
+                width: 100%;
+                height: 40px;
+            }
+
+            .inner-nav {
+                display: flex;
+                justify-content: center;
+                max-width: 1024px;
+                padding: 0;
+                margin: 0 auto;
+                line-height: 40px;
+                list-style: none;
+            }
+
+            .menu {
+                position: relative;
+                padding: 0 4em;
+                cursor: pointer;
+            }
+
+            .menu:not(:first-of-type)::before {
+                position: absolute;
+                top: 25%;
+                left: 0;
+                width: 1px;
+                height: 50%;
+                content: '';
+                background: #3a3a3a;
+            }
+
+            .menu:hover {
+                opacity: 0.7;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -36,7 +246,7 @@
             </ul>
         </div>
     </header>
-    <img src="https://count.getloli.com/get/@:256server" class="counter"/>
+    <!--<img src="https://count.getloli.com/get/@:256server" class="counter"/>-->
     <h2 class="top-h2">このサイトについて。</h2>
     <div class="sentence">
         <p>twitterが大好きな中学生のサイト、このサイトは一応2022年の8月8日（末広がりぃ）の夕方あたりに公開を初めたよ。サーバーは家のラズパイ君、ラズパイくんは小6のときに買った思い出のマイコン。家のmacでイメージを焼こうとしたけど知識が皆無だったから（今もほとんどないけど）できなくて自分用のPCを買うまではずっとホコリかぶってたりした。そのときに買ったPCだけどヤフオクさんで4.5万で落札したryzen5
@@ -51,14 +261,13 @@
             好きなものはキムワイプとlinuxと自作キーボード、自作キーボードはやっぱりお金がかかるもので2セット作ったんだけど、なんと掛ったお値段9万円。なんでメインPCの2倍のお金使ってんですかねぇ。まあ私ツイッター初めたきっかけもタイピングですしおすし。あ、そうそう
             タイピングで思い出した。私キーボードの配列をTomisuke配列にしていまして、まだまだqwertyの方には全然及ばないですけど、使っててたのしいですよ、 皆も使ってみてほしいですね、
             初めて聞いたよって人がほとんどな気がするのでTomisuke配列考案者のとみすけさんのブログ貼りますね。<a
-                href="https://tomisuke.hatenablog.com/entry/2022/07/19/185105">リンク</a></p>
+                href="https://tomisuke.hatenablog.com/entry/2022/07/19/185105" >リンク</a></p>
     </div>
     <h2>やってること</h2>
     <div class="sentence">
         <p>このサーバーとか電子工作とかタイピングを頑張ってます。来年受験生らしいけど気にせず続けたいですなぁ、英語勉強しないとなんだけど。なんか技術系でやってほしいことがあったらもしかしたらやるかも
             私のメアド貼っておくからなんかあれば -> admin@256server.com なんかadminっていいよねrootとかにしてもよかったかも、あ、わからん人もいるか（）</p>
     </div>
-    <h2>鯖の歴史？</h2>
     <div class="sentence">
         <p>一応この形に行きつくのにそこそこかかっているのでそれを書こうかなと思って</p>
         <p>1.fc2さんのサーバーを借りて作った奴　黒歴史だったりする　5月12日に公開</p>
