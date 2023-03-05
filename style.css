@@ -18,7 +18,7 @@ nav {
 }
 
 .top-h2 {
-   margin-top: 30px;
+   margin-top: 1000px;
 }
 
 h2 {
@@ -32,6 +32,7 @@ h2 {
 
 .li-a {
    color: #000;
+   list-style:none
 }
 
 header {
