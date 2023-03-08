@@ -1,0 +1,8 @@
+Options +Includes
+
+AddHandler server-parsed html
+
+AddType image/svg+xml .svg .svgz
+AddEncoding gzip .svgz
+
+ErrorDocument 404 /error/404.html
