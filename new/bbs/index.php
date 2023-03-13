@@ -12,8 +12,8 @@
         touch($datafile);
     }
     $data = file($datafile, FILE_IGNORE_NEW_LINES);
-    if (count($data) >= 1024) {
-        echo "このスレッドは1024書き込みを超えたので、封鎖されました。";
+    if (count($data) >= 9999) {
+        echo "このスレッドは9999書き込みを超えたので、封鎖されました。";
     } else {
         include "form.php";
     }

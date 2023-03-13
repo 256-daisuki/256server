@@ -1,24 +1,30 @@
-<hr>
-<h2>投稿一覧</h2>
-<?php
-$datafile = "bbs.txt";
-if (file_exists($datafile)) {
-    $data = file($datafile, FILE_IGNORE_NEW_LINES);
-    $count = count($data);
-    if ($count > 0) {
-        echo "<ol>";
-        foreach ($data as $row) {
-            $cols = explode("\t", $row);
-            $name = htmlspecialchars($cols[0], ENT_QUOTES, "UTF-8");
-            $time = htmlspecialchars($cols[1], ENT_QUOTES, "UTF-8");
-            $body = htmlspecialchars($cols[2], ENT_QUOTES, "UTF-8");
-            echo "<li>{$name} ({$time})<br>{$body}</li>";
-        }
-        echo "</ol>";
-    } else {
-        echo "まだ投稿がありません。";
-    }
-} else {
-    echo "まだ投稿がありません。";
-}
-?>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>BBS</title>
+</head>
+<body>
+   <h1>BBS</h1>
+   <ol reversed>
+   <?php
+      // bbs.txtファイルの内容を読み込む
+      $data = file_get_contents('bbs.txt');
+
+      // 改行で区切って、配列に格納する
+      $lines = explode("\n", $data);
+
+      // 最新の書き込みから順に表示する
+      for ($i = count($lines) - 1; $i >= 0; $i--) {
+         $line = $lines[$i];
+         // タブで区切って、名前と内容と書き込み時間を取得する
+         list($name, $content, $time) = explode("\t", $line);
+         // HTMLに変換して表示する
+         echo '<li><strong>' . htmlspecialchars($name) . '</strong> (' . htmlspecialchars($content) . ')<br>' . nl2br(htmlspecialchars($time)) . '</li>';
+      }
+   ?>
+   </ol>
+</body>
+</html>
