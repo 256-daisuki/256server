@@ -2,10 +2,10 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>BBS</title>
+    <title>256server|開発中 256ch</title>
 </head>
 <body>
-    <h1>BBS</h1>
+    <h1>256ch</h1>
     <?php
     $datafile = "bbs.txt";
     if (!file_exists($datafile)) {
