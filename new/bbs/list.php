@@ -7,7 +7,6 @@
    <title>BBS</title>
 </head>
 <body>
-   <h1>BBS</h1>
    <ol reversed>
    <?php
       // bbs.txtファイルの内容を読み込む
@@ -22,7 +21,7 @@
          // タブで区切って、名前と内容と書き込み時間を取得する
          list($name, $content, $time) = explode("\t", $line);
          // HTMLに変換して表示する
-         echo '<li><strong>' . htmlspecialchars($name) . '</strong> (' . htmlspecialchars($content) . ')<br>' . nl2br(htmlspecialchars($time)) . '</li>';
+         echo '<li><strong>' . htmlspecialchars($name) . '</strong> (' . htmlspecialchars($content) . ')<br><p>' .  htmlspecialchars($time) . '</p></li>';
       }
    ?>
    </ol>
