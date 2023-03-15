@@ -52,9 +52,6 @@ server {
 
 		root /var/www/html;
 		index index.html index.htm;
-		
-		deny 104.28.211.105;
-		deny 104.28.243.105;
 	}
 
 	error_page 404 /404.html;
