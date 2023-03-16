@@ -51,7 +51,9 @@ server {
 		try_files $uri $uri/ =404;
 
 		root /var/www/html;
-		index index.html index.htm;
+		index index.html index.htm index.php;
+
+		allow all;
 	}
 
 	error_page 404 /404.html;
@@ -61,14 +63,14 @@ server {
 
 	# pass PHP scripts to FastCGI server
 	#
-	#location ~ \.php$ {
-	#	include snippets/fastcgi-php.conf;
-	#
-	#	# With php-fpm (or other unix sockets):
-	#	fastcgi_pass unix:/run/php/php7.4-fpm.sock;
-	#	# With php-cgi (or other tcp sockets):
+	location ~ \.php$ {
+		include snippets/fastcgi-php.conf;
+	
+		# With php-fpm (or other unix sockets):
+		fastcgi_pass unix:/run/php/php7.4-fpm.sock;
+		# With php-cgi (or other tcp sockets):
 	#	fastcgi_pass 127.0.0.1:9000;
-	#}
+	}
 
 	# deny access to .htaccess files, if Apache's document root
 	# concurs with nginx's one
