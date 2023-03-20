@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Drag and Drop Example</title>
+    <style>
+    .draggable {
+        width: 40px;
+        height: 40px;
+        background-color: lightblue;
+        margin: 10px;
+        text-align: center;
+        font-size: 20px;
+        color: white;
+        cursor: move;
+    }
+    .droptarget {
+        width: 60px;
+        height: 60px;
+        border: 2px solid black;
+        display: inline-block;
+        margin: 10px;
+        text-align: center;
+        font-size: 20px;
+    }
+</style>
+</head>
+<body>
+    <div class="droptarget" id="drop1"></div>
+    <div class="droptarget" id="drop2"></div>
+    <div class="droptarget" id="drop3"></div>
+    <div class="droptarget" id="drop4"></div>
+    <div class="droptarget" id="drop5"></div>
+
+    <div class="draggable" draggable="true" id="drag1">1</div>
+    <div class="draggable" draggable="true" id="drag2">2</div>
+    <div class="draggable" draggable="true" id="drag3">3</div>
+    <div class="draggable" draggable="true" id="drag4">4</div>
+    <div class="draggable" draggable="true" id="drag5">5</div>
+    <script src="main.js"></script>
+</body>
+</html>
