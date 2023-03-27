@@ -9,6 +9,13 @@
         "button-name": "off"
       }
     ],
-    "meta-viewport": "off"
+    "meta-viewport": "off",
+    "axe/text-alternatives": [
+      "default",
+      {
+        "frame-title": "off"
+      }
+    ],
+    "no-inline-styles": "off"
   }
 }
