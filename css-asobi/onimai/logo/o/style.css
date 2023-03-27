@@ -1,0 +1,126 @@
+.a {
+    background-color: #896055;
+    position:  absolute;
+    width: 19vw;
+    height: 7.5vw;
+    left: 10vw;
+    top: 10vw;
+    border-radius: 1vw;
+}
+
+.b {
+    background-color: #896055;
+    position:  absolute;
+    width: 7.5vw;
+    height: 27vw;
+    left: 18vw;
+    top: 6vw;
+    border-radius: 1vw;
+}
+
+.c {
+    background-color: #896055;
+    position:  absolute;
+    width: 9vw;
+    height: 9vw;
+    left: 32vw;
+    top: 9.25vw;
+    border-radius:50%
+}
+
+.d {
+    background-color: #896055;
+    position:  absolute;
+    width: 7.5vw;
+    height: 7.5vw;
+    left: 14vw;
+    top: 22vw;
+}
+
+.e {
+    background-color: #896055;
+    position:  absolute;
+    width: 7.5vw;
+    height: 7.5vw;
+    left: 6.5vw;
+    top: 22vw;
+    border-radius: 100% 0 0 0;
+}
+
+.f {
+    background-color: #896055;
+    position:  absolute;
+    width: 7.5vw;
+    height: 3vw;
+    left: 6.5vw;
+    top: 29vw;
+}
+
+.g {
+    background-color: #896055;
+    position:  absolute;
+    width: 7.5vw;
+    height: 7.5vw;
+    left: 6.5vw;
+    top: 32vw;
+    border-radius: 0 0 0 100%;
+}
+
+.h {
+    background-color: #896055;
+    position:  absolute;
+    width: 4.5vw;
+    height: 7.5vw;
+    left: 14vw;
+    top: 32vw;
+}
+
+.i {
+    background-color: #896055;
+    position:  absolute;
+    width: 7.5vw;
+    height: 7.5vw;
+    left: 18vw;
+    top: 32vw;
+    border-radius: 0 0 100% 0;
+}
+
+.j {
+    background-color: #896055;
+    position:  absolute;
+    width: 5vw;
+    height: 7.5vw;
+    left: 28.5vw;
+    top: 22vw;
+    border-radius: 1vw;
+}
+
+.k {
+    background-color: #896055;
+    position:  absolute;
+    width: 7.5vw;
+    height: 7.5vw;
+    left: 32vw;
+    top: 22vw;
+    border-radius: 0 100% 0 0;
+}
+
+.l {
+    background-color: #896055;
+    position:  absolute;
+    width: 7.5vw;
+    height: 11.5vw;
+    left: 32vw;
+    top: 28vw;
+    border-radius: 1vw;
+}
+
+.edge-1 {
+    background-color: #896055;
+    position:  absolute;
+    width: 1vw;
+    height: 1vw;
+    left: 32vw;
+    top: 30vw;
+    border-radius: 1vw;
+}
