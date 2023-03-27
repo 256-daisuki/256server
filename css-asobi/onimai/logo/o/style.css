@@ -3,7 +3,7 @@
     position:  absolute;
     width: 19vw;
     height: 7.5vw;
-    left: 10vw;
+    left: 3.5vw;
     top: 10vw;
     border-radius: 1vw;
 }
@@ -13,7 +13,7 @@
     position:  absolute;
     width: 7.5vw;
     height: 27vw;
-    left: 18vw;
+    left: 11.5vw;
     top: 6vw;
     border-radius: 1vw;
 }
@@ -23,7 +23,7 @@
     position:  absolute;
     width: 9vw;
     height: 9vw;
-    left: 32vw;
+    left: 25.5vw;
     top: 9.25vw;
     border-radius:50%
 }
@@ -33,7 +33,7 @@
     position:  absolute;
     width: 7.5vw;
     height: 7.5vw;
-    left: 14vw;
+    left: 7.5vw;
     top: 22vw;
 }
 
@@ -42,7 +42,7 @@
     position:  absolute;
     width: 7.5vw;
     height: 7.5vw;
-    left: 6.5vw;
+    left: 0vw;
     top: 22vw;
     border-radius: 100% 0 0 0;
 }
@@ -52,7 +52,7 @@
     position:  absolute;
     width: 7.5vw;
     height: 3vw;
-    left: 6.5vw;
+    left: 0vw;
     top: 29vw;
 }
 
@@ -61,7 +61,7 @@
     position:  absolute;
     width: 7.5vw;
     height: 7.5vw;
-    left: 6.5vw;
+    left: 9.5vw;
     top: 32vw;
     border-radius: 0 0 0 100%;
 }
@@ -71,7 +71,7 @@
     position:  absolute;
     width: 4.5vw;
     height: 7.5vw;
-    left: 14vw;
+    left: 17vw;
     top: 32vw;
 }
 
@@ -80,7 +80,7 @@
     position:  absolute;
     width: 7.5vw;
     height: 7.5vw;
-    left: 18vw;
+    left: 21vw;
     top: 32vw;
     border-radius: 0 0 100% 0;
 }
@@ -90,7 +90,7 @@
     position:  absolute;
     width: 5vw;
     height: 7.5vw;
-    left: 28.5vw;
+    left: 31.5vw;
     top: 22vw;
     border-radius: 1vw;
 }
@@ -100,7 +100,7 @@
     position:  absolute;
     width: 7.5vw;
     height: 7.5vw;
-    left: 32vw;
+    left: 35vw;
     top: 22vw;
     border-radius: 0 100% 0 0;
 }
@@ -110,7 +110,7 @@
     position:  absolute;
     width: 7.5vw;
     height: 11.5vw;
-    left: 32vw;
+    left: 35vw;
     top: 28vw;
     border-radius: 1vw;
 }
@@ -120,7 +120,74 @@
     position:  absolute;
     width: 1vw;
     height: 1vw;
-    left: 32vw;
-    top: 30vw;
-    border-radius: 1vw;
+    left: 17vw;
+    top: 29.5vw;
+}
+
+.edge-2 {
+    background-color: #fff;
+    position:  absolute;
+    width: 1vw;
+    height: 1vw;
+    left: 17vw;
+    top: 29.5vw;
+    border-radius: 100% 0 0 0;
+}
+
+.edge-3 {
+    background-color: #896055;
+    position:  absolute;
+    width: 1vw;
+    height: 1vw;
+    left: 17vw;
+    top: 31vw;
+}
+
+.edge-4 {
+    background-color: #fff;
+    position:  absolute;
+    width: 1vw;
+    height: 1vw;
+    left: 17vw;
+    top: 31vw;
+    border-radius: 0 0 0 100%;
+}
+
+.edge-5 {
+    background-color: #896055;
+    position:  absolute;
+    width: 1vw;
+    height: 1vw;
+    left: 20vw;
+    top: 29.5vw;
+}
+
+.edge-6 {
+    background-color: #fff;
+    position:  absolute;
+    width: 1vw;
+    height: 1vw;
+    left: 20vw;
+    top: 29.5vw;
+    border-radius: 0 100% 0 0;
+}
+
+.edge-7 {
+    background-color: #896055;
+    position:  absolute;
+    width: 1vw;
+    height: 1vw;
+    left: 34vw;
+    top: 29.5vw;
+}
+
+
+.edge-8 {
+    background-color: #fff;
+    position:  absolute;
+    width: 1vw;
+    height: 1vw;
+    left: 34vw;
+    top: 29.5vw;
+    border-radius: 0 100% 0 0;
 }
