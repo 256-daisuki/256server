@@ -1,193 +1,197 @@
+body {
+    background-color: #fff;
+    margin: auto;
+}
+
 .a {
     background-color: #896055;
     position:  absolute;
-    width: 19vw;
-    height: 7.5vw;
-    left: 3.5vw;
-    top: 10vw;
-    border-radius: 1vw;
+    width: 19vh;
+    height: 7.5vh;
+    left: 3.5vh;
+    top: 4vh;
+    border-radius: 1vh;
 }
 
 .b {
     background-color: #896055;
     position:  absolute;
-    width: 7.5vw;
-    height: 27vw;
-    left: 11.5vw;
-    top: 6vw;
-    border-radius: 1vw;
+    width: 7.5vh;
+    height: 27vh;
+    left: 11.5vh;
+    top: 0vh;
+    border-radius: 1vh;
 }
 
 .c {
     background-color: #896055;
     position:  absolute;
-    width: 9vw;
-    height: 9vw;
-    left: 25.5vw;
-    top: 9.25vw;
+    width: 9vh;
+    height: 9vh;
+    left: 25.5vh;
+    top: 3.25vh;
     border-radius:50%
 }
 
 .d {
     background-color: #896055;
     position:  absolute;
-    width: 7.5vw;
-    height: 7.5vw;
-    left: 7.5vw;
-    top: 22vw;
+    width: 7.5vh;
+    height: 7.5vh;
+    left: 7.5vh;
+    top: 16vh;
 }
 
 .e {
     background-color: #896055;
     position:  absolute;
-    width: 7.5vw;
-    height: 7.5vw;
-    left: 0vw;
-    top: 22vw;
+    width: 7.5vh;
+    height: 7.5vh;
+    left: 0vh;
+    top: 16vh;
     border-radius: 100% 0 0 0;
 }
 
 .f {
     background-color: #896055;
     position:  absolute;
-    width: 7.5vw;
-    height: 3vw;
-    left: 0vw;
-    top: 29vw;
+    width: 7.5vh;
+    height: 3vh;
+    left: 0vh;
+    top: 23vh;
 }
 
 .g {
     background-color: #896055;
     position:  absolute;
-    width: 7.5vw;
-    height: 7.5vw;
-    left: 9.5vw;
-    top: 32vw;
+    width: 7.5vh;
+    height: 7.5vh;
+    left: 0vh;
+    top: 26vh;
     border-radius: 0 0 0 100%;
 }
 
 .h {
     background-color: #896055;
     position:  absolute;
-    width: 4.5vw;
-    height: 7.5vw;
-    left: 17vw;
-    top: 32vw;
+    width: 4.5vh;
+    height: 7.5vh;
+    left: 7.5vh;
+    top: 26vh;
 }
 
 .i {
     background-color: #896055;
     position:  absolute;
-    width: 7.5vw;
-    height: 7.5vw;
-    left: 21vw;
-    top: 32vw;
+    width: 7.5vh;
+    height: 7.5vh;
+    left: 11.5vh;
+    top: 26vh;
     border-radius: 0 0 100% 0;
 }
 
 .j {
     background-color: #896055;
     position:  absolute;
-    width: 5vw;
-    height: 7.5vw;
-    left: 31.5vw;
-    top: 22vw;
-    border-radius: 1vw;
+    width: 5vh;
+    height: 7.5vh;
+    left: 21.5vh;
+    top: 16vh;
+    border-radius: 1vh;
 }
 
 .k {
     background-color: #896055;
     position:  absolute;
-    width: 7.5vw;
-    height: 7.5vw;
-    left: 35vw;
-    top: 22vw;
+    width: 7.5vh;
+    height: 7.5vh;
+    left: 25.5vh;
+    top: 16vh;
     border-radius: 0 100% 0 0;
 }
 
 .l {
     background-color: #896055;
     position:  absolute;
-    width: 7.5vw;
-    height: 11.5vw;
-    left: 35vw;
-    top: 28vw;
-    border-radius: 1vw;
+    width: 7.5vh;
+    height: 11.5vh;
+    left: 25.5vh;
+    top: 22vh;
+    border-radius: 1vh;
 }
 
 .edge-1 {
     background-color: #896055;
     position:  absolute;
-    width: 1vw;
-    height: 1vw;
-    left: 17vw;
-    top: 29.5vw;
+    width: 1vh;
+    height: 1vh;
+    left: 7.5vh;
+    top: 23.5vh;
 }
 
 .edge-2 {
     background-color: #fff;
     position:  absolute;
-    width: 1vw;
-    height: 1vw;
-    left: 17vw;
-    top: 29.5vw;
+    width: 1vh;
+    height: 1vh;
+    left: 7.5vh;
+    top: 23.5vh;
     border-radius: 100% 0 0 0;
 }
 
 .edge-3 {
     background-color: #896055;
     position:  absolute;
-    width: 1vw;
-    height: 1vw;
-    left: 17vw;
-    top: 31vw;
+    width: 1vh;
+    height: 1vh;
+    left: 7.5vh;
+    top: 25vh;
 }
 
 .edge-4 {
     background-color: #fff;
     position:  absolute;
-    width: 1vw;
-    height: 1vw;
-    left: 17vw;
-    top: 31vw;
+    width: 1vh;
+    height: 1vh;
+    left: 7.5vh;
+    top: 25vh;
     border-radius: 0 0 0 100%;
 }
 
 .edge-5 {
     background-color: #896055;
     position:  absolute;
-    width: 1vw;
-    height: 1vw;
-    left: 20vw;
-    top: 29.5vw;
+    width: 1vh;
+    height: 1vh;
+    left: 10.5vh;
+    top: 23.5vh;
 }
 
 .edge-6 {
     background-color: #fff;
     position:  absolute;
-    width: 1vw;
-    height: 1vw;
-    left: 20vw;
-    top: 29.5vw;
+    width: 1vh;
+    height: 1vh;
+    left: 10.5vh;
+    top: 23.5vh;
     border-radius: 0 100% 0 0;
 }
 
 .edge-7 {
     background-color: #896055;
     position:  absolute;
-    width: 1vw;
-    height: 1vw;
-    left: 34vw;
-    top: 29.5vw;
+    width: 1vh;
+    height: 1vh;
+    left: 24.5vh;
+    top: 23.5vh;
 }
-
 
 .edge-8 {
     background-color: #fff;
     position:  absolute;
-    width: 1vw;
-    height: 1vw;
-    left: 34vw;
-    top: 29.5vw;
+    width: 1vh;
+    height: 1vh;
+    left: 24.5vh;
+    top: 23.5vh;
     border-radius: 0 100% 0 0;
 }
