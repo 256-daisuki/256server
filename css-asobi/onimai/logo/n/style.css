@@ -6,69 +6,70 @@ body {
 .a {
     background-color: #896055;
     position:  absolute;
-    width: 9vh;
-    height: 7.5vh;
-    top: 4vh;
+    width: 6vh;
+    height: 30vh;
+    left: 0vh;
+    top: 0vh;
+    border-radius: 1vh;
+}
+
+.a {
+    background-color: #896055;
+    position:  absolute;
+    width: 6vh;
+    height: 30vh;
+    left: 0vh;
+    top: 0vh;
     border-radius: 1vh;
 }
 
 .b {
     background-color: #896055;
     position:  absolute;
-    width: 7.5vh;
-    height: 19vh;
-    left: 5vh;
-    top: 0vh;
+    width: 6vh;
+    height: 6vh;
+    left: 8.5vh;
+    top: 10vh;
     border-radius: 1vh;
 }
 
 .c {
     background-color: #896055;
     position:  absolute;
-    width: 15vh;
-    height: 7.5vh;
-    left: 15.5vh;
-    top: 4vh;
-    border-radius: 1vh;
+    width: 6vh;
+    height: 6vh;
+    left: 13vh;
+    top: 10vh;
+    border-radius: 0 100% 0 0;
 }
 
 .d {
     background-color: #896055;
     position:  absolute;
-    width: 7.5vh;
-    height: 7vh;
-    left: 5vh;
-    top: 14vh;
-    border-radius: 50%;
+    width: 6vh;
+    height: 10vh;
+    left: 13vh;
+    top: 15vh;
+    border-radius: 1vh;
 }
 
 .e {
     background-color: #896055;
     position:  absolute;
-    width: 20vh;
-    height: 7vh;
-    left: 7.5vh;
-    top: 14vh;
-    border-radius: 1vh;
+    width: 6vh;
+    height: 6vh;
+    left: 13vh;
+    top: 24vh;
+    border-radius: 0 0 0 100%;
 }
 
 .f {
     background-color: #896055;
     position:  absolute;
-    width: 7.5vh;
-    height: 7.5vh;
-    left: 23vh;
-    top: 14vh;
-    border-radius: 50%;
-}
-
-.g {
-    background-color: #896055;
-    position:  absolute;
-    width: 7.5vh;
-    height: 13vh;
-    left: 23vh;
-    top: 17vh;
+    width: 10vh;
+    height: 6vh;
+    left: 17vh;
+    top: 24vh;
     border-radius: 1vh;
 }
 
@@ -78,7 +79,7 @@ body {
     width: 1vh;
     height: 1vh;
     left: 12vh;
-    top: 13vh;
+    top: 16vh;
 }
 
 .edge-2 {
@@ -86,9 +87,9 @@ body {
     position:  absolute;
     width: 1vh;
     height: 1vh;
-    left: 12.5vh;
-    top: 13vh;
-    border-radius: 0  0 0 100%;
+    left: 12vh;
+    top: 16vh;
+    border-radius: 0 100% 0 0;
 }
 
 .edge-3 {
@@ -96,8 +97,8 @@ body {
     position:  absolute;
     width: 1vh;
     height: 1vh;
-    left: 22vh;
-    top: 21vh;
+    left: 19vh;
+    top: 23vh;
 }
 
 .edge-4 {
@@ -105,7 +106,7 @@ body {
     position:  absolute;
     width: 1vh;
     height: 1vh;
-    left: 22vh;
-    top: 21vh;
-    border-radius: 0 100% 0 0;
+    left: 19vh;
+    top: 23vh;
+    border-radius: 0 0 0 100%;
 }

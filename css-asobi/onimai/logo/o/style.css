@@ -7,8 +7,8 @@ body {
     background-color: #896055;
     position:  absolute;
     width: 19vh;
-    height: 7.5vh;
-    left: 3.5vh;
+    height: 7vh;
+    left: 2.5vh;
     top: 4vh;
     border-radius: 1vh;
 }
@@ -17,8 +17,8 @@ body {
     background-color: #896055;
     position:  absolute;
     width: 7.5vh;
-    height: 27vh;
-    left: 11.5vh;
+    height: 25vh;
+    left: 10.5vh;
     top: 0vh;
     border-radius: 1vh;
 }
@@ -26,10 +26,10 @@ body {
 .c {
     background-color: #896055;
     position:  absolute;
-    width: 9vh;
-    height: 9vh;
-    left: 25.5vh;
-    top: 3.25vh;
+    width: 7vh;
+    height: 7vh;
+    left: 23.5vh;
+    top: 4vh;
     border-radius:50%
 }
 
@@ -37,56 +37,56 @@ body {
     background-color: #896055;
     position:  absolute;
     width: 7.5vh;
-    height: 7.5vh;
-    left: 7.5vh;
-    top: 16vh;
+    height: 6vh;
+    left: 6vh;
+    top: 14vh;
 }
 
 .e {
     background-color: #896055;
     position:  absolute;
-    width: 7.5vh;
+    width: 6vh;
     height: 7.5vh;
     left: 0vh;
-    top: 16vh;
+    top: 14vh;
     border-radius: 100% 0 0 0;
 }
 
 .f {
     background-color: #896055;
     position:  absolute;
-    width: 7.5vh;
+    width: 6vh;
     height: 3vh;
     left: 0vh;
-    top: 23vh;
+    top: 21vh;
 }
 
 .g {
     background-color: #896055;
     position:  absolute;
-    width: 7.5vh;
-    height: 7.5vh;
+    width: 6vh;
+    height: 6vh;
     left: 0vh;
-    top: 26vh;
+    top: 24vh;
     border-radius: 0 0 0 100%;
 }
 
 .h {
     background-color: #896055;
     position:  absolute;
-    width: 4.5vh;
-    height: 7.5vh;
-    left: 7.5vh;
-    top: 26vh;
+    width: 6vh;
+    height: 6vh;
+    left: 6vh;
+    top: 24vh;
 }
 
 .i {
     background-color: #896055;
     position:  absolute;
-    width: 7.5vh;
-    height: 7.5vh;
+    width: 6.5vh;
+    height: 6vh;
     left: 11.5vh;
-    top: 26vh;
+    top: 24vh;
     border-radius: 0 0 100% 0;
 }
 
@@ -94,29 +94,29 @@ body {
     background-color: #896055;
     position:  absolute;
     width: 5vh;
-    height: 7.5vh;
+    height: 6vh;
     left: 21.5vh;
-    top: 16vh;
+    top: 14vh;
     border-radius: 1vh;
 }
 
 .k {
     background-color: #896055;
     position:  absolute;
-    width: 7.5vh;
-    height: 7.5vh;
+    width: 6vh;
+    height: 6vh;
     left: 25.5vh;
-    top: 16vh;
+    top: 14vh;
     border-radius: 0 100% 0 0;
 }
 
 .l {
     background-color: #896055;
     position:  absolute;
-    width: 7.5vh;
-    height: 11.5vh;
+    width: 6vh;
+    height: 11vh;
     left: 25.5vh;
-    top: 22vh;
+    top: 19vh;
     border-radius: 1vh;
 }
 
@@ -125,8 +125,8 @@ body {
     position:  absolute;
     width: 1vh;
     height: 1vh;
-    left: 7.5vh;
-    top: 23.5vh;
+    left: 6vh;
+    top: 20vh;
 }
 
 .edge-2 {
@@ -134,8 +134,8 @@ body {
     position:  absolute;
     width: 1vh;
     height: 1vh;
-    left: 7.5vh;
-    top: 23.5vh;
+    left: 6vh;
+    top: 20vh;
     border-radius: 100% 0 0 0;
 }
 
@@ -144,8 +144,8 @@ body {
     position:  absolute;
     width: 1vh;
     height: 1vh;
-    left: 7.5vh;
-    top: 25vh;
+    left: 6vh;
+    top: 23vh;
 }
 
 .edge-4 {
@@ -153,8 +153,8 @@ body {
     position:  absolute;
     width: 1vh;
     height: 1vh;
-    left: 7.5vh;
-    top: 25vh;
+    left: 6vh;
+    top: 23vh;
     border-radius: 0 0 0 100%;
 }
 
@@ -163,8 +163,8 @@ body {
     position:  absolute;
     width: 1vh;
     height: 1vh;
-    left: 10.5vh;
-    top: 23.5vh;
+    left: 9.5vh;
+    top: 20vh;
 }
 
 .edge-6 {
@@ -172,8 +172,8 @@ body {
     position:  absolute;
     width: 1vh;
     height: 1vh;
-    left: 10.5vh;
-    top: 23.5vh;
+    left: 9.5vh;
+    top: 20vh;
     border-radius: 0 100% 0 0;
 }
 
@@ -183,7 +183,7 @@ body {
     width: 1vh;
     height: 1vh;
     left: 24.5vh;
-    top: 23.5vh;
+    top: 20vh;
 }
 
 .edge-8 {
@@ -192,6 +192,6 @@ body {
     width: 1vh;
     height: 1vh;
     left: 24.5vh;
-    top: 23.5vh;
+    top: 20vh;
     border-radius: 0 100% 0 0;
 }
