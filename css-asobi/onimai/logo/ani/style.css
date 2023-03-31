@@ -88,10 +88,10 @@ body {
 .i {
     background-color: #FFFABA;
     position:  absolute;
-    width: 24vh;
-    height: 24vh;
-    left: 15.3vh;
-    top: 21vh;
+    width: 20vh;
+    height: 20vh;
+    left: 17.5vh;
+    top: 23vh;
     border-radius: 50%;
 }
 
