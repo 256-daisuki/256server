@@ -1,0 +1,112 @@
+body {
+    background-color: #fff;
+    margin: auto;
+}
+
+.a {
+    background-color: #896055;
+    position:  absolute;
+    width: 6vh;
+    height: 30vh;
+    left: 0vh;
+    top: 0vh;
+    border-radius: 1vh;
+}
+
+.a {
+    background-color: #896055;
+    position:  absolute;
+    width: 6vh;
+    height: 30vh;
+    left: 0vh;
+    top: 0vh;
+    border-radius: 1vh;
+}
+
+.b {
+    background-color: #896055;
+    position:  absolute;
+    width: 6vh;
+    height: 6vh;
+    left: 8.5vh;
+    top: 10vh;
+    border-radius: 1vh;
+}
+
+.c {
+    background-color: #896055;
+    position:  absolute;
+    width: 6vh;
+    height: 6vh;
+    left: 13vh;
+    top: 10vh;
+    border-radius: 0 100% 0 0;
+}
+
+.d {
+    background-color: #896055;
+    position:  absolute;
+    width: 6vh;
+    height: 10vh;
+    left: 13vh;
+    top: 15vh;
+    border-radius: 1vh;
+}
+
+.e {
+    background-color: #896055;
+    position:  absolute;
+    width: 6vh;
+    height: 6vh;
+    left: 13vh;
+    top: 24vh;
+    border-radius: 0 0 0 100%;
+}
+
+.f {
+    background-color: #896055;
+    position:  absolute;
+    width: 10vh;
+    height: 6vh;
+    left: 17vh;
+    top: 24vh;
+    border-radius: 1vh;
+}
+
+.edge-1 {
+    background-color: #896055;
+    position:  absolute;
+    width: 1vh;
+    height: 1vh;
+    left: 12vh;
+    top: 16vh;
+}
+
+.edge-2 {
+    background-color: #fff;
+    position:  absolute;
+    width: 1vh;
+    height: 1vh;
+    left: 12vh;
+    top: 16vh;
+    border-radius: 0 100% 0 0;
+}
+
+.edge-3 {
+    background-color: #896055;
+    position:  absolute;
+    width: 1vh;
+    height: 1vh;
+    left: 19vh;
+    top: 23vh;
+}
+
+.edge-4 {
+    background-color: #fff;
+    position:  absolute;
+    width: 1vh;
+    height: 1vh;
+    left: 19vh;
+    top: 23vh;
+    border-radius: 0 0 0 100%;
+}
