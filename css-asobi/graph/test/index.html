@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvas" width="300" height="300"></canvas>
+    <script>
+        
+
+"use strict";
+window.addEventListener( "DOMContentLoaded" , ()=> {
+
+    const line = (context,sx,sy,ex,ey,width,color) => {
+        context.save();
+        context.beginPath();
+        context.lineWidth = width;
+        context.strokeStyle = color;
+        context.moveTo( sx,sy );
+        context.lineTo( ex,ey );
+        context.stroke();
+        context.restore();
+    };
+    const circle = (context,cx,cy,radius,lineColor,fillColor) => {
+        context.beginPath();
+        context.save();
+        context.strokeStyle = lineColor;
+        context.fillStyle = fillColor;
+        context.arc( cx,cy, radius, 0, 2 * Math.PI ,false);
+        context.fill();
+        context.stroke();
+        context.restore();
+    };
+    const rect = (context,sx,sy,ex,ey,color) => {
+
+        context.save();
+        context.fillStyle = color;
+        context.fillRect(
+            Math.min( sx , ex ) , Math.min( sy , ey ),
+            Math.abs( sx - ex ) , Math.abs( sy - ey ));
+        context.restore();
+    };
+
+    const initialCanvas = id => {
+
+        const originX = 10; // 原点位置（Canvas左下
+        const originY = 10; // からの距離）
+
+        const canvas =document.getElementById(id);
+        const {width,height} = canvas;
+
+        const context = canvas.getContext("2d");
+
+        context.translate( originX, height - originY );
+        context.scale(1, -1);
+             // x,y軸を描画
+        line( context , originX * -1 , 0 , width - originX  , 0 , 1 , "black" );
+        line( context , 0 , originY * -1 , 0 , height - originY  ,  1 , "black" );
+
+        return context;
+    };
+
+    const drawGraph = (  context , graphData ) =>{
+        const graphStep = 40;
+        const rectWidth = 20 / 2;
+
+        // 棒グラフを描画
+        graphData.forEach( (posY,index) => {
+            const posX = ( index + 1 ) * graphStep;
+
+            rect( context , posX - rectWidth , posY , posX + rectWidth , 0 , "pink" );
+        })
+
+        // 折れ線グラフを描画
+        let start = [  graphStep  , graphData[ 0 ] ];
+
+        for( let i = 1 ; i < graphData.length ; i ++ ){
+            const end = [ ( i + 1 ) * graphStep , graphData[ i ] ];
+            line( context , ...start , ...end , 3 , "blue" );
+            circle( context,...start,5,"blue","white");
+            if( i === graphData.length -1 )
+                circle( context,...end,5,"blue","white");
+            start = end;
+        }
+
+    };
+
+    const context = initialCanvas( "canvas" );
+
+    drawGraph( context , [ 120 , 170 , 130 , 125 , 190 , 155 ] );
+
+});
+
+
+    </script>
+</body>
+</html>
