@@ -1,6 +1,6 @@
 .main {
     position:  relative;        /* 要素の配置方法をと子要素の起点を指定 */
-    border: solid 2px red;      /* 枠線指定 */
+    /*border: solid 2px red;      /* 枠線指定 */
     height:  520px;             /* 高さ指定 */
     width: 500px;               /* 幅指定 */
 }
