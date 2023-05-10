@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>素因数分解ゲーム</title>
+</head>
+<body>
+  <h1>素因数分解ゲーム</h1>
+  <p>下の数を素因数分解してください。</p>
+  <p id="question"></p>
+  <input type="button" value="2" onclick="checkAnswer(2)">
+  <input type="button" value="3" onclick="checkAnswer(3)">
+  <input type="button" value="5" onclick="checkAnswer(5)">
+  <input type="button" value="7" onclick="checkAnswer(7)">
+  <p id="result"></p>
+  <script>
+    let num = Math.floor(Math.random() * 2401) + 1;
+    document.getElementById("question").textContent = num;
+    
+    function checkAnswer(divisor) {
+      let primes = [];
+      let quotient = num;
+      while (quotient > 1 && quotient % divisor === 0) {
+        primes.push(divisor);
+        quotient /= divisor;
+      }
+      if (primes.length > 0) {
+        document.getElementById("result").textContent = primes.join(" × ");
+      } else {
+        document.getElementById("result").textContent = "不正解！";
+        // 減点処理など
+      }
+    }
+  </script>
+</body>
+</html>
