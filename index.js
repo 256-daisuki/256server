@@ -1,6 +1,34 @@
-const ham = document.querySelector('#js-hamburger'); //js-hamburgerの要素を取得し、変数hamに格納
-const nav = document.querySelector('#js-nav'); //js-navの要素を取得し、変数navに格納
-  ham.addEventListener('click', function () { //ハンバーガーメニューをクリックしたら
-  ham.classList.toggle('active'); // ハンバーガーメニューにactiveクラスを付け外し
-  nav.classList.toggle('active'); // ナビゲーションメニューにactiveクラスを付け外し
-});
+//sp menu
+
+(function () {
+    document
+      .querySelector("body")
+      .insertAdjacentHTML("afterbegin", '<div class="sp-navi-box"><div class="sp-navi"></div></div>');
+    document.querySelector(".sp-navi").innerHTML = document.querySelector(
+      ".navi"
+    ).innerHTML;
+  
+    const documentElement = document.querySelector("html");
+    const contentElement = document.querySelector("#main");
+    const sidebarElement = document.querySelector(".sp-navi-box");
+    const openSidebar = function () {
+      scl_point = window.pageYOffset;
+      documentElement.classList.add("sidebar-is-open");
+      $("body").css("top", "-" + scl_point + "px");
+    };
+    const closeSidebar = function () {
+      documentElement.classList.remove("sidebar-is-open");
+      $(window).scrollTop(
+        $("body").css("top").replace(/-/g, "").replace(/px/g, "")
+      );
+      $("body").css("top", 0);
+    };
+    $(".sp-navi-toggle").click(function () {
+      //, .sp-navi-box a[href^=#]
+      if ($(".sidebar-is-open").length) {
+        closeSidebar();
+      } else {
+        openSidebar();
+      }
+    });
+  })();

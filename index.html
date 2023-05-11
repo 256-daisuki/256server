@@ -1,90 +1,54 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="" />
-    <title>256server</title>
-    <!--css読み込み-->
+    <title>256server｜home</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BN5KGMB0GN"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'G-BN5KGMB0GN');
-    </script>
 </head>
-
 <body>
-    <header class="header-8">
-        <h1 class="title">256server.comへようこそ</h1>
-        <p class="sub-title">中学生の趣味程度のサイト</p>
-        </p>
-        <div class="sp-nav">
-            <i class="fas fa-bars"></i>
-        </div>
-        <div class="box box-nav">
-            <ul class="inner-nav">
-                <li class="menu"><a class="li-a" href="/banner/index.html">banner</a></li>
-                <li class="menu"><a class="li-a" href="/made/index.html">made</a></li>
+    <header>
+        <div class="inner">
+            <p class="logo"><a class="over" href="#">256server</a></p>
+            <ul class="navi">
+                <li><a href="#">home</a></li>
+                <li><a href="tools/index.html">tools</a></li>
+                <li><a href="history/index.html">歴史（笑）</a></li>
+                <li><a href="bbs/index.php">BBS</a></li>
             </ul>
         </div>
+        <button class="sp-navi-toggle"><span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="menu">MENU</span><span class="close">CLOSE</span></button>
     </header>
-    <h2 class="top-h2">このサイトについて。</h2>
-    <div class="sentence">
-        <p>twitterが大好きな中学生のサイト、このサイトは一応2022年の8月8日（末広がりぃ）の夕方あたりに公開を初めたよ。サーバーは家のラズパイ君、ラズパイくんは小6のときに買った思い出のマイコン。家のmacでイメージを焼こうとしたけど知識が皆無だったから（今もほとんどないけど）できなくて自分用のPCを買うまではずっとホコリかぶってたりした。そのときに買ったPCだけどヤフオクさんで4.5万で落札したryzen5
-            3500UなRAM8GBのよわよわPCだったりする。
-            よわよわでもWEB系ならできるし、余ってるラズパイがあるからそれを使ってWEBサーバーを立ててもいいなって思いついて半年ぐらいHTMLとCSSとPHPを勉強して夏休みネット系勉強してなんとかサーバーを立てた感じだね、うーん
-            あ、そうそうこのサイトはgoogleアナリティクスを使用してるよ
-            これ以上書くことも無い気がする。</p>
-    </div>
-    <h2>私について</h2>
-    <div class="sentence">
-        <p>いわゆる自己紹介ですよ。日本の中学生で、レトロなPCにハマってるらしい。PC98とかじゃなくて、マイコン黎明期の頃のTK80とかが気になってるらしい。よく聞く音楽はgroup_inouさんとか平沢進さんとか、
-            好きなものはキムワイプとlinuxと自作キーボード、自作キーボードはやっぱりお金がかかるもので2セット作ったんだけど、なんと掛ったお値段9万円。なんでメインPCの2倍のお金使ってんですかねぇ。まあ私ツイッター初めたきっかけもタイピングですしおすし。あ、そうそう
-            タイピングで思い出した。私キーボードの配列をTomisuke配列にしていまして、まだまだqwertyの方には全然及ばないですけど、使っててたのしいですよ、 皆も使ってみてほしいですね、
-            初めて聞いたよって人がほとんどな気がするのでTomisuke配列考案者のとみすけさんのブログ貼りますね。<a
-                href="https://tomisuke.hatenablog.com/entry/2022/07/19/185105">リンク</a></p>
-    </div>
-    <h2>やってること</h2>
-    <div class="sentence">
-        <p>このサーバーとか電子工作とかタイピングを頑張ってます。今年受験生らしいけど気にせず続けたいですなぁ、英語勉強しないとなんだけど。なんか技術系でやってほしいことがあったらもしかしたらやるかも
-            私のメアド貼っておくからなんかあれば -> admin@256server.com なんかadminっていいよねrootとかにしてもよかったかも、あ、わからん人もいるか（）</p>
-        <p>CSSでちょくちょく遊んでます。専用ページはこちら <a href="/made/css/index.html">リンク</a></p>
-    </div>
-    <h2>鯖の歴史？</h2>
-    <div class="sentence">
-        <p>一応この形に行きつくのにそこそこかかっているのでそれを書こうかなと思って</p>
-        <p>1.fc2さんのサーバーを借りて作った奴　黒歴史だったりする　5月12日に公開</p>
-        <p>2.初のラズパイサーバー　bootstrapを使って作ったもの　DNSとかを勉強しながら丸々一日かけて完成　8月8日に公開</p>
-        <p>3.それっぽいデザインになった　2.をガラリと変えたもの　かなりデザインが変わった。　9月14日に公開</p>
-        <p>4.前のデザインをシンプルにした感じ　jsとかをめっちゃ使ってたけど減らしたりして動きを減らした。　一番はスマホに対応したことかな。</p>
-        <p>5.コピペ多様して作ったゴミページ 面白さがないし、ぐちゃぐちゃだし、面白さがとにかくない。</p>
-        <p>6.今のサイト chatGPT君と一緒に作ったサイト jsは私が書くとぐちゃぐちゃになっちゃうからAIに HTML,CSSは私が書く そんな感じでできました。 ちなみに文全部書き直したよ 馬鹿らしいね</p>
-    </div>
-    <h2>相互リンクとおすすめサイト</h2>
-    <div class="sentence">
-        <p>相互リンク</p>
-        <p><a href="https://www.activetk.jp">activeTK</a> 一時期ツイッターで有名になった中学生プログラマーの中身だよー</p>
-        <p><a href="https://doremire-server.com/">doremire-server</a> 私の友達のサーバー この人も自宅鯖 古いノートパソコンでサーバーを立ててるらしいよ すごいよね
+    <main>
+        <div class="top">
+            <h1 class="top-h1">256server</h1>
+            <p>中学生の趣味程度のサイト</p>
+            <img src="https://count.getloli.com/get/@:256server"/>
+            <p class="mini-p">アクセスカウンター</p>
+        </div>
+        <h2>このサイトについて</h2>
+        <p>このサイトは私がWEB系を勉強するためにつくったサイトです。</p>
+        <p>ヌシはふるーいマイコンとかサーバーとかに興味があります。　タイピングをちょっとやってまして、ヌシはひねくれてるのでTomisuke配列っていう、マイナーなキー配列を使ってます（すごい使いやすい）ほとんどの人が知らないと思うので、考案者さんのブログ貼っておきます。<a href="https://tomisuke.hatenablog.com/entry/2022/07/19/185105">リンク</a></p>
+        <h2>相互リンクとおすすめサイト</h2>
+            <div class="sentence">
+        <h3>相互リンク</h2>
+            <p><a href="https://www.activetk.jp">activeTK</a> 一時期ツイッターで有名になった中学生プログラマーの中身だよー</p>
+            <p><a href="https://doremire-server.com/">doremire-server</a> 私の友達のサーバー この人も自宅鯖 古いノートパソコンでサーバーを立ててるらしいよ すごいよね
         </p>
         <h3>おすすめリンク</h3>
-        <p><a href="https://rumiserver.com/">rumiserver</a>私の師匠のサーバー この256serverはここから来てる。内容がとても濃いから見るときは覚悟が必要</p>
-        <p><a href="https://m1ntooo.com/">m1ntooo</a>るみさんのお友達の鯖</p>
-        <p><a href="https://sites.google.com/view/kamera-room/%E3%83%9B%E3%83%BC%E3%83%A0">かめらのおへや</a>
-            ツイッターで人気な鳥ちゃんを撮ってる人のサイト ここからツイッターに行きましょう。</p>
-        <p>相互リンク募集してます。</p>
-        <p>ここをたくさんのリンクでやっぱり埋め尽くしたいって言う私の願望を叶えさせてくれ！
-            このサイト一日に100ぐらいしかアクセスないけど、少しは宣伝になると思うからもしサイト持ってたりしたらツイッターの@256_daisuki にDMちょうだいね！</p>
+            <p><a href="https://rumiserver.com/">rumiserver</a>私の師匠のサーバー この256serverの名前はここから来てる。内容がとても濃い</p>
+            <p><a href="https://m1ntooo.com/">m1ntooo</a>るみさんのお友達の鯖</p>
+            <p><a href="https://sites.google.com/view/kamera-room/%E3%83%9B%E3%83%BC%E3%83%A0">かめらのおへや</a>
+                ツイッターで人気な鳥ちゃんを撮ってる人のサイト ここからツイッターに行きましょう。</p>
+            <p>相互リンク募集してます。</p>
+            <p>ここをたくさんのリンクでやっぱり埋め尽くしたいって言う私の願望を叶えさせてくれ！
+                このサイト一日に100ぐらいしかアクセスないけど、少しは宣伝になると思うからもしサイト持ってたりしたらツイッターの@256_daisuki にDMちょうだいね！</p>
     </div>
+    </main>
     <footer class="footer03">
         <ul class="menu">
-            <li><a href="https://twitter.com/256_daisuki">twitter</a></li>
+            <li><a href="https://twitter.com/256_daisuke">twitter</a></li>
             <li><a href="https://youtube.com/@_256">youtube</a></li>
             <li><a href="https://github.com/256-daisuki">github</a></li>
         </ul>
@@ -92,9 +56,23 @@
             <li><a href="/terms.html">利用規約</a></li>
             <li><a href="/privacy.html">プライバシーポリシー</a></li>
         </ul>
-        <iframe src="a.html" frameborder="0" height="30px" scrolling="no"></iframe>
         <p class="copyright">&copy; 256大好き!</p>
+        <div id="usage"></div>
     </footer>
+    <script src="index.js"></script>
+    <script>
+        window.addEventListener('load', function() {
+            // a.htmlを読み込む
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                // レスポンスの中身を取得
+                document.getElementById('usage').innerHTML = this.responseText;
+                }
+            };
+            xhttp.open("GET", "a.html", true);
+            xhttp.send();
+        });
+    </script>
 </body>
-
 </html>
