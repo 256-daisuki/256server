@@ -218,22 +218,7 @@ header {
     padding: 0;
   }
 
-  /*main*/
-main {
-    margin-top: 80px;
-    margin-left: 5%;
-}
-
-.top {
-    text-align: center;
-    margin-left: -5%;
-}
-
-h2 {
-    margin-left: -2%;
-}
-
-/*フッター */
+  /*フッター */
 
 .footer03 {
   color: #808080;
@@ -312,4 +297,29 @@ h2 {
 
 .box {
   box-sizing: border-box;
+}
+
+/*main*/
+main {
+    margin-top: 90px;
+    margin-left: 5%;
+}
+
+.top {
+    text-align: center;
+    margin-left: -5%;
+}
+
+h2 {
+    margin-left: -2%;
+}
+
+.top-h1 {
+  font-size: 50px;
+  margin-bottom: -20px;
+}
+
+.mini-p {
+  font-size: 0.5em;
+  color: #808080;
 }
