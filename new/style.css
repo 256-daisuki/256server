@@ -1,24 +1,219 @@
-body { /*背景の設定*/
-    background-color: #4d4d4d;
-    background-image: url(data:image/png;base64,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);
-    margin: auto;
-}
+/* header */
 
-nav {
-    background-color: #2b2b2b;
-}
-
-main {
-    margin-left: 5%;
-    margin-right: 5%;
-}
-
-h1 {
-    color: #f1f1f1;
-}
-
-.container {
-    width: auto;
-    max-width: 680px;
-    padding: 0 15px;
+header {
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 0;
+    background: #eee;
+  }
+  header .inner {
+    position: relative;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+  /* .logo */
+  
+  header .logo {
+    position: relative;
+    width: 100px;
+    margin: 0;
+    padding: 0;
+  }
+  header .logo a {
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+  }
+  
+  @media screen and (max-width: 767px) {
+    header .logo {
+      padding: 0;
+    }
+    header .logo a {
+    }
+  }
+  
+  /* scroll */
+  
+  header {
+    transition: height 0.4s cubic-bezier(0.34, 0.615, 0.4, 0.985);
+  }
+  header.scroll {
+    height: 60px;
+    position: fixed;
+    z-index: 9999;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  header .logo {
+    transition: width 0.4s cubic-bezier(0.34, 0.615, 0.4, 0.985);
+  }
+  header.scroll .logo {
+    width: 70px;
+  }
+  
+  /* header-navi-box */
+  
+  header .navi {
+    margin: 0 0 0 auto;
+    padding: 0;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    list-style: none;
+  }
+  header .navi li {
+    margin: 5px 0 5px 40px;
+  }
+  header .navi li:first-child {
+    margin-left: 0;
+  }
+  header .navi li a {
+    display: block;
+    box-sizing: border-box;
+    text-decoration: none;
+    color: #333;
+  }
+  header .navi li a:hover {
+    text-decoration: underline;
+  }
+  
+  @media screen and (max-width: 767px) {
+    header .navi {
+      display: none;
+    }
+  }
+  
+  /* open-button */
+  
+  .sp-navi-toggle {
+    display: none;
+    margin: auto 0;
+    font-size: 10px;
+    font-weight: bold;
+    line-height: 1;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 40px;
+    width: 16px;
+    height: 25px;
+    transition: all 0.4s;
+    color: #464646;
+    border: none;
+    outline: none;
+    background: none;
+    -webkit-appearance: unset;
+  }
+  .sp-navi-toggle .menu,
+  .sp-navi-toggle .close {
+    position: absolute;
+    bottom: 0;
+    left: -50%;
+    display: block;
+    width: 34px;
+    height: 11px;
+  }
+  .sp-navi-toggle .close {
+    display: none;
+  }
+  .sp-navi-toggle .bar {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #464646;
+  }
+  .sp-navi-toggle .bar:nth-of-type(1) {
+    top: 0;
+  }
+  .sp-navi-toggle .bar:nth-of-type(2) {
+    top: 5px;
+  }
+  .sp-navi-toggle .bar:nth-of-type(3) {
+    top: 10px;
+  }
+  
+  /* close-button */
+  
+  html.sidebar-is-open .sp-navi-toggle .bar:nth-of-type(1) {
+    top: 5px;
+    transform: rotate(45deg);
+  }
+  html.sidebar-is-open .sp-navi-toggle .bar:nth-of-type(2) {
+    top: 5px;
+    transform: rotate(-45deg);
+  }
+  html.sidebar-is-open .sp-navi-toggle .bar:nth-of-type(3) {
+    display: none;
+  }
+  html.sidebar-is-open .sp-navi-toggle .menu {
+    display: none;
+  }
+  html.sidebar-is-open .sp-navi-toggle .close {
+    display: block;
+  }
+  
+  @media screen and (max-width: 767px) {
+    .sp-navi-toggle{
+      display: block;
+    }
+  }
+  
+  /* sp-navi */
+  
+  .sp-navi-box {
+    display: none;
+  }
+  .sp-navi {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    width: 100%;
+    height: 100vh;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+  }
+  .sp-navi li {
+    padding: 20px 0;
+  }
+  .sp-navi li a {
+    display: block;
+    box-sizing: border-box;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+  }
+  .sp-navi li a:hover {
+    text-decoration: underline;
+  }
+  
+  
+  
+  
+  @media screen and (max-width: 767px) {
+    html.sidebar-is-open .sp-navi-box {
+      display: block;
+    }
+    html.sidebar-is-open {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      overflow: hidden;
+      width: 100%;
+    }
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
   }
