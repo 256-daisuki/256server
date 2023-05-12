@@ -8,15 +8,79 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav>
-        <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
+    <header>
+        <div class="header-area">
+            <h1>256server</h1>
+                <div class="hamburger">
+                <!-- ハンバーガーメニューの線 -->
+                <span></span>
+                <span></span>
+                <span></span>
+                <!-- /ハンバーガーメニューの線 -->
+                </div>            
+        </div>
+        <ul class="slide-menu">
+            <li class="header-li">メニュー</li>
+            <li class="header-li">メニュー2</li>
+            <li class="header-li">メニュー3</li>
+            <li class="header-li">メニュー4</li>
         </ul>
-      </nav>
-      
-      <button>Menu</button>
-      
+    </header>
+    <main>
+        <div class="top">
+            <h1 class="top-h1">256server</h1>
+            <p>中学生の趣味程度のサイト</p>
+            <img src="https://count.getloli.com/get/@:256server"/>
+            <p class="mini-p">アクセスカウンター</p>
+        </div>
+        <h2>このサイトについて</h2>
+        <p>このサイトは私がWEB系を勉強するためにつくったサイトです。</p>
+        <p>ヌシはふるーいマイコンとかサーバーとかに興味があります。　タイピングをちょっとやってまして、ヌシはひねくれてるのでTomisuke配列っていう、マイナーなキー配列を使ってます（すごい使いやすい）ほとんどの人が知らないと思うので、考案者さんのブログ貼っておきます。<a href="https://tomisuke.hatenablog.com/entry/2022/07/19/185105">リンク</a></p>
+        <h2>相互リンクとおすすめサイト</h2>
+            <div class="sentence">
+        <h3>相互リンク</h2>
+            <p><a href="https://www.activetk.jp">activeTK</a> 一時期ツイッターで有名になった中学生プログラマーの中身だよー</p>
+            <p><a href="https://doremire-server.com/">doremire-server</a> 私の友達のサーバー この人も自宅鯖 古いノートパソコンでサーバーを立ててるらしいよ すごいよね
+        </p>
+        <h3>おすすめリンク</h3>
+            <p><a href="https://rumiserver.com/">rumiserver</a>私の師匠のサーバー この256serverの名前はここから来てる。内容がとても濃い</p>
+            <p><a href="https://m1ntooo.com/">m1ntooo</a>るみさんのお友達の鯖</p>
+            <p><a href="https://sites.google.com/view/kamera-room/%E3%83%9B%E3%83%BC%E3%83%A0">かめらのおへや</a>
+                ツイッターで人気な鳥ちゃんを撮ってる人のサイト ここからツイッターに行きましょう。</p>
+            <p>相互リンク募集してます。</p>
+            <p>ここをたくさんのリンクでやっぱり埋め尽くしたいって言う私の願望を叶えさせてくれ！
+                このサイト一日に100ぐらいしかアクセスないけど、少しは宣伝になると思うからもしサイト持ってたりしたらツイッターの@256_daisuki にDMちょうだいね！</p>
+    </div>
+    </main>
+
+    <footer class="footer03">
+        <ul class="menu">
+            <li><a href="https://twitter.com/256_daisuke">twitter</a></li>
+            <li><a href="https://youtube.com/@_256">youtube</a></li>
+            <li><a href="https://github.com/256-daisuki">github</a></li>
+        </ul>
+        <ul class="menu">
+            <li><a href="/terms.html">利用規約</a></li>
+            <li><a href="/privacy.html">プライバシーポリシー</a></li>
+        </ul>
+        <p class="copyright">&copy; 256大好き!</p>
+        <div id="usage"></div>
+    </footer>
+    <script src="index.js"></script>
+    <script>
+        window.addEventListener('load', function() {
+            // a.htmlを読み込む
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                // レスポンスの中身を取得
+                document.getElementById('usage').innerHTML = this.responseText;
+                }
+            };
+            xhttp.open("GET", "a.html", true);
+            xhttp.send();
+        });
+    </script>
+    <script src="script.js"></script>
 </body>
 </html>

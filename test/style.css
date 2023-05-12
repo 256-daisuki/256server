@@ -1,105 +1,202 @@
-nav {
-    position: relative;
-    z-index: 100;
-  }
-  
-  nav ul {
-    display: none;
-    position: absolute;
-    top: 100px;
-    left: 0;
-    background-color: #fff;
-    padding: 20px;
-    width: 200px;
-  }
-  
-  nav ul li {
-    list-style: none;
+body {
     margin: 0;
-    padding: 0 10px;
-  }
-  
-  nav ul li a {
-    color: #000;
-    font-size: 16px;
-  }
-  
-  button {
-    position: absolute;
-    top: 100px;
-    right: 0;
+}
+
+/* ヘッダー */
+header {
+    background-color: #eeeeee;
+    display: flex;
+    justify-content: space-between;
+    height: 65px;
+    padding: 0 20px;
+    align-items: center;
+    margin: 0;
+}
+
+header h1 {
+    margin-top: 27.5%;
+}
+
+.hamburger {
     width: 40px;
-    height: 40px;
-    background-color: #ccc;
-    border-radius: 50%;
-    cursor: pointer;
+    height: 25px;
+    position: relative;
+}
+
+.slide-menu li{
+    color: #808080;
+    list-style: none;
+    align-items: center;
+    margin: 10px;
+}
+
+.slide-menu {
+    display: flex;
+}
+
+@media screen and (max-width: 900px) {
+	/* 600px以下に適用されるCSS（スマホ用） */
+    body{
+        overflow-x: hidden;
+    }
+
+    .header-area{
+        display: flex;
+        justify-content: space-between;
+        height: 65px;
+        padding: 0 20px;
+        align-items: center;
+      }
+      .hamburger{
+        width: 40px;
+        height: 25px;
+        position: relative;
+      }
+      .hamburger span{
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        background-color: blue;
+      }
+      .hamburger span:first-of-type{/* ハンバーガーメニューの1番目の線 */
+        top: 0;
+      }
+      .hamburger span:nth-of-type(2){/* ハンバーガーメニューの2番目の線 */
+        top: 50%;
+      }
+      .hamburger span:last-of-type{/* ハンバーガーメニューの3番目の線 */
+        top: 100%;
+      }
+      .slide-menu{
+        background-color: #808080;
+        position: fixed;
+        top: 65px;
+        width: 100%;
+        left: 0;
+        transform: translateX(100%);
+      }
+      .slide-menu li{
+        color: #fff;
+        line-height: 400%;
+        text-align: center;
+      }
+      
+      /* ここから下を追記 */
+      .hamburger.active span:first-of-type{/* ハンバーガーメニューの1番目の線 */
+        top: 50%;
+        transform: rotate(45deg);
+      }
+      .hamburger.active span:nth-of-type(2){/* ハンバーガーメニューの2番目の線 */
+        opacity: 0;/* 透明にする */
+      }
+      .hamburger.active span:last-of-type{/* ハンバーガーメニューの3番目の線 */
+        top: 50%;
+        transform: rotate(-45deg);
+      }
+      .slide-menu.active{
+        transform: translateX(0); 
+      }
+}
+
+/*フッター */
+.footer03 {
+    padding: 20px;
+}
+  
+.footer03 a {
+    color: #808080;
+    text-decoration: none;
+}
+  
+.footer03 a:hover {
+    text-decoration: underline;
+}
+  
+.footer03 .menu {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+}
+  
+  .footer03 .menu li {
+    margin: 0;
+    padding: 0 20px;
+    border-left: 1px #808080 solid;
   }
   
-  button:hover {
-    background-color: #bbb;
+  .footer03 .menu li:first-child {
+    padding-left: 0;
+    border: none;
   }
   
-  button:active {
-    background-color: #aaa;
+  .footer03 .copyright {
+    margin: 0;
+    padding: 20px 0 0 0;
   }
   
-  button:before {
-    content: "";
-    position: absolute;
-    top: 20px;
-    left: 15px;
-    width: 10px;
-    height: 2px;
-    background-color: #000;
+  @media only screen and (max-width: 599px) {
+    .footer03 .menu li {
+       width: 50%;
+       padding: 0 20px 0 0;
+       box-sizing: border-box;
+       border: none;
+    }
   }
   
-  button:after {
-    content: "";
-    position: absolute;
-    top: 20px;
-    right: 15px;
-    width: 10px;
-    height: 2px;
-    background-color: #000;
-  }
-  
-  nav ul:hover {
-    display: block;
-  }
-  
-  @media (max-width: 600px) {
-    nav {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+  @media (min-width: 500px)/*PC用*/ {
+    .title {
+       text-align: center;
+       margin-top: 5vw;
+       font-size: 256%;
+    }
+    
+    .sub-title {
+       text-align: center;
     }
   
-    button {
-      display: none;
+    .top-h2 {
+       margin-top: 70px;
     }
   
-    nav ul {
-      display: block;
-    }
-  
-    nav ul li {
-      list-style: none;
-      margin: 0;
-      padding: 0 10px;
-    }
-  
-    nav ul li a {
-      color: #000;
-      font-size: 16px;
-    }
-  
-    nav ul li:not(:first-child)::before {
-      content: "";
-      display: block;
-      width: 10px;
-      height: 2px;
-      background-color: #000;
-      margin-left: 10px;
+    .counter {
+       padding-top: 10px;
     }
   }
   
+  /*FontAwesomeを使用しています。*/
+  .header-8 {
+    box-sizing: border-box;
+    width: 100%;
+    height: 120px;
+  }
+  
+  .box {
+    box-sizing: border-box;
+  }
+  
+  /*main*/
+  main {
+      margin-top: 90px;
+      margin-left: 5%;
+  }
+  
+  .top {
+      text-align: center;
+      margin-left: -5%;
+  }
+  
+  h2 {
+      margin-left: -2%;
+  }
+  
+  .top-h1 {
+    font-size: 50px;
+    margin-bottom: -20px;
+  }
+  
+  .mini-p {
+    font-size: 0.5em;
+    color: #808080;
+  }
