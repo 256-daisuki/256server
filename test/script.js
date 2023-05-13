@@ -1,4 +1,9 @@
-document.querySelector('.hamburger').addEventListener('click', function(){
-  this.classList.toggle('active');
-  document.querySelector('.slide-menu').classList.toggle('active');
-})
+const ham = document.querySelector('#js-hamburger');
+const nav = document.querySelector('#js-nav');
+
+ham.addEventListener('click', function () {
+
+  ham.classList.toggle('active');
+  nav.classList.toggle('active');
+
+});

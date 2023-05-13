@@ -4,28 +4,31 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>256server｜home</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BN5KGMB0GN"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-BN5KGMB0GN');
+    </script>
 </head>
 <body>
     <header>
-        <div class="header-area">
-            <h1>256server</h1>
-                <div class="hamburger">
-                <!-- ハンバーガーメニューの線 -->
-                <span></span>
-                <span></span>
-                <span></span>
-                <!-- /ハンバーガーメニューの線 -->
-                </div>            
-        </div>
-        <ul class="slide-menu">
-            <li class="header-li">メニュー</li>
-            <li class="header-li">メニュー2</li>
-            <li class="header-li">メニュー3</li>
-            <li class="header-li">メニュー4</li>
-        </ul>
+        <nav>
+            <p>256</p>
+            <ul>
+                <li><a href="#">home</a></li>
+                <li><a href="#">tools</a></li>
+                <li><a href="#">歴史（笑）</a></li>
+                <li><a href="#">BBS</a></li>
+            </ul>
+        </nav>
     </header>
+      
     <main>
         <div class="top">
             <h1 class="top-h1">256server</h1>
@@ -50,9 +53,8 @@
             <p>相互リンク募集してます。</p>
             <p>ここをたくさんのリンクでやっぱり埋め尽くしたいって言う私の願望を叶えさせてくれ！
                 このサイト一日に100ぐらいしかアクセスないけど、少しは宣伝になると思うからもしサイト持ってたりしたらツイッターの@256_daisuki にDMちょうだいね！</p>
-    </div>
+        </div>
     </main>
-
     <footer class="footer03">
         <ul class="menu">
             <li><a href="https://twitter.com/256_daisuke">twitter</a></li>
@@ -66,7 +68,8 @@
         <p class="copyright">&copy; 256大好き!</p>
         <div id="usage"></div>
     </footer>
-    <script src="index.js"></script>
+
+    </main>
     <script>
         window.addEventListener('load', function() {
             // a.htmlを読み込む
@@ -81,6 +84,5 @@
             xhttp.send();
         });
     </script>
-    <script src="script.js"></script>
 </body>
 </html>

@@ -1,112 +1,45 @@
-body {
-    margin: 0;
-}
-
-/* ヘッダー */
 header {
-    background-color: #eeeeee;
-    display: flex;
-    justify-content: space-between;
-    height: 65px;
-    padding: 0 20px;
-    align-items: center;
-    margin: 0;
+    background-color: #808080;
+    width: 100%;
 }
 
-header h1 {
-    margin-top: 27.5%;
+nav {
+    height: 40px;
 }
 
-.hamburger {
-    width: 40px;
-    height: 25px;
-    position: relative;
-}
-
-.slide-menu li{
-    color: #808080;
+nav ul {
     list-style: none;
-    align-items: center;
-    margin: 10px;
-}
-
-.slide-menu {
     display: flex;
+    margin-top: -30px;
+    margin-right: 3%;
+    justify-content: flex-end;
+}
+  
+header li {
+    margin-left: 20px;
+    text-align: right;
+    margin-top: -24px;
 }
 
-@media screen and (max-width: 900px) {
-	/* 600px以下に適用されるCSS（スマホ用） */
-    body{
-        overflow-x: hidden;
-    }
-
-    .header-area{
-        display: flex;
-        justify-content: space-between;
-        height: 65px;
-        padding: 0 10px;
-        align-items: center;
-    }
-
-    .hamburger{
-        width: 40px;
-        height: 25px;
-        position: relative;
-    }
-
-    .hamburger span{
-        position: absolute;
-        width: 100%;
-        height: 1px;
-        background-color: blue;
-      }
-
-      .hamburger span:first-of-type{/* ハンバーガーメニューの1番目の線 */
-        top: 0;
-      }
-
-      .hamburger span:nth-of-type(2){/* ハンバーガーメニューの2番目の線 */
-        top: 50%;
-      }
-
-      .hamburger span:last-of-type{/* ハンバーガーメニューの3番目の線 */
-        top: 100%;
-      }
-      
-      .slide-menu{
-        background-color: #808080;
-        position: fixed;
-        top: 65px;
-        width: 100%;
-        left: 0;
-        transform: translateX(100%);
-      }
-      .slide-menu li{
-        color: #fff;
-        line-height: 400%;
-        text-align: center;
-      }
-      
-      /* ここから下を追記 */
-      .hamburger.active span:first-of-type{/* ハンバーガーメニューの1番目の線 */
-        top: 50%;
-        transform: rotate(45deg);
-      }
-      .hamburger.active span:nth-of-type(2){/* ハンバーガーメニューの2番目の線 */
-        opacity: 0;/* 透明にする */
-      }
-      .hamburger.active span:last-of-type{/* ハンバーガーメニューの3番目の線 */
-        top: 50%;
-        transform: rotate(-45deg);
-      }
-      .slide-menu.active{
-        transform: translateX(0); 
-      }
+header a {
+    color: #fff;
+    text-decoration: none;
+}
+  
+header p {
+    color: #fff;
+    font-size: 1.5em;
+    margin-left: 15px;
+    margin-top: auto;
+    padding-top: 3px;
 }
 
 /*フッター */
+
 .footer03 {
-    padding: 20px;
+    color: #808080;
+    background: #e5e5e5;
+    padding: 30px;
 }
   
 .footer03 a {
@@ -126,36 +59,36 @@ header h1 {
     flex-wrap: wrap;
 }
   
-  .footer03 .menu li {
+.footer03 .menu li {
     margin: 0;
     padding: 0 20px;
     border-left: 1px #808080 solid;
-  }
+}
   
-  .footer03 .menu li:first-child {
+.footer03 .menu li:first-child {
     padding-left: 0;
     border: none;
-  }
+}
   
-  .footer03 .copyright {
+.footer03 .copyright {
     margin: 0;
     padding: 20px 0 0 0;
-  }
+}
   
-  @media only screen and (max-width: 599px) {
-    .footer03 .menu li {
-       width: 50%;
-       padding: 0 20px 0 0;
-       box-sizing: border-box;
-       border: none;
+    @media only screen and (max-width: 599px) {
+        .footer03 .menu li {
+        width: 50%;
+        padding: 0 20px 0 0;
+        box-sizing: border-box;
+        border: none;
+        }
     }
-  }
   
-  @media (min-width: 500px)/*PC用*/ {
-    .title {
-       text-align: center;
-       margin-top: 5vw;
-       font-size: 256%;
+    @media (min-width: 500px)/*PC用*/ {
+        .title {
+        text-align: center;
+        margin-top: 5vw;
+        font-size: 256%;
     }
     
     .sub-title {
@@ -178,31 +111,34 @@ header h1 {
     height: 120px;
   }
   
-  .box {
+.box {
     box-sizing: border-box;
-  }
+}
+
+/*main*/
+body {
+    margin: auto;
+}
+
+main {
+    margin-left: 5%;
+}
   
-  /*main*/
-  main {
-      margin-top: 90px;
-      margin-left: 5%;
-  }
-  
-  .top {
-      text-align: center;
-      margin-left: -5%;
-  }
-  
-  h2 {
-      margin-left: -2%;
-  }
-  
-  .top-h1 {
-    font-size: 50px;
-    margin-bottom: -20px;
-  }
-  
-  .mini-p {
-    font-size: 0.5em;
-    color: #808080;
-  }
+.top {
+    text-align: center;
+    margin-left: -5%;
+}
+
+h2 {
+    margin-left: -2%;
+}
+
+.top-h1 {
+font-size: 50px;
+margin-bottom: -20px;
+}
+
+.mini-p {
+font-size: 0.5em;
+color: #808080;
+}
