@@ -6,347 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>256server｜home</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* header */
-
-header {
-    position: fixed;
-    z-index: 999;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 20px 0;
-    background: #eee;
-  }
-  header .inner {
-    position: relative;
-    padding: 0 20px;
-    display: flex;
-    align-items: center;
-    height: 100%;
-  }
-  /* .logo */
-  
-  header .logo {
-    position: relative;
-    width: 100px;
-    margin: 0;
-    padding: 0;
-  }
-  header .logo a {
-    font-weight: bold;
-    text-decoration: none;
-    color: #333;
-  }
-  
-  @media screen and (max-width: 767px) {
-    header .logo {
-      padding: 0;
-    }
-    header .logo a {
-    }
-  }
-  
-  /* scroll */
-  
-  header {
-    transition: height 0.4s cubic-bezier(0.34, 0.615, 0.4, 0.985);
-  }
-  header.scroll {
-    height: 60px;
-    position: fixed;
-    z-index: 9999;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  header .logo {
-    transition: width 0.4s cubic-bezier(0.34, 0.615, 0.4, 0.985);
-  }
-  header.scroll .logo {
-    width: 70px;
-  }
-  
-  /* header-navi-box */
-  
-  header .navi {
-    margin: 0 0 0 auto;
-    padding: 0;
-    font-size: 14px;
-    font-weight: bold;
-    display: flex;
-    list-style: none;
-  }
-  header .navi li {
-    margin: 5px 0 5px 40px;
-  }
-  header .navi li:first-child {
-    margin-left: 0;
-  }
-  header .navi li a {
-    display: block;
-    box-sizing: border-box;
-    text-decoration: none;
-    color: #333;
-  }
-  header .navi li a:hover {
-    text-decoration: underline;
-  }
-  
-  @media screen and (max-width: 767px) {
-    header .navi {
-      display: none;
-    }
-  }
-  
-  /* open-button */
-  
-  .sp-navi-toggle {
-    display: none;
-    margin: auto 0;
-    font-size: 10px;
-    font-weight: bold;
-    line-height: 1;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 40px;
-    width: 16px;
-    height: 25px;
-    transition: all 0.4s;
-    color: #464646;
-    border: none;
-    outline: none;
-    background: none;
-    -webkit-appearance: unset;
-  }
-  .sp-navi-toggle .menu,
-  .sp-navi-toggle .close {
-    position: absolute;
-    bottom: 0;
-    left: -50%;
-    display: block;
-    width: 34px;
-    height: 11px;
-  }
-  .sp-navi-toggle .close {
-    display: none;
-  }
-  .sp-navi-toggle .bar {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: #464646;
-  }
-  .sp-navi-toggle .bar:nth-of-type(1) {
-    top: 0;
-  }
-  .sp-navi-toggle .bar:nth-of-type(2) {
-    top: 5px;
-  }
-  .sp-navi-toggle .bar:nth-of-type(3) {
-    top: 10px;
-  }
-  
-  /* close-button */
-  
-  html.sidebar-is-open .sp-navi-toggle .bar:nth-of-type(1) {
-    top: 5px;
-    transform: rotate(45deg);
-  }
-  html.sidebar-is-open .sp-navi-toggle .bar:nth-of-type(2) {
-    top: 5px;
-    transform: rotate(-45deg);
-  }
-  html.sidebar-is-open .sp-navi-toggle .bar:nth-of-type(3) {
-    display: none;
-  }
-  html.sidebar-is-open .sp-navi-toggle .menu {
-    display: none;
-  }
-  html.sidebar-is-open .sp-navi-toggle .close {
-    display: block;
-  }
-  
-  @media screen and (max-width: 767px) {
-    .sp-navi-toggle{
-      display: block;
-    }
-  }
-  
-  /* sp-navi */
-  
-  .sp-navi-box {
-    display: none;
-  }
-  .sp-navi {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    list-style: none;
-    width: 100%;
-    height: 100vh;
-    font-size: 14px;
-    margin: 0;
-    padding: 0;
-  }
-  .sp-navi li {
-    padding: 20px 0;
-  }
-  .sp-navi li a {
-    display: block;
-    box-sizing: border-box;
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-  }
-  .sp-navi li a:hover {
-    text-decoration: underline;
-  }
-  
-  
-  
-  
-  @media screen and (max-width: 767px) {
-    html.sidebar-is-open .sp-navi-box {
-      display: block;
-    }
-    html.sidebar-is-open {
-      position: fixed;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      overflow: hidden;
-      width: 100%;
-    }
-  }
-  
-  body {
-    margin: 0;
-    padding: 0;
-  }
-
-  /*フッター */
-
-.footer03 {
-  color: #808080;
-  background: #e5e5e5;
-  padding: 30px;
-}
-
-.footer03 a {
-  color: #808080;
-  text-decoration: none;
-}
-
-.footer03 a:hover {
-  text-decoration: underline;
-}
-
-.footer03 .menu {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.footer03 .menu li {
-  margin: 0;
-  padding: 0 20px;
-  border-left: 1px #808080 solid;
-}
-
-.footer03 .menu li:first-child {
-  padding-left: 0;
-  border: none;
-}
-
-.footer03 .copyright {
-  margin: 0;
-  padding: 20px 0 0 0;
-}
-
-@media only screen and (max-width: 599px) {
-  .footer03 .menu li {
-     width: 50%;
-     padding: 0 20px 0 0;
-     box-sizing: border-box;
-     border: none;
-  }
-}
-
-@media (min-width: 500px)/*PC用*/ {
-  .title {
-     text-align: center;
-     margin-top: 5vw;
-     font-size: 256%;
-  }
-  
-  .sub-title {
-     text-align: center;
-  }
-
-  .top-h2 {
-     margin-top: 70px;
-  }
-
-  .counter {
-     padding-top: 10px;
-  }
-}
-
-/*FontAwesomeを使用しています。*/
-.header-8 {
-  box-sizing: border-box;
-  width: 100%;
-  height: 120px;
-}
-
-.box {
-  box-sizing: border-box;
-}
-
-/*main*/
-main {
-    margin-top: 90px;
-    margin-left: 5%;
-}
-
-.top {
-    text-align: center;
-    margin-left: -5%;
-}
-
-h2 {
-    margin-left: -2%;
-}
-
-.top-h1 {
-  font-size: 50px;
-  margin-bottom: -20px;
-}
-
-.mini-p {
-  font-size: 0.5em;
-  color: #808080;
-}
-    </style>
 </head>
 <body>
     <header>
-        <div class="inner">
-            <p class="logo"><a class="over" href="#">256server</a></p>
-            <ul class="navi">
+        <nav>
+            <p>256</p>
+            <ul>
                 <li><a href="#">home</a></li>
-                <li><a href="tools/index.html">tools</a></li>
-                <li><a href="history/index.html">歴史（笑）</a></li>
-                <li><a href="bbs/index.php">BBS</a></li>
+                <li><a href="/tools/index.html">tools</a></li>
+                <li><a href="/history/index.html">歴史（笑）</a></li>
+                <li><a href="/bbs/index.php">BBS</a></li>
             </ul>
-        </div>
-        <button class="sp-navi-toggle"><span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="menu">MENU</span><span class="close">CLOSE</span></button>
+        </nav>
     </header>
+      
     <main>
         <div class="top">
             <h1 class="top-h1">256server</h1>
@@ -366,12 +39,12 @@ h2 {
         <h3>おすすめリンク</h3>
             <p><a href="https://rumiserver.com/">rumiserver</a>私の師匠のサーバー この256serverの名前はここから来てる。内容がとても濃い</p>
             <p><a href="https://m1ntooo.com/">m1ntooo</a>るみさんのお友達の鯖</p>
-            <p><a href="https://sites.google.com/view/kamera-room/%E3%83%9B%E3%83%BC%E3%83%A0">かめらのおへや</a>
-                ツイッターで人気な鳥ちゃんを撮ってる人のサイト ここからツイッターに行きましょう。</p>
+            <p><a href="https://sites.google.com/view/kamera-room/%E3%83%9B%E3%83%BC%E3%83%A0">かめらのおへや</a>ツイッターで人気な鳥ちゃんを撮ってる人のサイト ここからツイッターに行きましょう。</p>
+            <p><a href="https://keichankotaro.com/">keichankotaro</a>私の鯖のRTX1200の設定方法を教えてくださった方</p>    
             <p>相互リンク募集してます。</p>
             <p>ここをたくさんのリンクでやっぱり埋め尽くしたいって言う私の願望を叶えさせてくれ！
-                このサイト一日に100ぐらいしかアクセスないけど、少しは宣伝になると思うからもしサイト持ってたりしたらツイッターの@256_daisuki にDMちょうだいね！</p>
-    </div>
+                このサイト一日に20ぐらいしかアクセスないけど、少しは宣伝になると思うからもしサイト持ってたりしたらツイッターの@256_daisuki にDMちょうだいね！</p>
+        </div>
     </main>
     <footer class="footer03">
         <ul class="menu">
@@ -386,43 +59,8 @@ h2 {
         <p class="copyright">&copy; 256大好き!</p>
         <div id="usage"></div>
     </footer>
-    <script src="index.js"></script>
-    <script>
-        //sp menu
 
-(function () {
-    document
-      .querySelector("body")
-      .insertAdjacentHTML("afterbegin", '<div class="sp-navi-box"><div class="sp-navi"></div></div>');
-    document.querySelector(".sp-navi").innerHTML = document.querySelector(
-      ".navi"
-    ).innerHTML;
-  
-    const documentElement = document.querySelector("html");
-    const contentElement = document.querySelector("#main");
-    const sidebarElement = document.querySelector(".sp-navi-box");
-    const openSidebar = function () {
-      scl_point = window.pageYOffset;
-      documentElement.classList.add("sidebar-is-open");
-      $("body").css("top", "-" + scl_point + "px");
-    };
-    const closeSidebar = function () {
-      documentElement.classList.remove("sidebar-is-open");
-      $(window).scrollTop(
-        $("body").css("top").replace(/-/g, "").replace(/px/g, "")
-      );
-      $("body").css("top", 0);
-    };
-    $(".sp-navi-toggle").click(function () {
-      //, .sp-navi-box a[href^=#]
-      if ($(".sidebar-is-open").length) {
-        closeSidebar();
-      } else {
-        openSidebar();
-      }
-    });
-  })();
-    </script>
+    </main>
     <script>
         window.addEventListener('load', function() {
             // a.htmlを読み込む

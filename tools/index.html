@@ -6,20 +6,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>256server｜tools</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BN5KGMB0GN"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-BN5KGMB0GN');
+    </script>
+    <style>
+        header {
+            background-color: #808080;
+            width: 100%;
+        }
+
+        nav {
+            height: 40px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin-top: -30px;
+            margin-right: 3%;
+            justify-content: flex-end;
+        }
+  
+        header li {
+            margin-left: 20px;
+            text-align: right;
+            margin-top: -24px;
+        }
+
+        header a {
+            color: #fff;
+            text-decoration: none;
+        }
+  
+        header p {
+            color: #fff;
+            font-size: 1.5em;
+            margin-left: 15px;
+            margin-top: auto;
+            padding-top: 3px;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <div class="inner">
-            <p class="logo"><a class="over" href="#">256server</a></p>
-            <ul class="navi">
+        <nav>
+            <p>256</p>
+            <ul>
                 <li><a href="/index.html">home</a></li>
-                <li><a href="#">tools</a></li>
-                <li><a href="history/index.html">歴史（笑）</a></li>
-                <li><a href="bbs/index.php">BBS</a></li>
+                <li><a href="/tools/index.html">tools</a></li>
+                <li><a href="/history/index.html">歴史（笑）</a></li>
+                <li><a href="/bbs/index.php">BBS</a></li>
             </ul>
-        </div>
-        <button class="sp-navi-toggle"><span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="menu">MENU</span><span class="close">CLOSE</span></button>
+        </nav>
     </header>
+      
     <main>
         <div class="top">
             <h1 class="top-h1">作ったツール</h1>
@@ -31,23 +77,8 @@
         <h3><a href="/tools/todo/index.html">TODOリスト</a></h3>
         <p>AIがどこまで行けるか試すために作ったソフト。ほとんどAIに書かせた だけど、やっぱり意味わかんないコード書くから最後5分ぐらい手直しした。デザインも全部AI このままじゃAIにエンジニアは殺されちゃうな 私はAIにアバダケダブラをされたので殺される。</p>
         <h3><a href="css/index.html">CSS</a></h3>
-        <p>CSSでいろいろと作ってて、それをまとめたページ</p>
-    </div>
+        <p>CSSでいろいろと作ってて、それをまとめたページ ツールじゃないのは気にしちゃだめです。</p>
     </main>
-    <footer class="footer03">
-        <ul class="menu">
-            <li><a href="https://twitter.com/256_daisuke">twitter</a></li>
-            <li><a href="https://youtube.com/@_256">youtube</a></li>
-            <li><a href="https://github.com/256-daisuki">github</a></li>
-        </ul>
-        <ul class="menu">
-            <li><a href="/terms.html">利用規約</a></li>
-            <li><a href="/privacy.html">プライバシーポリシー</a></li>
-        </ul>
-        <p class="copyright">&copy; 256大好き!</p>
-        <div id="usage"></div>
-    </footer>
-    <script src="index.js"></script>
     <script>
         window.addEventListener('load', function() {
             // a.htmlを読み込む
@@ -58,7 +89,7 @@
                 document.getElementById('usage').innerHTML = this.responseText;
                 }
             };
-            xhttp.open("GET", "/a.html", true);
+            xhttp.open("GET", "a.html", true);
             xhttp.send();
         });
     </script>
