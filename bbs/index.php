@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>256server｜bbs</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BN5KGMB0GN"></script>
     <script>
@@ -19,6 +19,7 @@
         header {
             background-color: #808080;
             width: 100%;
+            padding: 0;
         }
 
         nav {
