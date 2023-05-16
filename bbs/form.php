@@ -11,7 +11,7 @@ function submitForm() {
     var body = document.getElementById("body").value;
     
     // 改行コードを空白に置き換える
-    body = body.replace(/\n/g, " ");
+    body = body.replace(/\n/g, "");
     
     // 名前が未入力の場合はデフォルト値を設定する
     if (name === "") {

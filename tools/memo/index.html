@@ -71,6 +71,11 @@
             background-color: #fff; /* 背景色 */
             box-shadow: 1px 1px 2px #ccc;
         }
+        
+        button:hover {
+            opacity: 0.2;
+            color: #808080;
+        }
     </style>
     <script>
         // ダウンロード
@@ -102,9 +107,9 @@
         }
 
         // 文字サイズ変更
-        let y = 100;
-        function larger()  { y *= 1.1; document.getElementById("main").style.fontSize = y + '%'; }
-        function smaller() { y /= 1.1; document.getElementById("main").style.fontSize = y + '%'; }
+        let y = 2;
+        function larger()  { y *= 1.2; document.getElementById("main").style.fontSize = y + 'em'; }
+        function smaller() { y /= 1.2; document.getElementById("main").style.fontSize = y + 'em'; }
         
         const selectedText = window.getSelection().toString();
         console.log(selectedText);

@@ -21,7 +21,7 @@
          // タブで区切って、名前と内容と書き込み時間を取得する
          list($name, $content, $time) = explode("\t", $line);
          // HTMLに変換して表示する
-         echo '<li><strong>' . htmlspecialchars($name) . '</strong> (' . htmlspecialchars($content) . ')<br><p>' .  htmlspecialchars($time) . '</p></li>';
+         echo '<li><strong>' . htmlspecialchars($name) . '</strong> (' . nl2br(htmlspecialchars($content)) . ')<br><p>' .  nl2br(htmlspecialchars($time)) . '</p></li>';
       }
    ?>
    </ol>
