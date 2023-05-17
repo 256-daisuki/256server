@@ -20,6 +20,7 @@
             text-shadow: 0 0 20px #808080;
             line-height: 1.2;
             text-align: center;
+            padding-top: 100px;
         }
 
         /* 文字サイズ調整 */
@@ -32,7 +33,7 @@
         }
         }
 
-        #slider{
+        #slider {
             width: 100%;
             margin: 2em 0;
         }
@@ -49,7 +50,16 @@
         
         nav {
             backdrop-filter: blur(3px);
-            filter:drop-shadow(5px 5px 5px #909090);
+            position: absolute;
+            bottom: 3%;
+            width: 98vw;
+            height: 97vh;
+        }
+
+        .content {
+            position: absolute;
+            bottom: 0;
+            height: 5em;
         }
 
         #text-container {
@@ -62,7 +72,6 @@
             display: block;
             margin: 10px 0;
         }
-
 
         #main {
             position: relative;
@@ -77,23 +86,6 @@
     </style>
 </head>
 <body id="all">
-    <nav id="nav">
-        <input type="range" id="slider" min="20" max="256" value="1" default="50">
-        <input type="range" id="text-slider" min="-128" max="512" value="1" step="2">
-        <input type="color" id="bg-color-picker" name="bg-color-picker" class="color-picker">
-        <input type="color" id="text-color-picker" name="text-color-picker" class="color-picker">
-        <button id="bg-color-button">background</button>
-        <button id="text-color-button">text</button>
-    <select id="font-select">
-        <option value="Arial">Arial</option>
-        <option value="Helvetica">Helvetica</option>
-        <option value="Times New Roman">Times New Roman</option>
-        <option value="Georgia">Georgia</option>
-        <option value="Ubuntu Mono">Ubuntu Mono</option>
-        <option value="Lekton">Lekton</option>
-        <option value="Fira Mono">Fira Mono</option>
-    </select>
-    </nav>
 
     <main id="main">
         <div id="text-container">
@@ -103,6 +95,30 @@
             </div>
         </div>
     </main>
+
+    <nav id="nav" class="nav">
+        <div class="content">
+            <input type="range" id="slider" min="20" max="256" value="1">
+            <input type="range" id="text-slider" min="-128" max="512" value="1">
+            <input type="color" id="bg-color-picker" name="bg-color-picker" class="color-picker">
+            <input type="color" id="text-color-picker" name="text-color-picker" class="color-picker">
+            <button id="bg-color-button">background</button>
+            <button id="text-color-button">text</button>
+            <select id="font-select">
+                <option value="">--fonts--</option>
+                <option value="Arial">Arial</option>
+                <option value="Helvetica">Helvetica</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Ubuntu Mono">Ubuntu Mono</option>
+                <option value="Lekton">Lekton</option>
+                <option value="Fira Mono">Fira Mono</option>
+            </select>
+        </div>
+
+    
+    </nav> 
+
     <script>
         //色変え
         const bgColorPicker = document.getElementById('bg-color-picker');
@@ -198,7 +214,7 @@
 			console.log(fileButton2);
 			fileButton2.click();
 		},false)
-        //3秒間操作が無かったらフェードアウトさせるやつ
+        //1.5秒間操作が無かったらフェードアウトさせるやつ
         const nav = document.getElementById('nav');
 
         let timer;
@@ -207,7 +223,7 @@
         nav.style.opacity = 1;
         timer = setTimeout(function() {
             nav.style.opacity = 0;
-        }, 3000);
+        }, 1500);
         });
 
         //上下に動かすやつ
