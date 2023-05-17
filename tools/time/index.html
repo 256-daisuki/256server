@@ -41,8 +41,8 @@
 </head>
 <body id="all">
     <input type="range" id="slider" min="20" max="100" value="1">
-    <input type="color" id="color-picker-bac">
-    <input type="color" id="color-picker-let">
+    <input type="color" id="bg-color-picker">
+    <input type="color" id="text-color-picker">
     <select id="font-select">
         <option value="Arial">Arial</option>
         <option value="Helvetica">Helvetica</option>
@@ -62,22 +62,18 @@
     </main>
     <script>
         //色変え
-        //バックグラウンド
-        const colorPicker = document.getElementById('color-picker-bac');
+        const bgColorPicker = document.getElementById('bg-color-picker');
+        const textColorPicker = document.getElementById('text-color-picker');
         const contentElement = document.getElementById('all');
-      
-        colorPicker.addEventListener('input', function() {
-        const color = this.value;
-        contentElement.style.backgroundColor = color;
+        
+        bgColorPicker.addEventListener('input', function() {
+            const bgColor = this.value;
+            contentElement.style.backgroundColor = bgColor;
         });
-
-        //文字
-        const colorPicker2 = document.getElementById('color-picker-let');
-        const contentElement2 = document.getElementById('container');
-      
-        colorPicker2.addEventListener('input', function() {
-        const color2 = this.value;
-        contentElement2.style.backgroundColor2 = color2;
+        
+        textColorPicker.addEventListener('input', function() {
+            const textColor = this.value;
+            contentElement.style.color = textColor;
         });
 
         //文字サイズ変更
