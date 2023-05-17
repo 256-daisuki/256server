@@ -38,16 +38,52 @@
         }
         
         .color-picker {
+            margin-top: 10px;
             display: none;
+        }
+
+        #nav {
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+        
+        nav {
+            backdrop-filter: blur(3px);
+            filter:drop-shadow(5px 5px 5px #909090);
+        }
+
+        #text-container {
+            position: relative;
+            top: 0;
+            transition: top 0.1s ease-in-out;
+        }
+
+        #text-slider {
+            display: block;
+            margin: 10px 0;
+        }
+
+
+        #main {
+            position: relative;
+            top: 0;
+            transition: top 0.1s ease-in-out;
+        }
+
+        #slider {
+            display: block;
+            margin: 10px 0;
         }
     </style>
 </head>
 <body id="all">
-    <input type="range" id="slider" min="20" max="256" value="1" default="50">
-    <input type="color" id="bg-color-picker" name="bg-color-picker" class="color-picker">
-    <input type="color" id="text-color-picker" name="text-color-picker" class="color-picker">
-    <button id="bg-color-button">background</button>
-    <button id="text-color-button">text</button>
+    <nav id="nav">
+        <input type="range" id="slider" min="20" max="256" value="1" default="50">
+        <input type="range" id="text-slider" min="-128" max="512" value="1" step="2">
+        <input type="color" id="bg-color-picker" name="bg-color-picker" class="color-picker">
+        <input type="color" id="text-color-picker" name="text-color-picker" class="color-picker">
+        <button id="bg-color-button">background</button>
+        <button id="text-color-button">text</button>
     <select id="font-select">
         <option value="Arial">Arial</option>
         <option value="Helvetica">Helvetica</option>
@@ -57,14 +93,15 @@
         <option value="Lekton">Lekton</option>
         <option value="Fira Mono">Fira Mono</option>
     </select>
+    </nav>
+
     <main id="main">
-        <div class="container">
+        <div id="text-container">
             <div class="clock">
                 <p class="clock-date"></p>
                 <p class="clock-time"></p>
             </div>
         </div>
-        
     </main>
     <script>
         //色変え
@@ -95,7 +132,7 @@
         test.style.fontSize = e.target.value + "px";
         }
 
-
+        //一番大事な時間のやつ
         const clock = () => {
         // 現在の日時・時刻の情報を取得
         const d = new Date();
@@ -161,6 +198,25 @@
 			console.log(fileButton2);
 			fileButton2.click();
 		},false)
+        //3秒間操作が無かったらフェードアウトさせるやつ
+        const nav = document.getElementById('nav');
+
+        let timer;
+        document.addEventListener('mousemove', function() {
+        clearTimeout(timer);
+        nav.style.opacity = 1;
+        timer = setTimeout(function() {
+            nav.style.opacity = 0;
+        }, 3000);
+        });
+
+        //上下に動かすやつ
+        const textSlider = document.getElementById('text-slider');
+        const textContainer = document.getElementById('text-container');
+  
+        textSlider.oninput = function() {
+        textContainer.style.top = this.value + 'px';
+        }
     </script>
 </body>
 </html>

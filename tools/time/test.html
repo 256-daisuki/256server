@@ -1,34 +1,36 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Background and Text Color Selector</title>
-  </head>
-  <body>
-    <label for="bg-color-picker">Choose background color:</label>
-    <input type="color" id="bg-color-picker">
-    
-    <label for="text-color-picker">Choose text color:</label>
-    <input type="color" id="text-color-picker">
-    
-    <div id="content">
-      <h1>Background and Text Color</h1>
-      <p>This is a sample text.</p>
-    </div>
-    
-    <script>
-      const bgColorPicker = document.getElementById('bg-color-picker');
-      const textColorPicker = document.getElementById('text-color-picker');
-      const contentElement = document.getElementById('content');
-      
-      bgColorPicker.addEventListener('input', function() {
-        const bgColor = this.value;
-        contentElement.style.backgroundColor = bgColor;
-      });
-      
-      textColorPicker.addEventListener('input', function() {
-        const textColor = this.value;
-        contentElement.style.color = textColor;
-      });
-    </script>
-  </body>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #text-container {
+  position: relative;
+  top: 0;
+  transition: top 0.2s ease-in-out;
+}
+
+#text-slider {
+  display: block;
+  margin: 10px 0;
+}
+
+  </style>
+</head>
+<body>
+  <input type="range" id="text-slider" min="20" max="256" value="0" step="2">
+<div id="text-container">
+  <p>テキストを上下に動かす</p>
+</div>
+<script>
+const textSlider = document.getElementById('text-slider');
+  const textContainer = document.getElementById('text-container');
+  
+  textSlider.oninput = function() {
+    textContainer.style.top = this.value + 'px';
+  }
+  </script>
+</body>
 </html>
