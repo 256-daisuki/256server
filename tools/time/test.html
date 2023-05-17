@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Background Color Selector</title>
+  </head>
+  <body>
+    <label for="color-picker">Choose background color:</label>
+    <input type="color" id="color-picker">
+    
+    <div id="content">
+      <h1>Background Color</h1>
+      <p>This is a sample text.</p>
+    </div>
+    
+    <script>
+      const colorPicker = document.getElementById('color-picker');
+      const contentElement = document.getElementById('content');
+      
+      colorPicker.addEventListener('input', function() {
+        const color = this.value;
+        contentElement.style.backgroundColor = color;
+      });
+    </script>
+  </body>
+</html>
