@@ -10,6 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Ubuntu+Mono&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lekton&family=Montserrat:wght@300&family=Ubuntu+Mono&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cousine&family=Fira+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cousine&family=Fira+Mono&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200&display=swap" rel="stylesheet">
     <style>
         body {
             background-color: aliceblue;
@@ -62,6 +65,10 @@
             height: 5em;
         }
 
+        .range {
+            width: 40vw;
+        }
+
         #text-container {
             position: relative;
             top: 0;
@@ -98,12 +105,13 @@
 
     <nav id="nav" class="nav">
         <div class="content">
-            <input type="range" id="slider" min="20" max="256" value="1">
-            <input type="range" id="text-slider" min="-128" max="512" value="1">
+            <input type="range" id="slider" min="20" max="256" value="1" class="range">
+            <input type="range" id="text-slider" min="-128" max="512" value="1" class="range">
             <input type="color" id="bg-color-picker" name="bg-color-picker" class="color-picker">
             <input type="color" id="text-color-picker" name="text-color-picker" class="color-picker">
             <button id="bg-color-button">background</button>
             <button id="text-color-button">text</button>
+            <button id="fullscreen-btn">full</button>
             <select id="font-select">
                 <option value="">--fonts--</option>
                 <option value="Arial">Arial</option>
@@ -113,10 +121,11 @@
                 <option value="Ubuntu Mono">Ubuntu Mono</option>
                 <option value="Lekton">Lekton</option>
                 <option value="Fira Mono">Fira Mono</option>
+                <option value="Cousine">Cousine</option>
+                <option value="Share Tech Mono">Share Tech Mono</option>
+                <option value="Inconsolata">Inconsolata</option>
             </select>
         </div>
-
-    
     </nav> 
 
     <script>
@@ -233,6 +242,29 @@
         textSlider.oninput = function() {
         textContainer.style.top = this.value + 'px';
         }
+
+        //全画面のやつ
+        const fullscreenBtn = document.getElementById('fullscreen-btn');
+        const fullscreenIcon = document.getElementById('fullscreen-icon');
+        const content = document.getElementById('all');
+
+        let isFullscreen = false;
+
+        fullscreenBtn.addEventListener('click', () => {
+        if (isFullscreen) {
+            document.exitFullscreen();
+            isFullscreen = false;
+        } else {
+            document.documentElement.requestFullscreen();
+            isFullscreen = true;
+        }
+        });
+
+        document.addEventListener('fullscreenchange', () => {
+        if (!document.fullscreenElement) {
+            isFullscreen = false;
+        }
+        });
     </script>
 </body>
 </html>

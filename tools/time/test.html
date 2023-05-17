@@ -2,35 +2,64 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Full Screen Demo</title>
   <style>
-    #text-container {
-  position: relative;
-  top: 0;
-  transition: top 0.2s ease-in-out;
-}
-
-#text-slider {
-  display: block;
-  margin: 10px 0;
-}
-
+    #fullscreen-btn {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      padding: 10px;
+      background-color: #fff;
+      border: 1px solid #000;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      z-index: 9999;
+    }
+    #fullscreen-btn img {
+      width: 20px;
+      height: 20px;
+      vertical-align: middle;
+      margin-right: 5px;
+    }
   </style>
 </head>
 <body>
-  <input type="range" id="text-slider" min="20" max="256" value="0" step="2">
-<div id="text-container">
-  <p>テキストを上下に動かす</p>
-</div>
-<script>
-const textSlider = document.getElementById('text-slider');
-  const textContainer = document.getElementById('text-container');
-  
-  textSlider.oninput = function() {
-    textContainer.style.top = this.value + 'px';
-  }
+  <button id="fullscreen-btn">
+    <img id="fullscreen-icon" src="1.png" alt="">
+    Full Screen
+  </button>
+
+  <div id="content">
+    <p>ここにコンテンツを記述します。</p>
+  </div>
+
+  <script>
+    const fullscreenBtn = document.getElementById('fullscreen-btn');
+    const fullscreenIcon = document.getElementById('fullscreen-icon');
+    const content = document.getElementById('content');
+
+    let isFullscreen = false;
+
+    fullscreenBtn.addEventListener('click', () => {
+      if (isFullscreen) {
+        document.exitFullscreen();
+        fullscreenIcon.src = '1.svg';
+        isFullscreen = false;
+      } else {
+        document.documentElement.requestFullscreen();
+        fullscreenIcon.src = '2.svg';
+        isFullscreen = true;
+      }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement) {
+        fullscreenIcon.src = '1.svg';
+        isFullscreen = false;
+      }
+    });
   </script>
 </body>
 </html>
+
