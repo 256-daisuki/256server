@@ -115,7 +115,7 @@
             <input type="range" id="text-slider" min="-128" max="512" value="1" class="range">
             <input type="color" id="bg-color-picker" name="bg-color-picker" class="color-picker">
             <input type="color" id="text-color-picker" name="text-color-picker" class="color-picker">
-            
+            <button id="bg-color-button">background</button>
             <button id="text-color-button">text</button>
             <button id="fullscreen-btn">full</button>
             <button id="format-toggle">12</button>
@@ -258,7 +258,7 @@
 			console.log(fileButton2);
 			fileButton2.click();
 		},false)
-
+        
         //1.5秒間操作が無かったらフェードアウトさせるやつ
         const nav = document.getElementById('nav');
 
