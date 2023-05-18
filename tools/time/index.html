@@ -115,9 +115,10 @@
             <input type="range" id="text-slider" min="-128" max="512" value="1" class="range">
             <input type="color" id="bg-color-picker" name="bg-color-picker" class="color-picker">
             <input type="color" id="text-color-picker" name="text-color-picker" class="color-picker">
-            <button id="bg-color-button">background</button>
+            
             <button id="text-color-button">text</button>
             <button id="fullscreen-btn">full</button>
+            <button id="format-toggle">12</button>
             <select id="font-select">
                 <option value="">--fonts--</option>
                 <option value="Arial">Arial</option>
@@ -194,7 +195,19 @@
 
         // 日付・時刻の文字列を作成
         let today = `${year}.${month}.${date} ${day}`;
-        let time = `${hour}:${min}:${sec}`;
+        let time = "";
+
+        // 12時間表示と24時間表示を切り替える
+        const formatToggle = document.getElementById('format-toggle');
+        if (formatToggle.dataset.format === '12') {
+            // 12時間表示の場合
+            let period = hour < 12 ? 'AM' : 'PM';
+            hour = hour % 12 || 12;
+            time = `${period} ${hour}:${min}:${sec}`;
+        } else {
+            // 24時間表示の場合
+            time = `${hour}:${min}:${sec}`;
+        }
 
         // 文字列を出力
         document.querySelector(".clock-date").innerText = today;
@@ -203,6 +216,22 @@
 
         // 1秒ごとにclock関数を呼び出す
         setInterval(clock, 1000);
+
+        // 切り替えボタンのクリックイベント
+        const formatToggle = document.getElementById('format-toggle');
+        formatToggle.addEventListener('click', function() {
+            // 現在のフォーマットを取得
+            const currentFormat = formatToggle.dataset.format;
+
+            // フォーマットを切り替え
+            if (currentFormat === '12') {
+                formatToggle.dataset.format = '24';
+                formatToggle.textContent = '12';
+            } else {
+                formatToggle.dataset.format = '12';
+                formatToggle.textContent = '24';
+            }
+        });
 
         //フォントを変えるやつ
         const fontSelect = document.getElementById('font-select');
@@ -229,6 +258,7 @@
 			console.log(fileButton2);
 			fileButton2.click();
 		},false)
+
         //1.5秒間操作が無かったらフェードアウトさせるやつ
         const nav = document.getElementById('nav');
 
