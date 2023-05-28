@@ -11,7 +11,7 @@ function submitForm() {
     var body = document.getElementById("body").value;
 
     // 名前が未入力の場合はデフォルト値を設定する
-    if (name === " ") {
+    if (name === "") {
         name = "名無し";
     }
     
