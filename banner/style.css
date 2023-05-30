@@ -1,15 +1,38 @@
-body {
-    margin: 100px;
+header {
+    background-color: #808080;
+    width: 100%;
+    padding: 0;
 }
 
-ul {
+nav {
+    height: 40px;
+}
+
+nav ul {
+    list-style: none;
     display: flex;
-    flex-wrap:wrap;
-    padding-left:0;
+    margin-top: -30px;
+    margin-right: 3%;
+    justify-content: flex-end;
+}
+  
+header li {
+    margin-left: 20px;
+    text-align: right;
+    margin-top: -24px;
 }
 
-li{
-    list-style:none;
+header a {
+    color: #fff;
+    text-decoration: none;
+}
+  
+header p {
+    color: #fff;
+    font-size: 1.5em;
+    margin-left: 15px;
+    margin-top: auto;
+    padding-top: 3px;
 }
 
 /*フッター */
@@ -18,46 +41,105 @@ li{
     color: #808080;
     background: #e5e5e5;
     padding: 30px;
- }
- 
- .footer03 a {
+}
+  
+.footer03 a {
     color: #808080;
     text-decoration: none;
- }
- 
- .footer03 a:hover {
+}
+  
+.footer03 a:hover {
     text-decoration: underline;
- }
- 
- .footer03 .menu {
+}
+  
+.footer03 .menu {
     margin: 0;
     padding: 0;
     list-style: none;
     display: flex;
     flex-wrap: wrap;
- }
- 
- .footer03 .menu li {
+}
+  
+.footer03 .menu li {
     margin: 0;
     padding: 0 20px;
     border-left: 1px #808080 solid;
- }
- 
- .footer03 .menu li:first-child {
+}
+  
+.footer03 .menu li:first-child {
     padding-left: 0;
     border: none;
- }
- 
- .footer03 .copyright {
+}
+  
+.footer03 .copyright {
     margin: 0;
     padding: 20px 0 0 0;
- }
- 
- @media only screen and (max-width: 599px) {
-    .footer03 .menu li {
-       width: 50%;
-       padding: 0 20px 0 0;
-       box-sizing: border-box;
-       border: none;
+}
+  
+    @media only screen and (max-width: 599px) {
+        .footer03 .menu li {
+        width: 50%;
+        padding: 0 20px 0 0;
+        box-sizing: border-box;
+        border: none;
+        }
     }
- }
+  
+    @media (min-width: 500px)/*PC用*/ {
+        .title {
+        text-align: center;
+        margin-top: 5vw;
+        font-size: 256%;
+    }
+    
+    .sub-title {
+       text-align: center;
+    }
+  
+    .top-h2 {
+       margin-top: 70px;
+    }
+  
+    .counter {
+       padding-top: 10px;
+    }
+}
+  
+/*FontAwesomeを使用しています。*/
+.header-8 {
+    box-sizing: border-box;
+    width: 100%;
+    height: 120px;
+}
+  
+.box {
+    box-sizing: border-box;
+}
+
+/*main*/
+body {
+    margin: auto;
+}
+
+main {
+    margin-left: 5%;
+}
+  
+.top {
+    text-align: center;
+    margin-left: -5%;
+}
+
+h2 {
+    margin-left: -2%;
+}
+
+.top-h1 {
+font-size: 50px;
+margin-bottom: -20px;
+}
+
+.mini-p {
+font-size: 0.5em;
+color: #808080;
+}

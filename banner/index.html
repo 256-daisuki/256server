@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>256srerver|banner</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <title>256server｜home</title>
+    <link rel="stylesheet" href="/style.css">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BN5KGMB0GN"></script>
     <script>
@@ -17,57 +15,61 @@
 
         gtag('config', 'G-BN5KGMB0GN');
     </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5856031137941875"
+    crossorigin="anonymous"></script>
     <style>
-        body {
-            margin: 100px;
+        header {
+            background-color: #808080;
+            width: 100%;
+            padding: 0;
         }
 
-        .title {
-            text-align: center;
-            margin-top: 10vw;
+        nav {
+            height: 40px;
         }
 
-        .sub-title {
-            text-align: center;
-            margin-bottom: 100px;
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin-top: -30px;
+            margin-right: 3%;
+            justify-content: flex-end;
+        }
+  
+        header li {
+            margin-left: 20px;
+            text-align: right;
+            margin-top: -24px;
         }
 
-        h2 {
-            margin-left: 2%;
-            padding: 0.17rem 1rem;
-            border-left: 2px solid #000;
-            padding: auto;
+        header a {
+            color: #fff;
+            text-decoration: none;
         }
-
-        .sentence {
-            margin-left: 5%;
+  
+        header p {
+            color: #fff;
+            font-size: 1.5em;
+            margin-left: 15px;
+            margin-top: auto;
+            padding-top: 3px;
         }
     </style>
 </head>
-
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/index.html">256</a>
-            </div>
-            <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="/index.html">Home</a></li>
-                    <li class="active"><a href="./banner/index.html">banner</a></li>
-                    <li><a href="/made/index.html">made</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
+    <header>
+        <nav>
+            <p>256</p>
+            <ul>
+                <li><a href="/index.html">home</a></li>
+                <li><a href="/tools/index.html">tools</a></li>
+                <li><a href="/history/index.html">歴史（笑）</a></li>
+                <li><a href="/bbs/index.php">BBS</a></li>
+            </ul>
+        </nav>
+    </header>
+      
+    <main>
     <h1>banner（同盟バナー）</h1>
     <p>昔はSNSがなかったからバナーとか相互リンクでお互いのサーバーを宣伝してたらしいね。なんかそれが好きだから友を巻き込んでバナー欄を作ってみた。「私もバナーを作ってここに乗りたい！」って思う変な人がいたら
         私のツイッター（@256_daisuki）にDMしてね あ、解像度は縦40px、横200pxだよ pngファイルでよろしくね</p>
@@ -81,22 +83,36 @@
         <li><a href="https://www.youtube.com/@jyeku"><img src="/image/banner/jyeku.png" alt="jyeku"></a></li>
         <li><a href="https://twitter.com/Canon_horusu64"><img src="/image/banner/canon.png" alt="kanon"></a></li>
     </ul>
+
+    </main>
     <footer class="footer03">
         <ul class="menu">
-            <li><a href="https://twitter.com/256_daisuki">twitter</a></li>
+            <li><a href="https://twitter.com/256_daisuke">twitter</a></li>
             <li><a href="https://youtube.com/@_256">youtube</a></li>
             <li><a href="https://github.com/256-daisuki">github</a></li>
         </ul>
-        <iframe id="my-iframe" src="/a.html" frameborder="0" height="30px" scrolling="no"></iframe>
+        <ul class="menu">
+            <li><a href="/terms.html">利用規約</a></li>
+            <li><a href="/privacy.html">プライバシーポリシー</a></li>
+        </ul>
         <p class="copyright">&copy; 256大好き!</p>
+        <div id="usage"></div>
     </footer>
+
+    </main>
     <script>
-        // 5秒ごとにiframeを更新する
-        setInterval(() => {
-            const iframe = document.getElementById("my-iframe");
-            iframe.src = iframe.src;
-        }, 5000);
+        window.addEventListener('load', function() {
+            // a.htmlを読み込む
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                // レスポンスの中身を取得
+                document.getElementById('usage').innerHTML = this.responseText;
+                }
+            };
+            xhttp.open("GET", "a.html", true);
+            xhttp.send();
+        });
     </script>
 </body>
-
 </html>
