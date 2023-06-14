@@ -71,7 +71,16 @@
         <div class="top">
             <h1 class="top-h1">256server</h1>
             <p>中学生の趣味程度のサイト</p>
-            <img src="https://count.getloli.com/get/@:256server?theme=rule34"/>
+            <?xml version="1.0" encoding="UTF-8"?>
+            <svg width="{{ g_width }}" height="{{ g_height }}" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink">
+                <g>
+                    {% for value in context %}
+                    <image x="{{ value.position }}" y="0" width="{{ value.width }}" height="{{ value.height }}"
+                        xlink:href="data:image/gif;base64,{{ value.base64 }}"></image>
+                    {% endfor %}
+                </g>
+            </svg>
             <p class="mini-p">アクセスカウンター</p>
         </div>
         <h2>このサイトについて</h2>
