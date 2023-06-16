@@ -62,7 +62,7 @@
                 <li><a href="#">home</a></li>
                 <li><a href="/tools/index.html">tools</a></li>
                 <li><a href="/history/index.html">歴史（笑）</a></li>
-                <li><a href="/bbs/index.php">BBS</a></li>
+                <li><a href="/bbs/">BBS</a></li>
             </ul>
         </nav>
     </header>
@@ -71,16 +71,7 @@
         <div class="top">
             <h1 class="top-h1">256server</h1>
             <p>中学生の趣味程度のサイト</p>
-            <?xml version="1.0" encoding="UTF-8"?>
-            <svg width="{{ g_width }}" height="{{ g_height }}" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink">
-                <g>
-                    {% for value in context %}
-                    <image x="{{ value.position }}" y="0" width="{{ value.width }}" height="{{ value.height }}"
-                        xlink:href="data:image/gif;base64,{{ value.base64 }}"></image>
-                    {% endfor %}
-                </g>
-            </svg>
+            <img src="https://moe-counter.glitch.me/get/@:256server?theme=rule34" alt="">
             <p class="mini-p">アクセスカウンター</p>
         </div>
         <h2>このサイトについて</h2>

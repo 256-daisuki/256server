@@ -64,7 +64,7 @@
                 <li><a href="/index.html">home</a></li>
                 <li><a href="/tools/index.html">tools</a></li>
                 <li><a href="/history/index.html">歴史（笑）</a></li>
-                <li><a href="/bbs/index.php">BBS</a></li>
+                <li><a href="#">BBS</a></li>
             </ul>
         </nav>
     </header>
