@@ -6,12 +6,11 @@
     <title>header - 256server</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
     <header>
         <div class="logo"><a href="#">256</a></div>
-        <button class="header_button" id="toggleButton">menu</button>
+        <div class="header_btn"><button class="header_button" id="toggleButton">menu</button></div>
         <div class="header-menu" id="header-menu">
-            <ul>
+        <ul>
             <li><a href="#">menu0</a></li>
             <li><a href="#">menu1</a></li>
             <li><a href="#">menu2</a></li>
@@ -28,16 +27,38 @@
 
         // ボタンがクリックされたときの処理
         toggleButton.addEventListener('click', function() {
-        // 現在のmargin-left値を取得
-        const currentMarginLeft = parseFloat(getComputedStyle(headerMenu).marginLeft);
+          // 現在のmargin-left値を取得
+            const currentMarginLeft = parseFloat(getComputedStyle(headerMenu).marginLeft);
 
-        // margin-leftが0でない場合は0に設定し、0の場合は元の値に戻す
-        if (currentMarginLeft !== 0) {
+          // margin-leftが0でない場合は0に設定し、0の場合は元の値に戻す
+            if (currentMarginLeft !== 0) {
             headerMenu.style.marginLeft = '0';
-        } else {
-            headerMenu.style.marginLeft = '190%'; // 元に戻す値を設定してください
-        }
+            } else {
+            headerMenu.style.marginLeft = '180%'; // 元に戻す値を設定してください
+            }
         });
     </script>
+    <script>
+      // 要素を取得
+        const myElement = document.getElementById('toggleButton');
+    
+      // ウィンドウの幅が変更されたときの処理
+        window.addEventListener('resize', function() {
+        // ウィンドウの横幅を取得
+        const windowWidth = window.innerWidth;
+    
+        // 横幅が481以上の場合、要素を非表示にする
+        if (windowWidth >= 513) {
+            myElement.style.display = 'none';
+        } else {
+          // 横幅が480以下の場合、要素を表示する
+            myElement.style.display = 'block';
+        }
+        });
+    
+      // 初回表示時にも処理を実行する
+        window.dispatchEvent(new Event('resize'));
+    </script>
+    
 </body>
 </html>
