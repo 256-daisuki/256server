@@ -1,9 +1,34 @@
 body {
-    background-color: aliceblue;
+    background-color: #eee;
     margin: auto;
 }
+
 header {
     width: 100%;
     height: 50px;
     background-color: #999;
+}
+
+header a {
+    text-decoration: none;
+    color: #222;
+}
+
+.logo {
+    font-family: 'monospace';
+    background: orange;
+    font-size: 1.5em;
+    width: 2em;
+}
+
+header ul {
+    display: flex; /* 横に並べるやつ */
+    list-style: none;
+    background: orange;
+    padding-left: 60%;
+}
+
+header li {
+    margin-left: 5%;
+    width: 5em;
 }
