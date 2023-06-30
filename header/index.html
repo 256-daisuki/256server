@@ -9,8 +9,8 @@
 <body>
     <header>
         <div class="logo"><a href="#">256</a></div>
-        <button class="header-button">menu</button>
-        <div class="header-menu">
+        <button class="header_button" id="toggleButton">menu</button>
+        <div class="header-menu" id="header-menu">
             <ul>
             <li><a href="#">menu0</a></li>
             <li><a href="#">menu1</a></li>
@@ -19,5 +19,25 @@
         </ul>
         </div>
     </header>
+    <script>
+        // ボタン要素を取得
+        const toggleButton = document.getElementById('toggleButton');
+
+        // header-menu要素を取得
+        const headerMenu = document.getElementById('header-menu');
+
+        // ボタンがクリックされたときの処理
+        toggleButton.addEventListener('click', function() {
+        // 現在のmargin-left値を取得
+        const currentMarginLeft = parseFloat(getComputedStyle(headerMenu).marginLeft);
+
+        // margin-leftが0でない場合は0に設定し、0の場合は元の値に戻す
+        if (currentMarginLeft !== 0) {
+            headerMenu.style.marginLeft = '0';
+        } else {
+            headerMenu.style.marginLeft = '190%'; // 元に戻す値を設定してください
+        }
+        });
+    </script>
 </body>
 </html>

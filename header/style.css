@@ -40,5 +40,43 @@ header li {
 }
 
 @media screen and (max-width:480px) { /*　画面サイズが480px以下の場合ここの記述が適用される*/
+    html,body {
+        overflow-x: hidden;
+    }
 
+    header {
+        width: 100%;
+        height: 70px;
+    }
+    
+    .logo {
+        padding-top: 12px;
+        padding-left: 8px;
+        font-family: 'monospace';
+        font-size: 2em;
+        width: 2em;
+    }
+
+    .header-button {
+        display:block
+    }
+
+    .header-menu {
+        margin-left: 190%;
+    }
+    
+    header ul {
+        display: block; /* 横に並べるやつ */
+        margin-top: -14px;
+        list-style: none;
+        width: 8em;
+        background-color: blue;
+    }
+    
+    header li {
+        margin: 10px;
+        width: 4em;
+        font-size: 1.3em;
+        background-color: pink;
+    }
 }
