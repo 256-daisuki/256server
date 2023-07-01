@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>header - 256server</title>
+    <title>256server - header</title>
     <link rel="stylesheet" href="style.css">
 </head>
     <header>
+
         <div class="logo"><a href="#">256</a></div>
         <div class="header_btn"><button class="header_button" id="toggleButton">menu</button></div>
-        <div class="header-menu" id="header-menu">
-        <ul>
+        <ul class="header-menu" id="header-menu">
             <li><a href="#">menu0</a></li>
             <li><a href="#">menu1</a></li>
             <li><a href="#">menu2</a></li>
             <li><a href="#">menu3</a></li>
         </ul>
-        </div>
     </header>
     <script>
         // ボタン要素を取得
@@ -47,11 +46,11 @@
         // ウィンドウの横幅を取得
         const windowWidth = window.innerWidth;
     
-        // 横幅が481以上の場合、要素を非表示にする
+        // 横幅が513以上の場合、要素を非表示にする
         if (windowWidth >= 513) {
             myElement.style.display = 'none';
         } else {
-          // 横幅が480以下の場合、要素を表示する
+          // 横幅が512以下の場合、要素を表示する
             myElement.style.display = 'block';
         }
         });

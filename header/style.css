@@ -25,7 +25,6 @@ header a {
 header ul {
     display: flex; /* 横に並べるやつ */
     float: right; /* 右端に寄せるやつ */
-    margin-top: -32px;
     list-style: none;
     width: 20em;
 }
@@ -37,14 +36,13 @@ header li {
 
 .header_button {
     display: block;
-    margin-top: -40px;
-    width: 70px;
-    height: 70px;
+    width: 55px;
+    height: 55px;
 }
 
-@media screen and (max-width:512px) { /*　画面サイズが480px以下の場合ここの記述が適用される*/
+@media screen and (max-width:512px) { /*　画面サイズが512px以下の場合ここの記述が適用される*/
     html,body {
-        overflow-x: hidden;
+        overflow-x: hidden; /* スクロール禁止！ */
     }
 
     header {
@@ -61,7 +59,7 @@ header li {
     }
 
     .header_btn {
-        margin-top: -20px;
+        
         float: right; /* 右端に寄せるやつ */
     }
 
@@ -71,8 +69,8 @@ header li {
     
     header ul {
         display: block; /* 横に並べるやつ */
+        padding: 0px;
         margin-top: 10px;
-        margin-right: -50px;
         list-style: none;
         width: 8em;
         background-color: #bbb;
