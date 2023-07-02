@@ -9,15 +9,19 @@
     <header>
         <ul class="header-flex">
             <div class="logo"><a href="#">256</a></div>
-            <div class="header_btn"><button class="header_button" id="toggleButton">menu</button></div>
-            <ul class="header-menu" id="header-menu">
-                <li><a href="#">menu0</a></li>
-                <li><a href="#">menu1</a></li>
-                <li><a href="#">menu2</a></li>
-                <li><a href="#">menu3</a></li>
-            </ul>
+            <button class="header_button" id="toggleButton">menu</button>
+        </ul>
+        <ul class="header-menu" id="header-menu">
+            <li><a href="#">menu0</a></li>
+            <li><a href="#">menu1</a></li>
+            <li><a href="#">menu2</a></li>
+            <li><a href="#">menu3</a></li>
         </ul>
     </header>
+    <main>
+        
+    </main>
+    
     <script>
         // ボタン要素を取得
         const toggleButton = document.getElementById('toggleButton');
@@ -37,27 +41,6 @@
             headerMenu.style.marginLeft = '180%'; // 元に戻す値を設定してください
             }
         });
-    </script>
-    <script>
-      // 要素を取得
-        const myElement = document.getElementById('toggleButton');
-    
-      // ウィンドウの幅が変更されたときの処理
-        window.addEventListener('resize', function() {
-        // ウィンドウの横幅を取得
-        const windowWidth = window.innerWidth;
-    
-        // 横幅が513以上の場合、要素を非表示にする
-        if (windowWidth >= 513) {
-            myElement.style.display = 'none';
-        } else {
-          // 横幅が512以下の場合、要素を表示する
-            myElement.style.display = 'block';
-        }
-        });
-    
-      // 初回表示時にも処理を実行する
-        window.dispatchEvent(new Event('resize'));
     </script>
 </body>
 </html>

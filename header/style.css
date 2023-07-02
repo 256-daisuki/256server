@@ -9,17 +9,24 @@ header {
     background-color: #bbb;
 }
 
+.header-flex {
+    display: flex;
+    margin: 0px;
+}
+
 header a {
     text-decoration: none;
     color: #222;
 }
 
 .logo {
-    padding-top: 8px;
-    padding-left: 5px;
+    margin-top: 0px;
+    background-color: red;
     font-family: 'monospace';
     font-size: 1.5em;
     width: 2em;
+    text-decoration: none;
+    color: #222;
 }
 
 header ul {
