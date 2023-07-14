@@ -15,10 +15,11 @@ nav ul {
     margin-right: 3%;
     justify-content: flex-end;
 }
-  
+
 header li {
     margin-left: 20px;
     text-align: right;
+    list-style: none;
     margin-top: -24px;
 }
 
@@ -26,7 +27,7 @@ header a {
     color: #fff;
     text-decoration: none;
 }
-  
+
 header p {
     color: #fff;
     font-size: 1.5em;
