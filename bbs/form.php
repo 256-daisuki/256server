@@ -2,7 +2,7 @@
     名前：<input type="text" id="name" name="name"><br>
     本文：<br>
     <textarea id="body" name="body" cols="40" rows="5"></textarea><br>
-    <input type="button" value="書き込む" onclick="submitForm()"><label><a href="./rule.html">bbsのルール！</a></label>
+    <input type="button" value="書き込む" onclick="submitForm()" name="name" value="<?php if( !empty($_POST['name']) ){ echo $_POST['name']; } ?>"><label><a href="./rule.html">bbsのルール！</a></label>
 </form>
 
 <script>
