@@ -1,4 +1,4 @@
-/*ヘッダー*/
+/*==========ヘッダー==========*/
 header {
     width: 100%;
     padding: 0px;
@@ -41,7 +41,7 @@ nav ul {
 nav ul a {
     color: #fff;
     text-decoration: none;
-    margin-left: 10px;
+    margin-left: 20px;
 }
 
 .nav-link {
@@ -55,7 +55,7 @@ nav ul a {
     justify-content: flex-end;
 }
 
-/*フッター */
+/*==========フッター==========*/
 .footer03 {
     color: #808080;
     background: #e5e5e5;
