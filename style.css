@@ -1,56 +1,76 @@
+/*ヘッダー*/
 header {
-    background-color: #808080;
     width: 100%;
-    padding: 0;
+    padding: 0px;
+    background-color: #808080;
+}
+
+.header-ul {
+    margin: 0px;
+    padding: 0px;
+    padding-left: 10px;
+    list-style: none;
+    display: flex;
+}
+
+.title-256 {
+    margin-top: 3px;
+    margin-right: auto;
+}
+
+.title-256 a {
+    margin: 0px;
+    margin-top: 0px;
+    padding: 0px;
+    height: 40px;
+    color: #fff;
+    font-size: 1.5em;
+    text-decoration: none;
 }
 
 nav {
-    height: 40px;
+    margin-top: 7px;
+    margin-right: 20px;
 }
 
 nav ul {
     list-style: none;
     display: flex;
+}
+
+nav ul a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.nav-link {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.nav ul {
+    display: flex;
     margin-right: 3%;
     justify-content: flex-end;
 }
 
-header li {
-    margin-left: 20px;
-    text-align: right;
-    margin-top: -24px;
-}
-
-header a {
-    color: #fff;
-    text-decoration: none;
-}
-
-header p {
-    color: #fff;
-    font-size: 1.5em;
-    margin-left: 15px;
-    margin-top: auto;
-    padding-top: 3px;
-}
-
 /*フッター */
-
 .footer03 {
     color: #808080;
     background: #e5e5e5;
     padding: 30px;
 }
-  
+
 .footer03 a {
     color: #808080;
     text-decoration: none;
 }
-  
+
 .footer03 a:hover {
     text-decoration: underline;
 }
-  
+
 .footer03 .menu {
     margin: 0;
     padding: 0;
@@ -58,7 +78,7 @@ header p {
     display: flex;
     flex-wrap: wrap;
 }
-  
+
 .footer03 .menu li {
     margin: 0;
     padding: 0 20px;
@@ -94,23 +114,23 @@ header p {
     .sub-title {
         text-align: center;
     }
-  
+
     .top-h2 {
         margin-top: 70px;
     }
-  
+
     .counter {
         padding-top: 10px;
     }
 }
-  
+
 /*FontAwesomeを使用しています。*/
 .header-8 {
     box-sizing: border-box;
     width: 100%;
     height: 120px;
 }
-  
+
 .box {
     box-sizing: border-box;
 }
@@ -123,7 +143,7 @@ body {
 main {
     margin-left: 5%;
 }
-  
+
 .top {
     text-align: center;
     margin-left: -5%;
@@ -134,11 +154,11 @@ h2 {
 }
 
 .top-h1 {
-font-size: 50px;
-margin-bottom: -20px;
+    font-size: 50px;
+    margin-bottom: -20px;
 }
 
 .mini-p {
-font-size: 0.5em;
-color: #808080;
+    font-size: 0.5em;
+    color: #808080;
 }
