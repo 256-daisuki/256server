@@ -2,7 +2,7 @@
     名前：<input type="text" id="name" name="name"><br>
     本文：<br>
     <textarea id="body" name="body" cols="40" rows="5"></textarea><br>
-    <input type="button" value="書き込む" onclick="submitForm()">
+    <input type="button" value="書き込む" onclick="submitForm()"><label><a href="./rule.html">bbsのルール！</a></label>
 </form>
 
 <script>
@@ -12,7 +12,7 @@ function submitForm() {
 
     // 名前が未入力の場合はデフォルト値を設定する
     if (name === "") {
-        name = "名無し";
+        name = "以下、256serverから名無しがお送りします";
     }
 
     // 改行コードを空白に置き換える

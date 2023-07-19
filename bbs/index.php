@@ -16,7 +16,7 @@
         gtag('config', 'G-BN5KGMB0GN');
     </script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5856031137941875"
-     crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script>
         <style>
         header {
             background-color: #808080;
@@ -35,7 +35,7 @@
             margin-right: 3%;
             justify-content: flex-end;
         }
-  
+
         header li {
             margin-left: 20px;
             text-align: right;
@@ -46,7 +46,7 @@
             color: #fff;
             text-decoration: none;
         }
-  
+
         header p {
             color: #fff;
             font-size: 1.5em;
@@ -68,7 +68,7 @@
             </ul>
         </nav>
     </header>
-      
+
     <main>
         <?php
         $datafile = "bbs.txt";
