@@ -1,3 +1,4 @@
+/*なんでCSSなんて見てるんだい？　f12で確認したほうが楽だろ*/
 /*==========ヘッダー==========*/
 header {
     width: 100%;
@@ -56,22 +57,22 @@ nav ul a {
 }
 
 /*==========フッター==========*/
-.footer03 {
+.footer {
     color: #808080;
     background: #e5e5e5;
     padding: 30px;
 }
 
-.footer03 a {
+.footer a {
     color: #808080;
     text-decoration: none;
 }
 
-.footer03 a:hover {
+.footer a:hover {
     text-decoration: underline;
 }
 
-.footer03 .menu {
+.footer .footer-menu {
     margin: 0;
     padding: 0;
     list-style: none;
@@ -79,24 +80,23 @@ nav ul a {
     flex-wrap: wrap;
 }
 
-.footer03 .menu li {
+.footer .footer-menu li {
     margin: 0;
-    padding: 0 20px;
-    border-left: 1px #808080 solid;
+    padding: 0 10px;
 }
 
-.footer03 .menu li:first-child {
+.footer .footer-menu li:first-child {
     padding-left: 0;
     border: none;
 }
 
-.footer03 .copyright {
+.footer .copyright {
     margin: 0;
     padding: 20px 0 0 0;
 }
 
     @media only screen and (max-width: 599px) {
-        .footer03 .menu li {
+        .footer .footer-menu li {
         width: 50%;
         padding: 0 20px 0 0;
         box-sizing: border-box;
@@ -135,7 +135,7 @@ nav ul a {
     box-sizing: border-box;
 }
 
-/*main*/
+/*==========main==========*/
 body {
     margin: auto;
 }

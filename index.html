@@ -37,7 +37,7 @@
         <div class="top">
             <h1 class="top-h1">256server</h1>
             <p>中学生の趣味程度のサイト</p>
-            <img src="https://counter.256server.com/_redirect?theme=moebooru" alt="">
+            <!--<img src="https://counter.256server.com/_redirect?theme=moebooru" alt="アクセスカウンター">-->
             <p class="mini-p">アクセスカウンター</p>
             <p class="mini-p">アクセスカウンターはsqlが吹っ飛んだので撤去されました。R.I.Pかわいいアクセスカウンター</p>
             <p class="mini-p">ヌシが頑張って復活させました。</p>
@@ -63,37 +63,21 @@
             <p><a href="https://sites.google.com/view/kamera-room/%E3%83%9B%E3%83%BC%E3%83%A0" alt="かめらのおへや">かめらのおへや</a>ツイッターで人気な鳥ちゃんを撮ってる人のサイト ここからツイッターに行きましょう。</p> 
             <p>相互リンク募集してます。</p>
             <p>ここをたくさんのリンクでやっぱり埋め尽くしたいって言う私の願望を叶えさせてくれ！
-                このサイト一日に20ぐらいしかアクセスないけど、少しは宣伝になると思うからもしサイト持ってたりしたらツイッターの@256_daisuki にDMちょうだいね！</p>
+                このサイト一日に20ぐらいしかアクセスないけど、少しは宣伝になると思うからもしサイト持ってたりしたら<a href="https://twitter.com/256_daisuke">@256_daisuke</a>にDMちょうだいね！</p>
         </div>
     </main>
-    <footer class="footer03">
-        <ul class="menu">
+    <footer class="footer">
+        <ul class="footer-menu">
             <li><a href="https://twitter.com/256_daisuke">twitter</a></li>
             <li><a href="https://youtube.com/@_256">youtube</a></li>
             <li><a href="https://github.com/256-daisuki">github</a></li>
+            <li><a href="https://note.com/256_daisuki/">note</a></li>
         </ul>
-        <ul class="menu">
+        <ul class="footer-menu">
             <li><a href="/terms.html">利用規約</a></li>
             <li><a href="/privacy.html">プライバシーポリシー</a></li>
         </ul>
         <p class="copyright">&copy; 256大好き!</p>
-        <div id="usage"></div>
     </footer>
-
-    </main>
-    <script>
-        window.addEventListener('load', function() {
-            // a.htmlを読み込む
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                // レスポンスの中身を取得
-                document.getElementById('usage').innerHTML = this.responseText;
-                }
-            };
-            xhttp.open("GET", "a.html", true);
-            xhttp.send();
-        });
-    </script>
 </body>
 </html>
