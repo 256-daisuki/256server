@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>256server｜404</title>
+    <style>
+        /*==========ヘッダー==========*/
+        body {
+            margin: auto;
+        }
+
+        header {
+            width: 100%;
+            padding: 0px;
+            background-color: #808080;
+        }
+
+        .header-ul {
+            margin: 0px;
+            padding: 0px;
+            padding-left: 10px;
+            list-style: none;
+            display: flex;
+        }
+
+        .title-256 {
+            margin-top: 3px;
+            margin-right: auto;
+        }
+
+        .title-256 a {
+            margin: 0px;
+            margin-top: 0px;
+            padding: 0px;
+            height: 40px;
+            color: #fff;
+            font-size: 1.5em;
+            text-decoration: none;
+        }
+
+        nav {
+            margin-top: 7px;
+            margin-right: 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .nav-link {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .nav ul {
+            display: flex;
+            margin-right: 3%;
+            justify-content: flex-end;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <ul class="header-ul">
+            <li class="title-256"><a href="/index.html">256</a></li>
+            <li class="nav-link">
+                <nav>
+                    <ul>
+                        <li><a href="/index.html">home</a></li>
+                        <li><a href="/tools/index.html">tools</a></li>
+                        <li><a href="/history/index.html">history</a></li>
+                        <li><a href="/bbs/index.php">BBS</a></li>
+                    </ul>
+                </nav>
+            </li>
+        </ul>
+    </header>
+    <audio autoplay id="audio" loop>
+            <source src="error/hotaru.mp3">
+    </audio>
+    <script>
+            document.addEventListener('click', audioPlay);
+            function audioPlay() {
+                document.getElementById('audio').play();
+                document.removeEventListener('click', audioPlay);
+        }
+    </script>
+    <h1>このページは存在しないか削除されたページです</h1>
+    <p>クリックすると蛍の光が流れるよ</p>
+    <p>蛍の光 <a href="https://howlingindicator.net">howlingindicator様</a></p>
+    <a href="/index.html">ホームへ戻る</a>
+</body>
+
