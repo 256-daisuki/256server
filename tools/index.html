@@ -49,19 +49,18 @@
         <h3><a href="time/index.html">256time</a></h3>
         <p>なんとなく6時間ぐらいで作った時計。スクリーンセイバーとかぐらいしか使い道が無いです。操作方法はめんどいので書きません。触れて慣れてください。</p>
     </main>
-    <script>
-        window.addEventListener('load', function() {
-            // a.htmlを読み込む
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                // レスポンスの中身を取得
-                document.getElementById('usage').innerHTML = this.responseText;
-                }
-            };
-            xhttp.open("GET", "a.html", true);
-            xhttp.send();
-        });
-    </script>
+    <footer class="footer">
+        <ul class="footer-menu">
+            <li><a href="https://twitter.com/256_daisuke">twitter</a></li>
+            <li><a href="https://youtube.com/@_256">youtube</a></li>
+            <li><a href="https://github.com/256-daisuki">github</a></li>
+            <li><a href="https://note.com/256_daisuki/">note</a></li>
+        </ul>
+        <ul class="footer-menu">
+            <li><a href="/terms.html">利用規約</a></li>
+            <li><a href="/privacy.html">プライバシーポリシー</a></li>
+        </ul>
+        <p class="copyright">&copy; 256大好き!</p>
+    </footer>
 </body>
 </html>
