@@ -14,6 +14,5 @@ footer{
     text-align: center;
     padding: 20px 0;
 
-    position: absolute;/*←絶対位置*/
-    bottom: 0; /*下に固定*/
+    position: absolute;/*絶対位置*/
 }
