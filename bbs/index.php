@@ -28,7 +28,7 @@
                         <li><a href="/index.html">home</a></li>
                         <li><a href="/tools/index.html">tools</a></li>
                         <li><a href="/history/index.html">history</a></li>
-                        <li><a href="#">BBS</a></li>
+                        <li><a href="https://bbs.256server.com">BBS</a></li>
                     </ul>
                 </nav>
             </li>
