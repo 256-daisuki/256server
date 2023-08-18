@@ -159,7 +159,7 @@
     <textarea class="title" id="title" cols="1" placeholder="タイトル"></textarea>
     <form name="in">
         <input type="file" name="select" id="select" onchange="selectFile()" onclick="OnButtonClick();" />
-        <textarea class="main" id="main" cols="64" rows="256" onkeyup="ShowLength(value);" placeholder="ここにメモ"></textarea>
+        <textarea class="main" id="main" cols="32" rows="16" onkeyup="ShowLength(value);" placeholder="ここにメモ"></textarea>
     </form>
     <script>
         document.querySelectorAll(".main").forEach(function(){
@@ -196,7 +196,7 @@
         //ロード系
         var form = document.forms.in;
 
-        form.select.addEventListener( 'change', function(e) {
+        form.select.addEventListener('change', function(e) {
 
             var result = e.target.files[0];
 
@@ -207,7 +207,7 @@
             reader.readAsText( result );
 
             //ファイルの中身を取得後に処理を行う
-            reader.addEventListener( 'load', function() {
+            reader.addEventListener('load', function() {
 
                 //ファイルの中身をtextarea内に表示する
                 form.main.textContent = reader.result;    
