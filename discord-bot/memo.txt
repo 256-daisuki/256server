@@ -1,0 +1,5 @@
+python -m pip install -U discord.py
+pip install requests 
+pip install beautifulsoup4
+pip install matplotlib
+python3 -m pip install -U google
