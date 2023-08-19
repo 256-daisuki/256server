@@ -14,6 +14,17 @@ async def on_ready():
     print("起動完了")
     await tree.sync()#スラッシュコマンドを同期
 
+# メッセージを受信した時に呼ばれる
+@client.event
+async def on_message(message):
+    # 自分のメッセージを無効
+    if message.author == client.user:
+        return
+
+    # メッセージが"$hello"で始まっていたら"Hello!"と応答
+    if message.content.startswith('$hello'):
+        await message.channel.send('Hello!')
+
 @tree.command(name="test",description="テストコマンドです。")
 async def test_command(interaction: discord.Interaction):
     await interaction.response.send_message("しらすじゅーす！",ephemeral=False)
@@ -61,16 +72,6 @@ async def google_command(interaction: discord.Interaction, *, search_word: str):
         result_embed.add_field(name="\u200B", value=f"[{site_title}]({site_url})", inline=False)  # 空白テキストを使ってタイトルを表示しないように
 
     await interaction.response.send_message(embed=result_embed, ephemeral=False)
-
-# メッセージを受信した時に呼ばれる
-@client.event
-async def on_message(message):
-    # 自分のメッセージを無効
-    if message.author == client.user:
-        return
-
-    if message.content.startswith('a'):
-        await message.channel.send('Hello!')
 
 # トークン
 client.run('')
