@@ -1,27 +1,30 @@
-import discord
-
-# インテントの生成
-intents = discord.Intents.default()
-intents.message_content = True
-
-# クライアントの生成
-client = discord.Client(intents=intents)
-
-# discordと接続した時に呼ばれる
-@client.event
-async def on_ready():
-    print(f'We have logged in as {client.user}')
-
-# メッセージを受信した時に呼ばれる
-@client.event
 async def on_message(message):
     # 自分のメッセージを無効
-    if message.author == client.user:
+    if message.author == bot.user:
         return
 
-    # メッセージが"$hello"で始まっていたら"Hello!"と応答
-    if message.content.startswith('$hello'):
-        await message.channel.send('Hello!')
+    if message.content.startswith('$shell'):
+        if message.author.id == 891521181990129675:
+            cmd = message.content[7:]
+            initial_directory = "/home/discord"  # 初期ディレクトリを変更してください
 
-# クライアントの実行
-client.run('MTE0MTg4NjQxNzYxODg4MjYyMA.G7IRxa.ZADUXXpEh-9uD5yBUAMJwNllLCZ01TfK5LL-vk')
+            try:
+                # コマンドを実行するために、シェル自体も起動
+                result = subprocess.run(
+                    ["/bin/bash", "-c", f"{cmd}"],
+                    cwd=initial_directory,
+                    stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                    text=True, timeout=10, shell=False
+                )
+                output = result.stdout.strip()
+
+                result_message = f"discord@256server:{initial_directory}$ {cmd}\n{output}"
+            except Exception as e:
+                result_message = f"Error: {str(e)}"
+
+            response = f'```{result_message}```'
+            await message.channel.send(response)
+        else:
+            await message.channel.send('256大好き!しか実行できません')
+
+    await bot.process_commands(message)
