@@ -5,6 +5,11 @@ import subprocess
 import re
 import os
 import pexpect
+import platform
+import psutil
+import sys
+import distro
+from datetime import datetime, timezone, timedelta
 from discord import app_commands
 from discord.ext import commands
 from bs4 import BeautifulSoup
@@ -29,11 +34,11 @@ async def on_message(message):
         return
 
     # shellコマンドです
-    if message.content.startswith('$shell'):
+    if message.content.startswith('$'):
         if message.author.id == 891521181990129675:
-            cmd = message.content[7:]
+            cmd = message.content[1:]  # 先頭の$を取り除く
             current_directory = os.getcwd()
-            command_with_prompt = f'discord@256server:{current_directory}$ {cmd}\n'
+            command_with_prompt = f'discord@256server:{current_directory}${cmd}\n'
 
             # カレントディレクトリを変更する前にコマンドを実行
             result = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True, cwd=current_directory)
@@ -41,6 +46,7 @@ async def on_message(message):
             output = stdout.decode() + stderr.decode()
             
             # カレントディレクトリを変更してから追加のコマンドを実行
+            # cdはいろいろとめんどい
             if cmd.startswith("cd "):  # コマンドが「cd 」で始まる場合
                 new_directory = cmd[3:].strip()
                 os.chdir(new_directory)
@@ -54,6 +60,26 @@ async def on_message(message):
 @tree.command(name="test",description="テストコマンドです。")
 async def test_command(interaction: discord.Interaction):
     await interaction.response.send_message("しらすじゅーす！",ephemeral=False)
+
+@tree.command(name="server_usage",description="サーバーの情報を今すぐ取得")
+async def server_info(interaction: discord.Interaction):
+    cpu_usage = psutil.cpu_percent(interval=1)
+    ram_usage = psutil.virtual_memory().percent
+    cpu_bar_blocks = max(int(cpu_usage / 10), 1)
+    ram_bar_blocks = max(int(ram_usage / 10), 1)
+
+    cpu_bar = "█" * cpu_bar_blocks + " " * (10 - cpu_bar_blocks)
+    ram_bar = "█" * ram_bar_blocks + " " * (10 - ram_bar_blocks)
+
+    embed = discord.Embed(
+        title="サーバー使用率",
+        color=0x00ff00,
+    )
+
+    embed.add_field(name="CPU使用率", value=f"```{cpu_bar}\n{cpu_usage:.2f}%```")
+    embed.add_field(name="RAM使用率", value=f"```{ram_bar}\n{ram_usage:.2f}%```")
+
+    await interaction.response.send_message(embed=embed)
 
 @tree.command(name="ping", description="BOTにpingを打ちます")
 async def ping_command(interaction: discord.Interaction):
@@ -119,4 +145,4 @@ async def yahoo_news_command(interaction: discord.Interaction):
     await interaction.response.send_message(embed=result_embed, ephemeral=False)
 
 # トークン
-client.run('トークン')
+client.run('')
