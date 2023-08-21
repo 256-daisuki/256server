@@ -6,3 +6,6 @@ python3 -m pip install -U google
 pip install pexpect
 pip install psutil
 pip install distro
+
+
+pip install -U discord.py requests beautifulsoup4 matplotlib install google pexpect psutil distro
