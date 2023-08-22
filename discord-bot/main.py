@@ -5,6 +5,7 @@ import subprocess
 import re
 import os
 import pexpect
+import psutil
 from discord import app_commands
 from discord.ext import commands
 from bs4 import BeautifulSoup
@@ -26,12 +27,25 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    # shellコマンドです
+    if message.content.startswith("a! exec"):
+        command = message.content[8:].strip()  # コマンド部分を取得
+        allowed_users = [891521181990129675, 867187372026232833, 997588139235360958]  # 許可するユーザーのIDリスト
+
+        if message.author.id in allowed_users:
+            try:
+                result = eval(command)  # コマンドを実行して結果を取得
+                await message.channel.send(f"結果: {result}")
+            except Exception as e:
+                await message.channel.send(f"エラーが発生しました: {e}")
+        else:
+            await message.channel.send("権限がありません。")
+
+    # shellコマンド
     if message.content.startswith('$'):
-        allowed_users = [891521181990129675, 867187372026232833]  # 許可するユーザーのIDリスト
+        allowed_users = [891521181990129675, 867187372026232833, 997588139235360958]  # 許可するユーザーのIDリスト
         if message.author.id in allowed_users:
 
-            cmd = message.content[2:]
+            cmd = message.content[1:]
             current_directory = os.getcwd()
             command_with_prompt = f'discord@256server:{current_directory}$ {cmd}\n'
 
@@ -53,7 +67,7 @@ async def on_message(message):
                 
             await message.channel.send(response)
         else:
-            await message.channel.send('256大好き!しか実行できません')
+            await message.channel.send('一部の人しか実行できません')
 
 @tree.command(name="test",description="テストコマンドです。")
 async def test_command(interaction: discord.Interaction):
@@ -83,10 +97,30 @@ async def ping_command(interaction: discord.Interaction):
 async def echo_command(interaction: discord.Interaction, *, text: str):
     await interaction.response.send_message(text, ephemeral=False)
 
+@tree.command(name="server_usage",description="サーバーの情報を今すぐ取得")
+async def server_info(interaction: discord.Interaction):
+    cpu_usage = psutil.cpu_percent(interval=1)
+    ram_usage = psutil.virtual_memory().percent
+    cpu_bar_blocks = max(int(cpu_usage / 10), 1)
+    ram_bar_blocks = max(int(ram_usage / 10), 1)
+
+    cpu_bar = "█" * cpu_bar_blocks + " " * (10 - cpu_bar_blocks)
+    ram_bar = "█" * ram_bar_blocks + " " * (10 - ram_bar_blocks)
+
+    embed = discord.Embed(
+        title="サーバー使用率",
+        color=0x00ff00,
+    )
+
+    embed.add_field(name="CPU使用率", value=f"```{cpu_bar}\n{cpu_usage:.2f}%```")
+    embed.add_field(name="RAM使用率", value=f"```{ram_bar}\n{ram_usage:.2f}%```")
+
+    await interaction.response.send_message(embed=embed)
+
 @tree.command(name="google", description="Googleで検索結果を表示します")
 async def google_command(interaction: discord.Interaction, *, search_word: str):
     pages_num = 10 + 1  # 上位から何件までのサイトを抽出するか指定
-    result_embed = discord.Embed(title=f"Google検索結果: {search_word}", color=0xfabb05)
+    result_embed = discord.Embed(title=f"Google検索結果: {search_word}", color=0xff0839)
 
     url = f'https://www.google.co.jp/search?hl=ja&num={pages_num}&q={search_word}'
     request = requests.get(url)
