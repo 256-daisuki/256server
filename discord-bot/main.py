@@ -8,6 +8,8 @@ import pexpect
 from discord import app_commands
 from discord.ext import commands
 from bs4 import BeautifulSoup
+from dotenv import load_dotenv
+load_dotenv()
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -137,4 +139,4 @@ async def yahoo_news_command(interaction: discord.Interaction):
     await interaction.response.send_message(embed=result_embed, ephemeral=False)
 
 # トークン
-client.run('MTE0MTg4NjQxNzYxODg4MjYyMA.GBBbcj.2g5TQIiO_7zDVkzOjFNEWQsVSg_lxOLoXEFbHQ')
+client.run(os.getenv("TOKEN"))
