@@ -69,7 +69,7 @@ async def on_message(message):
                 
             await message.channel.send(response)
         else:
-            await message.channel.send('256大好き!しか実行できません')
+            await message.channel.send('裏技を使わないと実行できません')
 
 @tree.command(name="test",description="テストコマンドです。")
 async def test_command(interaction: discord.Interaction):
