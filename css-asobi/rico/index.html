@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+<style>
+    #chart {
+        width: 300px;
+        height: 300px;
+    }
+</style>
+</head>
+<body>
+    <svg id="chart"></svg>
+    <script>
+        const svg = document.getElementById('chart');
+        const centerX = 150;
+        const centerY = 150;
+        const radius = 100;
+
+        const x1 = 500;
+        const x2 = -500;
+        const x3 = 0;
+        const y1 = -200;
+        const y2 = 0;
+        const y3 = 500;
+
+        const points = [];
+            for (let t = 0; t <= 1; t += 0.01) {
+            const x = x1 * t ** 2 + 2 * t * (1 - t) * x2 + x3 * (1 - t) ** 2;
+            const y = y1 * t ** 2 + 2 * t * (1 - t) * y2 + y3 * (1 - t) ** 2;
+            points.push(`${centerX + x},${centerY - y}`);
+        }
+
+        const pathData = `M${points.join(' L')}`;
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', pathData);
+        path.setAttribute('fill', 'none');
+        path.setAttribute('stroke', 'blue');
+        svg.appendChild(path);
+    </script>
+</body>
+</html>
