@@ -1,42 +1,125 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="style.css">
 <style>
+    #container {
+        display: flex;
+        align-items: center;
+    }
     #chart {
+        width: 600px;
+        height: 600px;
+        position: relative;
+        background-image: url("img.png");
+        background-size: cover;
+    }
+    #controls {
+        display: flex;
+        flex-direction: column;
         width: 300px;
-        height: 300px;
+        margin-left: 20px;
+    }
+    .slider-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .slider-label {
+        width: 40px;
     }
 </style>
 </head>
 <body>
-    <svg id="chart"></svg>
+    <div id="container">
+        <svg id="chart">
+        <g transform="translate(0, 0)"> <!-- バーとグラフの原点を合わせる -->
+            <rect width="100%" height="100%" fill="none" />
+        </g>
+        </svg>
+        <div id="controls">
+        <div class="slider-container">
+            <label class="slider-label" for="x1">x1:</label>
+            <input type="range" id="x1" min="0" max="600" value="0">
+            <span id="x1-value">100</span>
+        </div>
+        <div class="slider-container">
+            <label class="slider-label" for="x2">x2:</label>
+            <input type="range" id="x2" min="0" max="600" value="0">
+            <span id="x2-value">150</span>
+        </div>
+        <div class="slider-container">
+            <label class="slider-label" for="x3">x3:</label>
+            <input type="range" id="x3" min="0" max="600" value="0">
+            <span id="x3-value">200</span>
+        </div>
+        <div class="slider-container">
+            <label class="slider-label" for="y1">y1:</label>
+            <input type="range" id="y1" min="0" max="600" value="0">
+            <span id="y1-value">50</span>
+        </div>
+        <div class="slider-container">
+            <label class="slider-label" for="y2">y2:</label>
+            <input type="range" id="y2" min="0" max="600" value="0">
+            <span id="y2-value">100</span>
+        </div>
+        <div class="slider-container">
+            <label class="slider-label" for="y3">y3:</label>
+            <input type="range" id="y3" min="0" max="600" value="0">
+            <span id="y3-value">150</span>
+        </div>
+        </div>
+    </div>
     <script>
         const svg = document.getElementById('chart');
-        const centerX = 150;
-        const centerY = 150;
+        const controls = document.getElementById('controls');
+        const centerX = 0; // グラフの原点を左上に合わせる
+        const centerY = 0; // グラフの原点を左上に合わせる
         const radius = 100;
 
-        const x1 = 500;
-        const x2 = -500;
-        const x3 = 0;
-        const y1 = -200;
-        const y2 = 0;
-        const y3 = 500;
+        const curves = [
+        { x1: 0, x2: 0, x3: 0, y1: 0, y2: 0, y3: 0 },
+        { x1: 280, x2: 195, x3: 179, y1: 126, y2: 131, y3: 243 },
+        { x1: 168, x2: 173, x3: 158, y1: 173, y2: 173, y3: 168 },
+        { x1: 173, x2: 173, x3: 168, y1: 158, y2: 147, y3: 173 },
+        { x1: 142, x2: 104, x3: 120, y1: 158, y2: 216, y3: 322 },
+        { x1: 211, x2: 232, x3: 264, y1: 126, y2: 115, y3: 120 },
+        { x1: 184, x2: 195, x3: 142, y1: 205, y2: 211, y3: 78 },
+        { x1: 141, x2: 147, x3: 227, y1: 57, y2: 67, y3: 142 },
+        { x1: 141, x2: 129, x3: 158, y1: 55, y2: 169, y3: 214 },
+        ];
 
-        const points = [];
+        function updateCurves() {
+        const graphGroup = svg.querySelector('g');
+        graphGroup.innerHTML = '';
+
+        for (const curve of curves) {
+            const points = [];
             for (let t = 0; t <= 1; t += 0.01) {
-            const x = x1 * t ** 2 + 2 * t * (1 - t) * x2 + x3 * (1 - t) ** 2;
-            const y = y1 * t ** 2 + 2 * t * (1 - t) * y2 + y3 * (1 - t) ** 2;
-            points.push(`${centerX + x},${centerY - y}`);
+            const x = curve.x1 * t ** 2 + 2 * t * (1 - t) * curve.x2 + curve.x3 * (1 - t) ** 2;
+            const y = curve.y1 * t ** 2 + 2 * t * (1 - t) * curve.y2 + curve.y3 * (1 - t) ** 2;
+            points.push(`${x},${y}`);
+            }
+
+            const pathData = `M${points.join(' L')}`;
+            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            path.setAttribute('d', pathData);
+            path.setAttribute('fill', 'none');
+            path.setAttribute('stroke', 'red');
+            graphGroup.appendChild(path);
+        }
         }
 
-        const pathData = `M${points.join(' L')}`;
-        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        path.setAttribute('d', pathData);
-        path.setAttribute('fill', 'none');
-        path.setAttribute('stroke', 'blue');
-        svg.appendChild(path);
+        controls.addEventListener('input', function(event) {
+        const target = event.target;
+        const value = parseInt(target.value);
+        const valueSpan = document.getElementById(`${target.id}-value`);
+        valueSpan.textContent = value;
+        const param = target.id.split('-')[0];
+        curves[0][param] = value;
+        updateCurves();
+        });
+
+        updateCurves();
     </script>
 </body>
 </html>
