@@ -20,11 +20,11 @@ tree = app_commands.CommandTree(client)
 async def on_ready():
 
     # 認識しているサーバーをlist型で取得し、その要素の数を 変数:guild_count に格納しています。
-    # guild_count = len(client.guilds)
+    guild_count = len(client.guilds)
     # 関数:lenは、引数に指定したオブジェクトの長さや要素の数を取得します。
     
-    # game = discord.Game(f'{guild_count} サーバー数の人たちを監視')
-    game = discord.Game(f'お前らを監視中')
+    game = discord.Game(f'{guild_count} サーバー数の人たちを監視中')
+    # game = discord.Game(f'お前らを監視中')
     # f文字列(フォーマット済み文字列リテラル)は、Python3.6からの機能です。
     
     # BOTのステータスを変更する
@@ -90,9 +90,26 @@ async def ping_command(interaction: discord.Interaction):
         description=f"BotのPing値は{ping}msです。")
     await interaction.response.send_message(embed=embed)
 
+@tree.command(name="host-ping", description="好きなホストにpingします")
+async def hostping_command(ctx, hostname: str):
+    try:
+        result = subprocess.run(['ping', '-c', '4', hostname], capture_output=True, text=True, timeout=10)
+        if result.returncode == 0:
+            success_message = f'Ping to {hostname} succeeded!'
+            await ctx.send(success_message)
+        else:
+            error_message = f'Ping to {hostname} failed.'
+            await ctx.send(error_message)
+    except subprocess.TimeoutExpired:
+        timeout_message = f'Ping to {hostname} timed out.'
+        await ctx.send(timeout_message)
+    except Exception as e:
+        error_message = f'An error occurred: {str(e)}'
+        await ctx.send(error_message)
+
 @tree.command(name="omikuji", description="おみくじ　そのまま")
 async def ping_command(interaction: discord.Interaction):
-    omikuji = ["大凶","中凶","小凶","末吉凶","吉凶","凶"]
+    omikuji = ["大凶","中凶","小凶","末凶","吉凶","凶"]
     await interaction.response.send_message(f"今日のお前の運勢 {random.choice(omikuji)}")
 
 @tree.command(name="echo", description="あんなことやそんなことまで言います")
