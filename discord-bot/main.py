@@ -90,23 +90,6 @@ async def ping_command(interaction: discord.Interaction):
         description=f"BotのPing値は{ping}msです。")
     await interaction.response.send_message(embed=embed)
 
-@tree.command(name="host-ping", description="好きなホストにpingします")
-async def hostping_command(ctx, hostname: str):
-    try:
-        result = subprocess.run(['ping', '-c', '4', hostname], capture_output=True, text=True, timeout=10)
-        if result.returncode == 0:
-            success_message = f'Ping to {hostname} succeeded!'
-            await ctx.send(success_message)
-        else:
-            error_message = f'Ping to {hostname} failed.'
-            await ctx.send(error_message)
-    except subprocess.TimeoutExpired:
-        timeout_message = f'Ping to {hostname} timed out.'
-        await ctx.send(timeout_message)
-    except Exception as e:
-        error_message = f'An error occurred: {str(e)}'
-        await ctx.send(error_message)
-
 @tree.command(name="omikuji", description="おみくじ　そのまま")
 async def ping_command(interaction: discord.Interaction):
     omikuji = ["大凶","中凶","小凶","末凶","吉凶","凶"]
