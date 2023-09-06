@@ -138,5 +138,6 @@ async def yahoo_news_command(interaction: discord.Interaction):
 
     await interaction.response.send_message(embed=result_embed, ephemeral=False)
 
+
 # トークン
 client.run(os.getenv("TOKEN"))
