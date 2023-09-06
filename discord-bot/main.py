@@ -4,6 +4,7 @@ import requests
 import subprocess
 import re
 import os
+import aiohttp
 import pexpect
 from discord import app_commands
 from discord.ext import commands
@@ -15,6 +16,8 @@ intents = discord.Intents.default()
 intents.message_content = True
 client = discord.Client(intents=intents)
 tree = app_commands.CommandTree(client)
+
+bot = commands.Bot(command_prefix='/', intents=intents)
 
 @client.event
 async def on_ready():
@@ -34,7 +37,6 @@ async def on_ready():
     print("起動完了")
     await tree.sync()#スラッシュコマンドを同期
 
-
 # メッセージを受信した時に呼ばれる
 @client.event
 async def on_message(message):
@@ -42,7 +44,13 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    # shellコマンドです
+    # BOTのIDが 949479338275913799 の場合に「ああぬ」と返す
+    if message.author.id == 949479338275913799:
+        await message.channel.send("ああぬ")
+    
+    await bot.process_commands(message)
+
+    # shellコマンド
     if message.content.startswith('$'):
         allowed_users = [891521181990129675, 867187372026232833]  # 許可するユーザーのIDリスト
         if message.author.id in allowed_users:
@@ -70,6 +78,28 @@ async def on_message(message):
             await message.channel.send(response)
         else:
             await message.channel.send('許してぇてぇ')
+
+@client.event
+async def on_message_edit(before, after):
+    # メッセージがBOTのIDによって編集された場合
+    if after.author.id == 949479338275913799 and before.content != after.content:
+        if len(after.attachments) > 0:
+            # メッセージに添付された画像を保存
+            for attachment in after.attachments:
+                image_url = attachment.url
+                image_filename = attachment.filename
+
+                # 画像を保存
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(image_url) as response:
+                        if response.status == 200:
+                            image_data = await response.read()
+                            with open(f'/home/discord/python/saved_images/{image_filename}', 'wb') as image_file:
+                                image_file.write(image_data)
+        else:
+            # 何らかの処理（例えば、new MIQ().load_miq(newMessage) のような処理）
+            await message.channel.send('あああぬ')
+            pass
 
 @tree.command(name="test",description="テストコマンドです。")
 async def test_command(interaction: discord.Interaction):
@@ -115,7 +145,10 @@ async def google_command(interaction: discord.Interaction, *, search_word: str):
         except IndexError:
             site_title = site.select('img')[0]['alt']
         site_url = site['href'].replace('/url?q=', '').split('&')[0]  # 余計な部分を取り除く
-        result_embed.add_field(name=site_title, value=f'({site_url})', inline=False)
+
+        # マークダウン形式でタイトルとURLを統一して表示
+        link_text = f"[{site_title}]({site_url})"
+        result_embed.add_field(name='\u200b', value=link_text, inline=False)
 
     await interaction.response.send_message(embed=result_embed, ephemeral=False)
 
@@ -132,12 +165,11 @@ async def yahoo_news_command(interaction: discord.Interaction):
         title = data.span.string
         url = data.attrs["href"]
 
-        # リンクとなるテキストを作成
-        link_text = f"{title}"
-        result_embed.add_field(name=link_text, value=f'({url})', inline=False)
+        # マークダウン形式でリンクを埋め込む
+        link_text = f"[{title}]({url})"
+        result_embed.add_field(name='\u200b', value=link_text, inline=False)
 
     await interaction.response.send_message(embed=result_embed, ephemeral=False)
-
 
 # トークン
 client.run(os.getenv("TOKEN"))
