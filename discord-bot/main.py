@@ -48,16 +48,6 @@ async def on_message(message):
     if message.author.id == 949479338275913799:
         await message.channel.send("ああぬ")
 
-        # 画像を保存
-        for attachment in after.attachments:
-            image_url = attachment.url
-            image_filename = attachment.filename
-
-            # 画像を保存
-            with open(f'/home/discord/python/saved_images/{image_filename}', 'wb') as image_file:
-                image_data = await image_url.read()
-                image_file.write(image_data)
-
     # shellコマンド
     if message.content.startswith('$'):
         allowed_users = [891521181990129675, 867187372026232833]  # 許可するユーザーのIDリスト
