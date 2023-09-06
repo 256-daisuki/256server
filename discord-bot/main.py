@@ -95,8 +95,16 @@ async def on_message_edit(before, after):
                             with open(f'/home/discord/python/saved_images/{image_filename}', 'wb') as image_file:
                                 image_file.write(image_data)
         else:
-            # 何らかの処理（例えば、new MIQ().load_miq(newMessage) のような処理）
-            await message.channel.send('あああぬ')
+            # 画像が削除された場合の処理
+            await after.channel.send('削除を検知しました。:flag_cn:')
+            
+            # 削除される前のメッセージに添付されていた画像がある場合、それを一緒に送信
+            if len(before.attachments) > 0:
+                for attachment in before.attachments:
+                    # 保存した画像を直接メッセージに添付
+                    with open(f'/home/discord/python/saved_images/{attachment.filename}', 'rb') as image_file:
+                        image = discord.File(image_file)
+                        await after.channel.send('😏',file=image)
             pass
 
 @tree.command(name="test",description="テストコマンドです。")
