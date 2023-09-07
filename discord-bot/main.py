@@ -44,10 +44,6 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    # BOTのIDが 949479338275913799 の場合に「ああぬ」と返す
-    if message.author.id == 949479338275913799:
-        await message.channel.send("ああぬ")
-
     # shellコマンド
     if message.content.startswith('$'):
         allowed_users = [891521181990129675, 867187372026232833]  # 許可するユーザーのIDリスト
@@ -96,7 +92,7 @@ async def on_message_edit(before, after):
                                 image_file.write(image_data)
         else:
             # 画像が削除された場合の処理
-            await after.channel.send('削除を検知しました。:flag_cn:')
+            await after.channel.send(':flag_cn: 削除を検知しました。:flag_cn:')
             
             # 削除される前のメッセージに添付されていた画像がある場合、それを一緒に送信
             if len(before.attachments) > 0:
