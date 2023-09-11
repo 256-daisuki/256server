@@ -9,36 +9,38 @@ const data = {
     account: process.env.ACCOUNT,
     server_name: process.env.SERVER_NAME,
     api_secret_key: process.env.API_SECRET_KEY,
-    reset_flg: "1",
-    box_reset_flg: "1",
+    box_reset_flg: "0",
     param: [
         {
             address_name: "test",
             address_domain: "256.email",
             address: "test@256.email",
-            pop_how: "3", //転送+PPO/WEB受信のできるように3番を選択
-            quota: "128", //利用可能記憶域容量
-            autorespond: "0", //自動返信設定 無し
-            clamd: "1", //ウイルスフィルター　有り
-            spamd: "1", //スパムフィルター　有り
-            customd: "0", //カスタムフィルター　無し
-            pop_pass_rand: "1", //パスワードランダム設定
-            customd_body: {
-                allow_stringcase: "0", //大文字小文字区別
-                save_mail: "1", //メールを残すか
-                conditions: [
+            force: "0",
+            pop_how: "3",
+            // address_trans: "",
+            // pop_pass: "",
+            quota: "128", // メールボックスの容量(MB)
+            autorespond: "0",
+            clamd: "1",
+            spam: "1",
+            customd: "1",
+            customd_body: [
+                {
+                    allow_stringcase: "0",
+                    save_mail: "1",
+                    conditions: [
                         {
                             target: "all",
-                            body: "example_string",
-                            condition: "match",
-                        },
+                        }
                     ],
-                action_body: "forward",
-                action_type: "admin@256server.com", // forward：メール転送 , maildir：振り分け , change_subject：題名変更 , change_from：from変更 , add_header：header追加 , delete：破棄
+                action_body: "admin@256server.com",
+                action_type: "forward",
                 }
-            }
-        ]
-    };
+            ],
+            pop_pass_rand: "1"
+        },
+    ]
+}
 
 axios.post(url_edit, data, {
     headers: {
