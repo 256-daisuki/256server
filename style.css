@@ -46,6 +46,10 @@ nav ul a {
     margin-left: 10px;
 }
 
+nav ul a:hover {
+    color: aqua;
+}
+
 .nav-link {
     display: flex;
     justify-content: flex-end;
@@ -137,6 +141,7 @@ nav ul a {
 }
 
 /*==========main==========*/
+
 body {
     margin: auto;
 }
