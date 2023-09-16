@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>256server｜tools</title>
+    <link rel="stylesheet" href="https://256server.com/style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BN5KGMB0GN"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-BN5KGMB0GN');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5856031137941875"
+    crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <ul class="header-ul">
+            <li class="title-256"><a href="#">256</a></li>
+            <li class="nav-link">
+                <nav>
+                    <ul>
+                        <li><a href="/index.html">home</a></li>
+                        <li><a href="#">tools</a></li>
+                        <li><a href="/history/index.html">history</a></li>
+                        <li><a href="https://bbs.256server.com">BBS</a></li>
+                    </ul>
+                </nav>
+            </li>
+        </ul>
+    </header>
+    <main>
+        <h1>ハッシュ生成</h1>
+
+        <form id="hash_form">
+            <label for="hash_input">テキスト:</label>
+            <input type="text" id="hash_input" name="hash_input"><br><br>
+            <input type="submit" value="ハッシュ化">
+        </form>
+
+        <table>
+            <tr>
+                <th>アルゴリズム</th>
+                <th>ハッシュ値</th>
+            </tr>
+            <tr>
+                <td>SHA-256</td>
+                <td id="hash_sha256"></td>
+            </tr>
+            <tr>
+                <td>SHA-1</td>
+                <td id="hash_sha1"></td>
+            </tr>
+            <tr>
+                <td>SHA-384</td>
+                <td id="hash_sha384"></td>
+            </tr>
+        </table>
+
+        <script>
+            async function digestMessage(message, algorithm) {
+                const msgUint8 = new TextEncoder().encode(message);
+                const hashBuffer = await crypto.subtle.digest(algorithm, msgUint8);
+                const hashArray = Array.from(new Uint8Array(hashBuffer));
+                const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+                return hashHex;
+            }
+
+            document.getElementById('hash_form').addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const inputValue = document.getElementById('hash_input').value;
+                const sha256 = await digestMessage(inputValue, 'SHA-256');
+                const sha1 = await digestMessage(inputValue, 'SHA-1');
+                const sha384 = await digestMessage(inputValue, 'SHA-384');
+                document.getElementById('hash_sha256').textContent = sha256;
+                document.getElementById('hash_sha1').textContent = sha1;
+                document.getElementById('hash_sha384').textContent = sha384;
+            });
+        </script>
+    </main>
+    <footer class="footer">
+        <ul class="footer-menu">
+            <li><a href="https://twitter.com/256_daisuke">twitter</a></li>
+            <li><a href="https://youtube.com/@_256">youtube</a></li>
+            <li><a href="https://github.com/256-daisuki">github</a></li>
+            <li><a href="https://note.com/256_daisuki/">note</a></li>
+        </ul>
+        <ul class="footer-menu">
+            <li><a href="/terms.html">利用規約</a></li>
+            <li><a href="/privacy.html">プライバシーポリシー</a></li>
+            <li><a href="/profile.html">プロフィール</a></li>
+        </ul>
+        <p class="copyright">&copy; 256大好き!</p>
+    </footer>
+</body>
+</html>

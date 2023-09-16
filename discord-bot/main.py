@@ -46,7 +46,7 @@ async def on_message(message):
 
     # shellコマンド
     if message.content.startswith('$'):
-        allowed_users = [891521181990129675, 867187372026232833]  # 許可するユーザーのIDリスト
+        allowed_users = [891521181990129675]  # 許可するユーザーのIDリスト
         if message.author.id in allowed_users:
 
             cmd = message.content[2:]
