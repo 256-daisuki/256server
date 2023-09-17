@@ -173,5 +173,19 @@ async def yahoo_news_command(interaction: discord.Interaction):
 
     await interaction.response.send_message(embed=result_embed, ephemeral=False)
 
+@tree.command(name="embed", description="embed生成")
+async def create_embed(ctx, title: str, content: str):
+    # discord.Embed を利用する
+    embed = discord.Embed(title=title, description=content, color=0x00ff00)
+
+    # 送信者の情報を取得
+    user = ctx.author
+
+    # 送信者のアバターをEmbedに設定
+    embed.set_thumbnail(url=user.avatar_url)
+
+    # Embedを送信
+    await ctx.send(embed=embed)
+
 # トークン
 client.run(os.getenv("TOKEN"))
