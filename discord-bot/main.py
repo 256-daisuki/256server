@@ -129,7 +129,18 @@ async def ping_command(interaction: discord.Interaction):
 
 @tree.command(name="echo", description="あんなことやそんなことまで言います")
 async def echo_command(interaction: discord.Interaction, *, text: str):
-    await interaction.response.send_message(text, ephemeral=False)
+    # 1. コマンド実行者の情報（アイコン、名前）を取得
+    user_avatar = interaction.user.display_avatar
+    user_name = interaction.user.display_name
+
+    # 2. 分身を作成するためのWebhookを作成
+    webhook = await interaction.channel.create_webhook(name="Echo Webhook")
+
+    # 3. Webhookを使ってメッセージを送信
+    await webhook.send(content=text, username=user_name, avatar_url=user_avatar)
+
+    # 4. Webhookを削除
+    await webhook.delete()
 
 @tree.command(name="google", description="Googleで検索結果を表示します")
 async def google_command(interaction: discord.Interaction, *, search_word: str):
@@ -173,19 +184,35 @@ async def yahoo_news_command(interaction: discord.Interaction):
 
     await interaction.response.send_message(embed=result_embed, ephemeral=False)
 
-@tree.command(name="embed", description="embed生成")
-async def create_embed(ctx, title: str, content: str):
-    # discord.Embed を利用する
-    embed = discord.Embed(title=title, description=content, color=0x00ff00)
+@tree.command(name="embed", description="Embedを代わりに送信してくれます")
+async def embed_command(interaction: discord.Interaction, text: str, title: str = None, color: int = None,
+                        author_name: str = None, author_url: str = None, author_icon_url: str = None,
+                        thumbnail_url: str = None, image_url: str = None, footer_text: str = None):
+    user_avatar = interaction.user.display_avatar
+    user_name = interaction.user.display_name
 
-    # 送信者の情報を取得
-    user = ctx.author
+    embed = discord.Embed(description=text, color=color or 0x00ff00)
 
-    # 送信者のアバターをEmbedに設定
-    embed.set_thumbnail(url=user.avatar_url)
+    if title:
+        embed.title = title
 
-    # Embedを送信
-    await ctx.send(embed=embed)
+    if author_name:
+        embed.set_author(name=author_name, url=author_url, icon_url=author_icon_url)
+
+    if thumbnail_url:
+        embed.set_thumbnail(url=thumbnail_url)
+
+    if image_url:
+        embed.set_image(url=image_url)
+
+    if footer_text:
+        embed.set_footer(text=footer_text)
+
+    webhook = await interaction.channel.create_webhook(name="Embed Webhook")
+
+    await webhook.send(embed=embed, username=user_name, avatar_url=user_avatar)
+
+    await webhook.delete()
 
 # トークン
 client.run(os.getenv("TOKEN"))
