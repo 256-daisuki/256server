@@ -46,7 +46,7 @@ async def on_message(message):
 
     # shellコマンド
     if message.content.startswith('$'):
-        allowed_users = [891521181990129675]  # 許可するユーザーのIDリスト
+        allowed_users = [891521181990129675, 997588139235360958]  # 許可するユーザーのIDリスト
         if message.author.id in allowed_users:
 
             cmd = message.content[2:]
@@ -107,6 +107,29 @@ async def on_message_edit(before, after):
 async def test_command(interaction: discord.Interaction):
     await interaction.response.send_message("しらすじゅーす！",ephemeral=False)
 
+@tree.command(name="help", description="コマンドのヘルプを表示します")
+async def help_command(interaction: discord.Interaction):
+    # コマンド一覧を作成
+    command_list = [
+        ("/test", "Botの動作が怪しいときに使ってください　適当に返答します"),
+        ("/ping", "Botにpingを打ちます。応答するかどうか　testとほぼ一緒です"),
+        ("/echo", "好きなことを言わすことができます"),
+        ("/omikuji", "凶しか入ってないおみくじです"),
+        ("/google", "google検索します　そのまま"),
+        ("/yahoo", "yahooニュースを表示します"),
+        ("/embed", "Botがユーザーの代わりにembedを送信します")
+    ]
+
+    # Embedを作成
+    embed = discord.Embed(title="Help! 📕", description="利用可能なコマンドの一覧です", color=0x00ff00)
+
+    # コマンド一覧をEmbedに追加
+    for name, description in command_list:
+        embed.add_field(name=name, value=description, inline=False)
+
+    # メッセージを送信
+    await interaction.response.send_message(embed=embed, ephemeral=True)
+
 @tree.command(name="ping", description="BOTにpingを打ちます")
 async def ping_command(interaction: discord.Interaction):
     # Ping値を秒単位で取得
@@ -122,25 +145,14 @@ async def ping_command(interaction: discord.Interaction):
         description=f"BotのPing値は{ping}msです。")
     await interaction.response.send_message(embed=embed)
 
-@tree.command(name="omikuji", description="おみくじ　そのまま")
+@tree.command(name="omikuji", description="おみくじ　凶限定")
 async def ping_command(interaction: discord.Interaction):
     omikuji = ["大凶","中凶","小凶","末凶","吉凶","凶"]
     await interaction.response.send_message(f"今日のお前の運勢 {random.choice(omikuji)}")
 
 @tree.command(name="echo", description="あんなことやそんなことまで言います")
 async def echo_command(interaction: discord.Interaction, *, text: str):
-    # 1. コマンド実行者の情報（アイコン、名前）を取得
-    user_avatar = interaction.user.display_avatar
-    user_name = interaction.user.display_name
-
-    # 2. 分身を作成するためのWebhookを作成
-    webhook = await interaction.channel.create_webhook(name="Echo Webhook")
-
-    # 3. Webhookを使ってメッセージを送信
-    await webhook.send(content=text, username=user_name, avatar_url=user_avatar)
-
-    # 4. Webhookを削除
-    await webhook.delete()
+    await interaction.response.send_message(text, ephemeral=False)
 
 @tree.command(name="google", description="Googleで検索結果を表示します")
 async def google_command(interaction: discord.Interaction, *, search_word: str):

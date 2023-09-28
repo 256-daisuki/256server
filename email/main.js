@@ -15,23 +15,29 @@ const data = {
             address_name: "test",
             address_domain: "256.email",
             address: "test@256.email",
-            force: "0",
             pop_how: "3",
             // address_trans: "",
             // pop_pass: "",
-            quota: "128", // メールボックスの容量(MB)
+            quota: "1000000", // 1MB
             autorespond: "0",
             clamd: "1",
             spam: "1",
             customd: "1",
             customd_body: [
                 {
-                    allow_stringcase: "0",
-                    save_mail: "1",
+                    allow_stringcase: 0,
+                    save_mail: 0,
                     conditions: [
                         {
-                            target: "all",
-                        }
+                        target: 'all',
+                        body: 'example_string',
+                        condition: 'match',
+                        },
+                        {
+                        target: 'subject',
+                        body: 'sibject_ignore',
+                        condition: 'notmatch',
+                        },
                     ],
                 action_body: "admin@256server.com",
                 action_type: "forward",
