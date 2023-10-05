@@ -5,6 +5,7 @@
     "express": "^4.18.2",
     "ping": "^0.4.2",
     "three": "^0.157.0",
+    "three-orbitcontrols": "^2.110.3",
     "three.js": "^0.77.0"
   },
   "devDependencies": {
