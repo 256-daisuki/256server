@@ -1,21 +1,44 @@
-<html>
-    <head>
-        <!-- A-FrameをCDNから読み込む -->
-        <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
-        <!-- aframe-orbit-controlsをCDNから読み込む -->
-        <script src="https://unpkg.com/aframe-orbit-controls@1.2.0/dist/aframe-orbit-controls.min.js"></script>
-    </head>
-    <body>
-    <a-scene>
-        <!-- aframe-orbit-controlsのプロパティを記述 -->
-        <a-entity camera look-controls orbit-controls="target: 0 1.6 -0.5; maxPolarAngle:180; minDistance: 0.5; maxDistance: 200; initialPosition: 0 0 30"></a-entity>
-        
-        <!-- 3Dモデルを読み込んで、位置やスケールなど定義する -->
-        <a-gltf-model  id="test" src="YYB Hatsune Miku_default_1.0ver.glb"  position="0 -1 0" rotation="20 124 7" scale="0.1 0.1 0.1"></a-gltf-model>
-        
-        <!-- 背景色-->
-        <a-sky color="#9EA1E7"></a-sky>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MMDモデルの表示</title>
+</head>
+<body>
+    <script src="https://threejsfundamentals.org/threejs/resources/threejs/r132/build/three.js"></script>
+    <script src="https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/js/loaders/GLTFLoader.js"></script>
 
-    </a-scene>
+    <script>
+        // three.jsの基本設定
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+        directionalLight.position.set(1, 1, 1).normalize();
+        scene.add(directionalLight);
+
+        // GLTFLoaderで.glbファイルを読み込む
+        const loader = new THREE.GLTFLoader();
+        loader.load('./box.glb', (gltf) => {
+            scene.add(gltf.scene);
+        });
+
+        // カメラの位置設定
+        camera.position.z = 5;
+        
+        // アニメーションループ
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
 </body>
 </html>
