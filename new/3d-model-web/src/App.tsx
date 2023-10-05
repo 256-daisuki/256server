@@ -29,7 +29,7 @@ function App() {
       0.1,
       1000
     );
-    camera.position.set(0, 0.2, 2);
+    camera.position.set(0, 0.38, 1.2);
 
     // renderer
     const renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer({
@@ -46,7 +46,7 @@ function App() {
     gltfLoader.load("./models/scene.gltf", (gltf) => {
       model = gltf.scene;
       model.scale.set(0.7, 0.7, 0.7);
-      model.rotation.y = -Math.PI / 8;
+      model.rotation.y = -Math.PI / 15;
 
       scene.add(model);
     });
@@ -87,17 +87,17 @@ function App() {
       const zoomSpeed = 0.005;
       const zoom = 1 + event.deltaY * zoomSpeed;
 
-      // マウスの位置を取得
-      const mouseX = (event.clientX / sizes.width) * 2 - 1;
-      const mouseY = -((event.clientY / sizes.height) * 2 - 1);
-
       // マウスの位置を中心に拡大縮小
-      camera.position.x = camera.position.x * zoom + mouseX;
-      camera.position.y = camera.position.y * zoom + mouseY;
-      camera.position.z *= zoom;
+      const mouse = new THREE.Vector2(
+        (event.clientX / sizes.width) * 2 - 1,
+        -(event.clientY / sizes.height) * 2 + 1
+      );
 
-      // カメラ位置を固定
-      camera.lookAt(mouseX, mouseY, 0); // マウスポインターの位置を注視点に設定
+      const screenPosition = new THREE.Vector3(mouse.x, mouse.y, 0.5);
+      screenPosition.unproject(camera);
+
+      const direction = screenPosition.sub(camera.position).normalize();
+      camera.position.add(direction.multiplyScalar(zoom - 1));
     });
 
     // マウスの移動に応じてモデルを回転させる

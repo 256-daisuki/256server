@@ -2,9 +2,9 @@ body.no_scroll{
     overflow: hidden;
 }
 
-canvas {
-    width: 100%;
-    height: 100vh;
+#canvas {
+    width: 800px;
+    height: 800px;
     background: #eee;
 
     position: relative;
