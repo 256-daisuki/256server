@@ -45,7 +45,7 @@ function App() {
     //3dモデルインポート
     const gltfLoader = new GLTFLoader();
 
-    gltfLoader.load("./models/scene.gltf", (gltf) => {
+    gltfLoader.load("./test/miku4.gltf", (gltf) => {
       model = gltf.scene;
       model.scale.set(0.7, 0.7, 0.7)
       model.rotation.y = -Math.PI / 8;
