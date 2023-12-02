@@ -197,14 +197,25 @@ async def yahoo_news_command(interaction: discord.Interaction):
     await interaction.response.send_message(embed=result_embed, ephemeral=False)
 
 @tree.command(name="embed", description="Embedを代わりに送信してくれます")
-async def embed_command(interaction: discord.Interaction, text: str, title: str = None, color: int = None,
+async def embed_command(interaction: discord.Interaction, text: str, title: str = None, color: str = None,
                         author_name: str = None, author_url: str = None, author_icon_url: str = None,
                         thumbnail_url: str = None, image_url: str = None, footer_text: str = None):
     user_avatar = interaction.user.display_avatar
     user_name = interaction.user.display_name
 
-    embed = discord.Embed(description=text, color=color or 0x00ff00)
+    if color:
+        # カラーコードが指定されている場合、16進数に変換
+        try:
+            color = int(color, 16)
+        except ValueError:
+            await interaction.followup.send("無効なカラーコードです。")
+            return
+    else:
+        # カラーコードが指定されていない場合はデフォルトの色を使用
+        color = 0x00ff00
 
+    embed = discord.Embed(description=text, color=color)
+    await interaction.response.defer()
     if title:
         embed.title = title
 
@@ -223,8 +234,27 @@ async def embed_command(interaction: discord.Interaction, text: str, title: str 
     webhook = await interaction.channel.create_webhook(name="Embed Webhook")
 
     await webhook.send(embed=embed, username=user_name, avatar_url=user_avatar)
+    await interaction.followup.send('ぬ')
 
     await webhook.delete()
 
+@tree.command(name="tex", description="LaTeX数式を計算します")
+async def hoge_command(ctx: commands.Context, *, equation: str):
+    try:
+        # 入力されたLaTeX数式をSymPyオブジェクトに変換
+        expr = sympify(equation)
+        
+        # 数式を簡約化
+        simplified_expr = simplify(expr)
+        
+        # LaTeX形式に変換
+        latex_expression = latex(simplified_expr)
+        
+        # 結果を送信
+        await ctx.send(f"入力した数式: {equation}\n計算結果: {latex_expression}")
+        
+    except Exception as e:
+        # エラーが発生した場合はエラーメッセージを送信
+        await ctx.send(f"エラーが発生しました: {e}")
 # トークン
 client.run(os.getenv("TOKEN"))
