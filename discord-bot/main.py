@@ -217,7 +217,7 @@ async def embed_command(interaction: discord.Interaction, text: str, title: str 
     embed = discord.Embed(description=text, color=color)
     await interaction.response.defer()
     if title:
-        embed.title = title
+        embed.title = title 
 
     if author_name:
         embed.set_author(name=author_name, url=author_url, icon_url=author_icon_url)
