@@ -237,7 +237,7 @@ async def embed_command(interaction: discord.Interaction, text: str, title: str 
     await interaction.followup.send('ぬ')
 
     await webhook.delete()
- 
+  
 @tree.command(name="tex", description="LaTeX数式を計算します")
 async def hoge_command(ctx: commands.Context, *, equation: str):
     try:
