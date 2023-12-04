@@ -5,6 +5,7 @@ import subprocess
 import re
 import os
 import aiohttp
+import asyncio
 import pexpect
 from discord import app_commands
 from discord.ext import commands
@@ -234,27 +235,13 @@ async def embed_command(interaction: discord.Interaction, text: str, title: str 
     webhook = await interaction.channel.create_webhook(name="Embed Webhook")
 
     await webhook.send(embed=embed, username=user_name, avatar_url=user_avatar)
-    await interaction.followup.send('ぬ')
+    followup_message = await interaction.followup.send("embedを作成しました.")
+
+    # 3秒後にメッセージを削除
+    await asyncio.sleep(3)
+    await followup_message.delete()
 
     await webhook.delete()
-死ねカス
-@tree.command(name="tex", description="LaTeX数式を計算します")
-async def hoge_command(ctx: commands.Context, *, equation: str):
-    try:
-        # 入力されたLaTeX数式をSymPyオブジェクトに変換
-        expr = sympify(equation)
-        
-        # 数式を簡約化
-        simplified_expr = simplify(expr)
-        
-        # LaTeX形式に変換
-        latex_expression = latex(simplified_expr)
-        
-        # 結果を送信
-        await ctx.send(f"入力した数式: {equation}\n計算結果: {latex_expression}")
-        
-    except Exception as e:
-        # エラーが発生した場合はエラーメッセージを送信
-        await ctx.send(f"エラーが発生しました: {e}")
+
 # トークン
 client.run(os.getenv("TOKEN"))
