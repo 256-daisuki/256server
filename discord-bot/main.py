@@ -235,7 +235,7 @@ async def embed_command(interaction: discord.Interaction, text: str, title: str 
     webhook = await interaction.channel.create_webhook(name="Embed Webhook")
 
     await webhook.send(embed=embed, username=user_name, avatar_url=user_avatar)
-    followup_message = await interaction.followup.send("embedを作成しました.")
+    followup_message = await interaction.followup.send("embedを作成しました。")
 
     # 3秒後にメッセージを削除
     await asyncio.sleep(3)
