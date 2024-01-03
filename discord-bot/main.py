@@ -169,10 +169,13 @@ async def google_command(interaction: discord.Interaction, *, search_word: str):
         try:
             site_title = site.select('h3.zBAuLc')[0].text
         except IndexError:
-            site_title = site.select('img')[0]['alt']
-        site_url = site['href'].replace('/url?q=', '').split('&')[0]  # 余計な部分を取り除く
+            try:
+                site_title = site.select('img')[0]['alt']
+            except IndexError:
+                site_title = "No title available"
 
-        # マークダウン形式でタイトルとURLを統一して表示
+        site_url = site['href'].replace('/url?q=', '').split('&')[0]
+
         link_text = f"[{site_title}]({site_url})"
         result_embed.add_field(name='\u200b', value=link_text, inline=False)
 
