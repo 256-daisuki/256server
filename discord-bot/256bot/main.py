@@ -93,7 +93,7 @@ async def on_message_edit(before, after):
                                 image_file.write(image_data)
         else:
             # 画像が削除された場合の処理
-            await after.channel.send(':flag_cn: 削除を検知しました。:flag_cn:')
+            await after.channel.send('🚨 削除を検知しました。🚨')
             
             # 削除される前のメッセージに添付されていた画像がある場合、それを一緒に送信
             if len(before.attachments) > 0:
