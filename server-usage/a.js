@@ -28,7 +28,7 @@ async function fetchData() {
             const freeMemoryGB = (ramData.freeMemory / 1000).toFixed(1); // MBからGBに変換
 
             // テキストファイルに出力
-            const outputText = `Server: ${server.ip}\nCPU Usage: ${cpuUsage}, numCores: ${cpuData.numCores}\nRAM Usage: ${ramUsage}%, Total Memory: ${totalMemoryGB} GB, Free Memory: ${freeMemoryGB} GB\n\n`;
+            const outputText = `Server: ${server.ip}\nCPU Usage: ${cpuUsage}, numCores: ${cpuData.numCores}\nRAM Usage: ${ramUsage}%, Total Memory: ${totalMemoryGB} GB, Free Memory: ${freeMemoryGB} GB\n`;
 
             fs.appendFileSync('server_stats.txt', outputText);
         }
