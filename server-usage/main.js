@@ -3,7 +3,7 @@ const os = require('os-utils');
 
 const app = express();
 
-// CPU使用率を取得するエンドポイント
+// CPU使用率とコア数を取得
 app.get('/cpu', (req, res) => {
   os.cpuUsage((value) => {
     const numCores = os.cpuCount();
@@ -15,7 +15,7 @@ app.get('/cpu', (req, res) => {
   });
 });
 
-// RAM使用率とメモリ情報を取得するエンドポイント
+// RAM使用率とメモリ情報を取得
 app.get('/ram', (req, res) => {
   const ramUsage = os.freememPercentage() * 100;
   const totalMemory = os.totalmem();
