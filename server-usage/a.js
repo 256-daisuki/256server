@@ -1,42 +1,48 @@
 const http = require('http');
 const fs = require('fs');
 
-// サーバーのIPアドレスとポート番号のリスト
+// サーバーのIP
 const servers = [
-    { ip: '192.168.100.4', port: 3000 },
-    { ip: '192.168.100.5', port: 3000 },
-    { ip: '192.168.100.6', port: 3000 }
+    { ip: '192.168.100.4', hostname: 'hp1'},
+    { ip: '192.168.100.5', hostname: 'hp2'},
+    { ip: '192.168.100.6', hostname: 'fuji1'}
 ];
 
 // CPU使用率とRAM使用率を取得する関数
 async function fetchData() {
-    try {
-        // テキストファイルを新規に作成
-        fs.writeFileSync('server_stats.txt', '');
+  // テキストファイル作成
+  fs.writeFileSync('server_stats.txt', '');
 
-        for (const server of servers) {
-            // CPU使用率を取得
-            const cpuResponse = await getJson(`http://${server.ip}:${server.port}/cpu`);
-            const cpuData = JSON.parse(cpuResponse);
-            const cpuUsage = Math.floor(cpuData.cpuUsage * 10) / 10; // 小数点第1位で切り捨て
+  for (const server of servers) {
+    // CPU使用率
+    const cpuResponse = await getJson(`http://${server.ip}:3000/cpu`);
+    const cpuData = JSON.parse(cpuResponse);
+    const cpuUsage = Math.floor(cpuData.cpuUsage * 10) / 10; // 小数点第1位で切り捨て
 
-            // RAM使用率を取得
-            const ramResponse = await getJson(`http://${server.ip}:${server.port}/ram`);
-            const ramData = JSON.parse(ramResponse);
-            const ramUsage = Math.floor((100 - ramData.ramUsage) * 10) / 10; // 空き容量のパーセンテージから100を引く
-            const totalMemoryGB = (ramData.totalMemory / 1000).toFixed(1); // MBからGBに変換
-            const freeMemoryGB = (ramData.freeMemory / 1000).toFixed(1); // MBからGBに変換
+    // RAM使用率
+    const ramResponse = await getJson(`http://${server.ip}:3000/ram`);
+    const ramData = JSON.parse(ramResponse);
+    const ramUsage = Math.floor((100 - ramData.ramUsage) * 10) / 10;
+    const totalMemoryGB = (ramData.totalMemory / 1000).toFixed(1); // MBからGBに変換
+    const freeMemoryGB = (ramData.freeMemory / 1000).toFixed(1); // MBからGBに変換
 
-            // テキストファイルに出力
-            const outputText = `Server: ${server.ip}\nCPU Usage: ${cpuUsage}, numCores: ${cpuData.numCores}\nRAM Usage: ${ramUsage}%, Total Memory: ${totalMemoryGB} GB, Free Memory: ${freeMemoryGB} GB\n`;
-
-            fs.appendFileSync('server_stats.txt', outputText);
-        }
-
-        console.log('Data written successfully');
-    } catch (error) {
-        console.error('Error fetching data:', error);
-    }
+    // テキストファイルに出す
+    const outputText = `
+    <h1>サーバー: ${server.hostname}</h1>
+    <h2>CPU</h2>
+    <li>
+      <ul>CPU使用率: ${cpuUsage}%</ul>
+      <ul>コア数: ${cpuData.numCores}コア</ul>
+    </li>
+    <h2>RAM</h2>
+    <li>
+      <ul>RAM使用率: ${ramUsage}%</ul>
+      <ul>総メモリ容量: ${totalMemoryGB}GB</ul>
+      <ul>空きメモリ容量: ${freeMemoryGB}GB</ul>
+    </li>
+    `;
+    fs.appendFileSync('server_stats.html', outputText);
+  }
 }
 
 // HTTP GETリクエストを行う関数
@@ -58,5 +64,8 @@ function getJson(url) {
     });
 }
 
-// データを取得してテキストファイルに出力
+// 初回実行
 fetchData();
+
+// 15秒ごとに実行
+setInterval(fetchData, 15000);
