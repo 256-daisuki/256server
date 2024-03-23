@@ -1,0 +1,12 @@
+Server: 192.168.100.4
+CPU Usage: 0, numCores: 4
+RAM Usage: 39.3%, Total Memory: 64.2 GB, Free Memory: 38.9 GB
+
+Server: 192.168.100.5
+CPU Usage: 0, numCores: 4
+RAM Usage: 4.2%, Total Memory: 64.0 GB, Free Memory: 61.2 GB
+
+Server: 192.168.100.6
+CPU Usage: 0, numCores: 4
+RAM Usage: 10.1%, Total Memory: 15.8 GB, Free Memory: 14.2 GB
+
