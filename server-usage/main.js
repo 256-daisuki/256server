@@ -1,7 +1,9 @@
 const express = require('express');
 const os = require('os-utils');
+const cors = require('cors');
 
 const app = express();
+app.use(cors());
 
 // CPU使用率とコア数を取得
 app.get('/cpu', (req, res) => {

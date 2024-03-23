@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Stats</title>
+</head>
+<body>
+    <h1>Server Stats</h1>
+
+    <div id="serverStats"></div>
+
+    <script>
+        function fetchServerStats() {
+            const serverList = [
+                { name: 'hp1', ip: '192.168.100.4' },
+                { name: 'hp2', ip: '192.168.100.5' },
+                { name: 'fuji1', ip: '192.168.100.6' },
+            ];
+
+            serverList.forEach(server => {
+                fetch(`http://${server.ip}:3000/cpu`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const serverStats = document.getElementById('serverStats');
+                        const serverDiv = document.createElement('div');
+                        serverDiv.innerHTML = `<h2>${server.name}</h2>
+                                                <p>CPU Usage: ${data.cpuUsage}</p>`;
+                        serverStats.appendChild(serverDiv);
+                    })
+                    .catch(error => console.error(`Error fetching CPU usage for ${server.name}:`, error));
+
+                fetch(`http://${server.ip}:3000/ram`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const serverStats = document.getElementById('serverStats');
+                        const serverDiv = serverStats.querySelector(`div:last-child`);
+                        serverDiv.innerHTML += `<p>RAM Usage: ${data.ramUsage}</p>
+                                                <p>Total Memory: ${data.totalMemory} MB</p>
+                                                <p>Free Memory: ${data.freeMemory} MB</p>`;
+                    })
+                    .catch(error => console.error(`Error fetching RAM usage for ${server.name}:`, error));
+            });
+        }
+
+        window.onload = fetchServerStats;
+    </script>
+</body>
+</html>
