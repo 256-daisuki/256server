@@ -74,6 +74,28 @@ async def on_message(message):
         else:
             await message.channel.send('許してぇてぇ')
 
+    if message.content.startswith('/a'):
+        allowed_users = [891521181990129675, 997588139235360958]  # 許可するユーザーのIDリスト
+        if message.author.id in allowed_users:
+            # コマンドの内容を取得
+            content = message.content.split()
+            # コマンドの引数が足りない場合はエラーメッセージを送信
+            if len(content) < 3:
+                await message.channel.send("コマンドの引数が不足しています。")
+                return
+            # チャンネルのURLとメッセージを取得
+            channel_url = content[1]
+            message_content = ' '.join(content[2:])
+            # チャンネルのURLからチャンネルを取得
+            channel = client.get_channel(int(channel_url.split('/')[-1]))
+            if channel is None:
+                await message.channel.send("指定されたチャンネルが見つかりませんでした。")
+                return
+            # メッセージを送信
+            await channel.send(message_content)
+        else:
+            await message.channel.send('許してぇてぇ')
+
 @client.event
 async def on_message_edit(before, after):
     # メッセージがBOTのIDによって編集された場合
@@ -200,7 +222,7 @@ async def yahoo_news_command(interaction: discord.Interaction):
 
     await interaction.response.send_message(embed=result_embed, ephemeral=False)
 
-@tree.command(name="embed", description="Embedを代わりに送信してくれます")
+@tree.command(name="emdeb", description="Embedを代わりに送信してくれます")
 async def embed_command(interaction: discord.Interaction, text: str, title: str = None, color: str = None,
                         author_name: str = None, author_url: str = None, author_icon_url: str = None,
                         thumbnail_url: str = None, image_url: str = None, footer_text: str = None):
