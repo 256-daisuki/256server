@@ -8,6 +8,7 @@ import aiohttp
 import asyncio
 import pexpect
 from pytube import YouTube
+from dotenv import load_dotenv
 from discord import app_commands
 from discord.ext import commands
 from bs4 import BeautifulSoup
@@ -225,19 +226,30 @@ async def yahoo_news_command(interaction: discord.Interaction):
 
 @tree.command()
 async def play(ctx, url: str):
-    if ctx.user.voice is None or ctx.user.voice.channel is None:
+    if ctx.author.voice is None or ctx.author.voice.channel is None:
         await ctx.send("ボイスチャンネルに接続してください。")
         return
     
-    channel = ctx.user.voice.channel
+    channel = ctx.author.voice.channel
     vc = await channel.connect()  # ボイスチャンネルに接続
     
     try:
-        yt = YouTube(url)
-        audio = yt.streams.filter(only_audio=True).first()
-        source = discord.FFmpegPCMAudio(audio.url)
+        ydl_opts = {
+            'format': 'bestaudio/best',
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                'preferredquality': '192',
+            }],
+        }
+
+        with YoutubeDL(ydl_opts) as ydl:
+            info = ydl.extract_info(url, download=False)
+            audio_url = info['formats'][0]['url']
+
+        source = discord.FFmpegPCMAudio(audio_url)
         vc.play(source)
-        await ctx.send(f'Now playing: {yt.title}')
+        await ctx.send(f'Now playing: {info["title"]}')
         
         while vc.is_playing():
             await asyncio.sleep(1)
