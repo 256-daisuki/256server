@@ -62,11 +62,48 @@ nav ul a {
     justify-content: flex-end;
 }
 
+/*==========main==========*/
+
+body {
+    margin: auto;
+}
+
+main {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.top {
+    text-align: center;
+    margin-left: -5%;
+}
+
+.top-h1 {
+    font-size: 50px;
+    margin-bottom: -20px;
+}
+
+.mini-p {
+    font-size: 0.5em;
+    color: #989898;
+}
+
+h2 {
+    margin-left: -2%;
+}
+
+iframe {
+    margin: auto;
+    padding: auto;
+    height: 3em;
+    color: #fff;
+}
+
 /*==========フッター==========*/
 .footer {
+    padding: 30px;
     color: #e5e5e5;
     background: #9f9f9f;
-    padding: 30px;
 }
 
 .footer a {
@@ -139,43 +176,6 @@ nav ul a {
 
 .box {
     box-sizing: border-box;
-}
-
-/*==========main==========*/
-
-body {
-    margin: auto;
-}
-
-main {
-    margin-left: 5%;
-    margin-right: 5%;
-}
-
-.top {
-    text-align: center;
-    margin-left: -5%;
-}
-
-.top-h1 {
-    font-size: 50px;
-    margin-bottom: -20px;
-}
-
-.mini-p {
-    font-size: 0.5em;
-    color: #989898;
-}
-
-h2 {
-    margin-left: -2%;
-}
-
-iframe {
-    margin: auto;
-    padding: auto;
-    height: 3em;
-    color: #fff;
 }
 
 /*===ダークモード===*/
