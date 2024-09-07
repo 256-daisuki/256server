@@ -1,10 +1,15 @@
 /*なんでCSSなんて見てるんだい？　f12で確認したほうが楽だろ*/
 /*==========ヘッダー==========*/
 
+body {
+    background-color: #ebebeb;
+    word-break: break-all;
+}
+
 header {
     width: 100%;
     padding: 0px;
-    background-color: #a2a2a2;
+    background-color: #686868;
 }
 
 .header-ul {
@@ -25,7 +30,7 @@ header {
     margin-top: 0px;
     padding: 0px;
     height: 40px;
-    color: #fff;
+    color: #e5e5e5;
     font-size: 1.5em;
     text-decoration: none;
 }
@@ -41,7 +46,7 @@ nav ul {
 }
 
 nav ul a {
-    color: #fff;
+    color: #e5e5e5;
     text-decoration: none;
     margin-left: 10px;
 }
@@ -59,13 +64,13 @@ nav ul a {
 
 /*==========フッター==========*/
 .footer {
-    color: #808080;
-    background: #e5e5e5;
+    color: #e5e5e5;
+    background: #9f9f9f;
     padding: 30px;
 }
 
 .footer a {
-    color: #808080;
+    color: #e5e5e5;
     text-decoration: none;
 }
 
@@ -159,9 +164,40 @@ main {
 
 .mini-p {
     font-size: 0.5em;
-    color: #808080;
+    color: #989898;
 }
 
 h2 {
     margin-left: -2%;
+}
+
+iframe {
+    margin: auto;
+    padding: auto;
+    height: 3em;
+    color: #fff;
+}
+
+/*===ダークモード===*/
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #272727;
+        color: #ebebeb;
+    }
+
+    header {
+        background-color: #161616;
+        color: #ebebeb;
+    }
+
+    a {
+        color: #00a8fc;
+    }
+    
+    .footer {
+        color: #ebebeb;
+        background: #161616;
+        padding: 30px;
+    }
+    
 }

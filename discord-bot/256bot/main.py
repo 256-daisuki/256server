@@ -7,12 +7,11 @@ import os
 import aiohttp
 import asyncio
 import pexpect
-from pytube import YouTube
-from dotenv import load_dotenv
 from discord import app_commands
 from discord.ext import commands
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
+from playwright.async_api import async_playwright
 load_dotenv()
 
 intents = discord.Intents.default()
@@ -48,7 +47,7 @@ async def on_message(message):
         return
 
     # shellコマンド
-    if message.content.startswith('$'):
+    if message.content.startswith('$ '):
         allowed_users = [891521181990129675, 997588139235360958]  # 許可するユーザーのIDリスト
         if message.author.id in allowed_users:
 
@@ -76,7 +75,7 @@ async def on_message(message):
         else:
             await message.channel.send('許してぇてぇ')
 
-    if message.content.startswith('/a'):
+    if message.content.startswith('/send_message'):
         allowed_users = [891521181990129675, 997588139235360958]  # 許可するユーザーのIDリスト
         if message.author.id in allowed_users:
             # コマンドの内容を取得
@@ -97,7 +96,7 @@ async def on_message(message):
             await channel.send(message_content)
         else:
             await message.channel.send('許してぇてぇ')
-
+            
 @client.event
 async def on_message_edit(before, after):
     # メッセージがBOTのIDによって編集された場合
@@ -224,44 +223,7 @@ async def yahoo_news_command(interaction: discord.Interaction):
 
     await interaction.response.send_message(embed=result_embed, ephemeral=False)
 
-@tree.command()
-async def play(ctx, url: str):
-    if ctx.author.voice is None or ctx.author.voice.channel is None:
-        await ctx.send("ボイスチャンネルに接続してください。")
-        return
-    
-    channel = ctx.author.voice.channel
-    vc = await channel.connect()  # ボイスチャンネルに接続
-    
-    try:
-        ydl_opts = {
-            'format': 'bestaudio/best',
-            'postprocessors': [{
-                'key': 'FFmpegExtractAudio',
-                'preferredcodec': 'mp3',
-                'preferredquality': '192',
-            }],
-        }
-
-        with YoutubeDL(ydl_opts) as ydl:
-            info = ydl.extract_info(url, download=False)
-            audio_url = info['formats'][0]['url']
-
-        source = discord.FFmpegPCMAudio(audio_url)
-        vc.play(source)
-        await ctx.send(f'Now playing: {info["title"]}')
-        
-        while vc.is_playing():
-            await asyncio.sleep(1)
-        
-        await vc.disconnect()
-      
-    except Exception as e:
-        await ctx.send("再生中にエラーが発生しました")
-        raise e
-
-"""
-@tree.command(name="emdeb", description="Embedを代わりに送信してくれます")
+@tree.command(name="embed", description="Embedを代わりに送信してくれます")
 async def embed_command(interaction: discord.Interaction, text: str, title: str = None, color: str = None,
                         author_name: str = None, author_url: str = None, author_icon_url: str = None,
                         thumbnail_url: str = None, image_url: str = None, footer_text: str = None):
@@ -306,8 +268,26 @@ async def embed_command(interaction: discord.Interaction, text: str, title: str 
     await followup_message.delete()
 
     await webhook.delete()
-"""
 
+@tree.command(name="screenshot", description="指定されたURLのスクリーンショットを撮ります")
+async def screenshot_command(interaction: discord.Interaction, url: str):
+    try:
+        # Playwrightを非同期で操作
+        async with async_playwright() as p:
+            browser = await p.chromium.launch(headless=True)
+            page = await browser.new_page()
+            await page.goto(url)
+            
+            # スクリーンショットを撮って保存
+            screenshot_path = os.path.join("screen_image", "screenshot.png")
+            await page.screenshot(path=screenshot_path)
+            await browser.close()
+
+        # Discordにスクリーンショットを送信
+        await interaction.response.send_message(file=discord.File(screenshot_path))
+
+    except Exception as e:
+        await interaction.response.send_message(f"エラーが発生しました: {e}")
 
 # トークン
 client.run(os.getenv("TOKEN"))
