@@ -141,7 +141,8 @@ async def help_command(interaction: discord.Interaction):
         ("/omikuji", "凶しか入ってないおみくじです"),
         ("/google", "google検索します　そのまま"),
         ("/yahoo", "yahooニュースを表示します"),
-        ("/embed", "Botがユーザーの代わりにembedを送信します")
+        ("/embed", "Botがユーザーの代わりにembedを送信します"),
+        ("/screenshot", "Webサイトのスクリーンショットを送信します(httpsをちゃんとつけてください)")
     ]
 
     # Embedを作成
