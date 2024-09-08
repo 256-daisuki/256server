@@ -30,7 +30,18 @@ server.listen(3000, () => {
       const freeMem = osUtils.freemem();
       const memUsage = ((totalMem - freeMem) / totalMem) * 100;
 
-      const html = `<style>p { color: #ebebeb; } body { margin: auto; } html { margin: auto; }</style><p>CPU: ${Math.floor(cpuUsage.toFixed(2) * 100) }% RAM: ${memUsage.toFixed(2)}%<p>`;
+      const html = `
+      <style>
+      html, body { margin: auto; height: 24px; padding: auto; }
+      o { margin: 0px; }
+      o { color: #e5e5e5; }
+      @media (prefers-color-scheme: dark) { 
+        o { color: #ebebeb} }
+      </style>
+      <body>
+        <o>server_usage CPU: ${Math.floor(cpuUsage.toFixed(2) * 100) }% RAM: ${memUsage.toFixed(2)}%<o>
+      </body>
+        `;
       fs.writeFile('a.html', html, (err) => {
         if (err) {
           console.error(err);

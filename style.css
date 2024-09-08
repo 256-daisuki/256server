@@ -62,6 +62,10 @@ nav ul a {
     justify-content: flex-end;
 }
 
+li {
+    height: auto;
+}
+
 /*==========main==========*/
 
 body {
@@ -71,6 +75,7 @@ body {
 main {
     margin-left: 5%;
     margin-right: 5%;
+    min-height: calc(100vh - 39px - 33.5px - (15px * 2 + 24px * 5 + 20px));
 }
 
 .top {
@@ -79,6 +84,7 @@ main {
 }
 
 .top-h1 {
+    margin-top: 33.5px;
     font-size: 50px;
     margin-bottom: -20px;
 }
@@ -92,18 +98,26 @@ h2 {
     margin-left: -2%;
 }
 
-iframe {
+/*==========フッター==========*/
+
+.footer_iframe {
     margin: auto;
     padding: auto;
-    height: 3em;
-    color: #fff;
+    height: 24px;
 }
 
-/*==========フッター==========*/
+iframe.html {
+    margin: auto;
+}
+
 .footer {
-    padding: 30px;
+    padding-left: 30px;
+    padding-top: 15px;
+    padding-bottom: 15px;
     color: #e5e5e5;
     background: #9f9f9f;
+    position: sticky;
+    margin-top: auto;
 }
 
 .footer a {
@@ -147,8 +161,12 @@ iframe {
         }
     }
 
-    @media (min-width: 500px)/*PC用*/ {
-        .title {
+    @media (min-width: 599px)/*PC用*/ {
+
+    main {
+        min-height: calc(100vh - 39px - 33.5px - (15px * 2 + 24px * 4 + 20px));
+    }
+    .title {
         text-align: center;
         margin-top: 5vw;
         font-size: 256%;
@@ -197,7 +215,6 @@ iframe {
     .footer {
         color: #ebebeb;
         background: #161616;
-        padding: 30px;
     }
     
 }
