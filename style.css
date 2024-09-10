@@ -75,7 +75,6 @@ body {
 main {
     margin-left: 5%;
     margin-right: 5%;
-    min-height: calc(100vh - 39px - 33.5px - (15px * 2 + 24px * 5 + 20px));
 }
 
 .top {
@@ -86,7 +85,6 @@ main {
 .top-h1 {
     margin-top: 33.5px;
     font-size: 50px;
-    margin-bottom: -20px;
 }
 
 .mini-p {
@@ -123,6 +121,7 @@ iframe.html {
 .footer a {
     color: #e5e5e5;
     text-decoration: none;
+    font-family: sans-serif;
 }
 
 .footer a:hover {
@@ -164,7 +163,7 @@ iframe.html {
     @media (min-width: 599px)/*PC用*/ {
 
     main {
-        min-height: calc(100vh - 39px - 33.5px - (15px * 2 + 24px * 4 + 20px));
+        min-height: calc(100vh - 78px - 131px);
     }
     .title {
         text-align: center;

@@ -33,13 +33,12 @@ server.listen(3000, () => {
       const html = `
       <style>
       html, body { margin: auto; height: 24px; padding: auto; }
-      o { margin: 0px; }
-      o { color: #e5e5e5; }
+      o { margin: 0px; color: #e5e5e5; font-family: sans-serif; }
       @media (prefers-color-scheme: dark) { 
         o { color: #ebebeb} }
       </style>
       <body>
-        <o>server_usage CPU: ${Math.floor(cpuUsage.toFixed(2) * 100) }% RAM: ${memUsage.toFixed(2)}%<o>
+        <o>CPU: ${Math.floor(cpuUsage.toFixed(2) * 100) }% RAM: ${memUsage.toFixed(2)}%<o>
       </body>
         `;
       fs.writeFile('a.html', html, (err) => {
