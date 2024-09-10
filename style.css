@@ -82,8 +82,11 @@ main {
     margin-left: -5%;
 }
 
-.top-h1 {
+h1 {
     margin-top: 33.5px;
+}
+
+.top-h1 {
     font-size: 50px;
 }
 
