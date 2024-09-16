@@ -142,7 +142,7 @@ async def help_command(interaction: discord.Interaction):
         ("/google", "google検索します　そのまま"),
         ("/yahoo", "yahooニュースを表示します"),
         ("/embed", "Botがユーザーの代わりにembedを送信します"),
-        ("/screenshot", "Webサイトのスクリーンショットを送信します(httpsをちゃんとつけてください)")
+        # ("/screenshot", "Webサイトのスクリーンショットを送信します(httpsをちゃんとつけてください)")
     ]
 
     # Embedを作成
@@ -270,25 +270,25 @@ async def embed_command(interaction: discord.Interaction, text: str, title: str 
 
     await webhook.delete()
 
-@tree.command(name="screenshot", description="指定されたURLのスクリーンショットを撮ります")
-async def screenshot_command(interaction: discord.Interaction, url: str):
-    try:
+#@tree.command(name="screenshot", description="指定されたURLのスクリーンショットを撮ります")
+#async def screenshot_command(interaction: discord.Interaction, url: str):
+#    try:
         # Playwrightを非同期で操作
-        async with async_playwright() as p:
-            browser = await p.chromium.launch(headless=True)
-            page = await browser.new_page()
-            await page.goto(url)
+#        async with async_playwright() as p:
+#            browser = await p.chromium.launch(headless=True)
+#            page = await browser.new_page()
+#            await page.goto(url)
             
             # スクリーンショットを撮って保存
-            screenshot_path = os.path.join("screen_image", "screenshot.png")
-            await page.screenshot(path=screenshot_path)
-            await browser.close()
+#            screenshot_path = os.path.join("screen_image", "screenshot.png")
+#            await page.screenshot(path=screenshot_path)
+#            await browser.close()
 
         # Discordにスクリーンショットを送信
-        await interaction.response.send_message(file=discord.File(screenshot_path))
+#        await interaction.response.send_message(file=discord.File(screenshot_path))
 
-    except Exception as e:
-        await interaction.response.send_message(f"エラーが発生しました: {e}")
+#    except Exception as e:
+#        await interaction.response.send_message(f"エラーが発生しました: {e}")
 
 # トークン
 client.run(os.getenv("TOKEN"))
