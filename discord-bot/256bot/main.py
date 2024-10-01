@@ -175,9 +175,9 @@ async def ping_command(interaction: discord.Interaction):
     omikuji = ["大凶","中凶","小凶","末凶","吉凶","凶"]
     await interaction.response.send_message(f"今日のお前の運勢 {random.choice(omikuji)}")
 
-@tree.command(name="echo", description="あんなことやそんなことまで言います")
-async def echo_command(interaction: discord.Interaction, *, text: str):
-    await interaction.response.send_message(text, ephemeral=False)
+#@tree.command(name="echo", description="あんなことやそんなことまで言います")
+#async def echo_command(interaction: discord.Interaction, *, text: str):
+#    await interaction.response.send_message(text, ephemeral=False)
 
 @tree.command(name="google", description="Googleで検索結果を表示します")
 async def google_command(interaction: discord.Interaction, *, search_word: str):
