@@ -1,0 +1,50 @@
+body {
+  margin: 1%;
+  padding: auto;
+  display: flex;
+}
+
+textarea {
+  margin-right: 10px;
+  width: 50%;
+  height: 90vh;
+  font-family: monospace;
+  font-size: 1em;
+  white-space: pre-wrap;
+}
+
+.markdown_preview {
+  font-size: 1em;
+  width: 50%;
+  height: 90vh;
+  overflow-y: auto;
+}
+
+pre {
+  margin: auto;
+  display: block;
+  overflow: auto;
+}
+
+p {
+  margin: auto;
+}
+
+.textarea_lists {
+  margin-right: 2px;
+  margin-top: 3px;
+  white-space: pre;
+}
+
+.textarea_lists, div {
+  font-family: monospace;
+}
+
+code {
+  display: block;
+  margin: 2px;
+  padding: 1px;
+  border: 1px solid #ccc;
+  background-color: #f3f3f3;
+  border-radius: 3px;
+}
