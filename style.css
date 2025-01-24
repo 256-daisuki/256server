@@ -86,10 +86,6 @@ h1 {
     margin-top: 33.5px;
 }
 
-.top-h1 {
-    font-size: 50px;
-}
-
 .mini-p {
     font-size: 0.5em;
     color: #989898;
@@ -219,4 +215,10 @@ iframe.html {
         background: #161616;
     }
     
+}
+
+/* TOP PAGE */
+
+.top-h1 {
+    font-size: 50px;
 }

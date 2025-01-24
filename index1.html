@@ -5,7 +5,232 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>256server｜home</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /*なんでCSSなんて見てるんだい？　f12で確認したほうが楽だろ*/
+        /*==========ヘッダー==========*/
+
+        body {
+            background-color: #ebebeb;
+            word-break: break-all;
+        }
+
+        header {
+            width: 100%;
+            padding: 0px;
+            background-color: #686868;
+        }
+
+        .header-ul {
+            margin: 0px;
+            padding: 0px;
+            padding-left: 15px;
+            list-style: none;
+            display: flex;
+        }
+
+        .title-256 {
+            margin-top: 3px;
+            margin-right: auto;
+        }
+
+        .title-256 a {
+            margin: 0px;
+            margin-top: 0px;
+            padding: 0px;
+            height: 40px;
+            color: #e5e5e5;
+            font-size: 1.5em;
+            text-decoration: none;
+        }
+
+        nav {
+            margin-top: 7px;
+            margin-right: 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul a {
+            color: #e5e5e5;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
+        .nav-link {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .nav ul {
+            display: flex;
+            margin-right: 3%;
+            justify-content: flex-end;
+        }
+
+        li {
+            height: auto;
+        }
+
+        /*==========main==========*/
+
+        body {
+            margin: auto;
+        }
+
+        main {
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+
+        .top {
+            text-align: center;
+            margin-left: -5%;
+        }
+
+        h1 {
+            margin-top: 33.5px;
+        }
+
+        .mini-p {
+            font-size: 0.5em;
+            color: #989898;
+        }
+
+        h2 {
+            margin-left: -2%;
+        }
+
+        /*==========フッター==========*/
+
+        .footer_iframe {
+            margin: auto;
+            padding: auto;
+            height: 24px;
+        }
+
+        iframe.html {
+            margin: auto;
+        }
+
+        .footer {
+            padding-left: 30px;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            color: #e5e5e5;
+            background: #9f9f9f;
+            position: sticky;
+            margin-top: auto;
+        }
+
+        .footer a {
+            color: #e5e5e5;
+            text-decoration: none;
+            font-family: sans-serif;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer .footer-menu {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .footer .footer-menu li {
+            margin: 0;
+            padding: 0 10px;
+        }
+
+        .footer .footer-menu li:first-child {
+            padding-left: 0;
+            border: none;
+        }
+
+        .footer .copyright {
+            margin: 0;
+            padding: 20px 0 0 0;
+        }
+
+            @media only screen and (max-width: 599px) {
+                .footer .footer-menu li {
+                width: 50%;
+                padding: 0 20px 0 0;
+                box-sizing: border-box;
+                border: none;
+                }
+            }
+
+            @media (min-width: 599px)/*PC用*/ {
+
+            main {
+                min-height: calc(100vh - 78px - 131px);
+            }
+            .title {
+                text-align: center;
+                margin-top: 5vw;
+                font-size: 256%;
+            }
+            
+            .sub-title {
+                text-align: center;
+            }
+
+            .top-h2 {
+                margin-top: 70px;
+            }
+
+            .counter {
+                padding-top: 10px;
+            }
+        }
+
+        /*FontAwesomeを使用しています。*/
+        .header-8 {
+            box-sizing: border-box;
+            width: 100%;
+            height: 120px;
+        }
+
+        .box {
+            box-sizing: border-box;
+        }
+
+        /*===ダークモード===*/
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #272727;
+                color: #ebebeb;
+            }
+
+            header {
+                background-color: #161616;
+                color: #ebebeb;
+            }
+
+            a {
+                color: #00a8fc;
+            }
+            
+            .footer {
+                color: #ebebeb;
+                background: #161616;
+            }
+            
+        }
+
+        /* TOP PAGE */
+
+        .top-h1 {
+            font-size: 50px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -17,7 +242,6 @@
                         <li><a href="https://256server.com">home</a></li>
                         <li><a href="/tools/index.html">tools</a></li>
                         <li><a href="/history/index.html">history</a></li>
-                        <li><a href="https://bbs.256server.com">BBS</a></li>
                     </ul>
                 </nav>
             </li>
@@ -27,46 +251,93 @@
     <main>
         <div class="top">
             <h1 class="top-h1">256server</h1>
-            <p>中学生の趣味程度のサイト</p>
+            <p><s>中学生</s> 高校生の趣味程度のサイト</p>
         </div>
+        <hr>
+
         <h2>このサイトについて</h2>
-        <p>このサイトはヌシがWEB系を勉強するためにつくったサイトです。</p>
-        <p>ヌシはふるーいマイコンとかサーバーとかに興味があります。　タイピングをちょっとやってまして、ヌシはひねくれてるのでTomisuke配列っていう、マイナーなキー配列を使ってます（すごい使いやすい）ほとんどの人が知らないと思うので、考案者さんのブログ貼っておきます。<a href="https://tomisuke.hatenablog.com/entry/2022/07/19/185105" alt="Tomisuke配列">リンク</a></p>
+            <p>このサイトはヌシがWEB系を勉強するためにつくったサイトです。</p>
+            <p>このサイトに特に価値とかは無いよ　なんかツール作ったりしたら <a href="/tools/index.html">ツールページ</a>に公開したりとか　そんなサイト</p>
+            <p>もっとこのサイトちゃんと作ろうと思ってたけどこれでもいいかってなって放置してる。基本的な要素しか使ってないから古いブラウザでもアクセスできるし <- 最近IEでアクセスしたら思いっきり崩れてました。ただダサいだけのページです　最近はWPの鯖を立てて遊んでる <a href="https://gyougetsu.com">暁月ブログ</a>って名前です　適当にブログ書いたり書いてもらったり、そんな鯖</p>
+        <hr>
+
         <h2>ヌシについて</h2>
-        <p>なんかこのサイトについてと被ってるけど、一応中学生　誕生日はデーモン閣下と同じ　linuxを毎日触らないと手が震えるタイプの人間　macOS,ios,android,win,ubuntu を使えます。macはｱﾔｼｲけどね　無水エタノールとキムワイプは常備してるタイプ　夏が大嫌いです。</p>
+            <p>デーモン閣下と誕生日一緒　androidメイン</p>
+            <p>鯖強くしたりネットワークとか回路とか編み物とかオーディオとかいろいろ　気になったものはとりあえず触ってる　このサイトも同じような感じで作られた　そしてなのもかもが途中　中途半端</p>
+            <p>ヌシは大量の黒歴史がありますがそれは触れないで上げてください　数日布団から出れなくなります</p>
+        <hr>
+
+        <h2>ツールとか</h2>
+            <p>今はメモ帳と時計しかないけど、なんか作ってほしいのがあったら言ってほしい　最近なんも思いつかなくて全然コード書かなくなっちゃったから　あんま難しいのは無理だけどね</p>
+        <hr>
+
+        <h2>鯖について</h2>
+            <p>この鯖はおうちの鯖で動いてます。自宅鯖ってヤツね　<a href="https://gyougetsu.com/archives/240">詳しい構成は自分のブログの記事</a>に書いてるので読んでね 消費電力はネットワーク含め大体250Wぐらい　省電力（）だね</p>
+            <p>このページは何となくきもいからって理由でtorをブロックしてるんだけど、それはかわいそうだから.onionのミラーサイトを作ったよ<a href="http://cebq7zqzztlznstynx2zknhu5dgndq6xogjis3xlo46xl36izpslryqd.onion/">http://cebq7zqzztlznstynx2zknhu5dgndq6xogjis3xlo46xl36izpslryqd.onion/</a>遊びに来てね♡</p>
+            <p>無駄にスペックがあるだけで全然使えていない　かわいそうなサーバー　もうサーバーは買いません（）</p>
+        <hr>
+        <h2>アクセスカウンター</h2>
+            <p>上のアクセスカウンターはAPI?として公開してます。`https://counter.256server.com/test` こんな感じで最後に好きな文字追加してあげれば新しいカウンターが生成されるよ　みんな好きに&lt;img&gt;タグで埋め込んでね `?theme=asoul` って感じで、最後にテーマを設定すると、絵が変わるよ　asoul, moebooru, rule34　の3つがテーマがある</p>
+            <p>注意点としては私が運営してるので若干不安定なのともしかしたらデータが吹っ飛ぶかもしれない　それにOKしてもらえるなら是非</p>
+            <p>journey-adさんの<a href="https://github.com/journey-ad/Moe-Counter">Moe-Counter</a>が元っぽい? 私はRTAklandさんが作った<a href="https://github.com/RTAkland/MoeCounter">python版</a>を使ってる</p>
+        <hr>
+
         <h2>相互リンクとおすすめサイト</h2>
-            <div class="sentence">
-                <h3><a href="/banner/index.html">バナー</a>画像の読み込み速度とかなんやらで別ページに移行しました。</h3>
-        <h3>相互リンク</h2>
-            <p><a href="https://www.activetk.jp" alt="activeTK">activeTK</a> 一時期ツイッターで有名になった中学生プログラマーの中身だよー</p>
-            <p><a href="https://doremire-server.com/" alt="doremire">doremire-server</a> 私の友達のサーバー この人も自宅鯖 古いノートパソコンでサーバーを立ててるらしいよ すごいよね</p>
-            <p><a href="https://m1ntooo.com/" alt="m1ntooo">m1ntooo</a>るみさんのお友達の鯖</p>
-            <p><a href="https://keichankotaro.com/" alt="keichankotaro">keichankotaro</a> 私の鯖のRTX1200の設定方法を教えてくださった方</p>   
-            <p><a href="http://21emon.wjg.jp" alt="21emon.wjg.jp">プシューサービスゲートウェイ</a> <a href="/bbs/index.php">BBS</a>で出会ったプシューさんのサイト！</p>
-            <p><a href="https://mcflurryoreo.github.io/">mcflurryoreo</a>私のdiscord鯖で出会った人の鯖。PC推奨</p>
-            <p><a href="https://sites.google.com/view/minecraft-canon-world">Canon World</a>私の友のマイクラ好きな人のHP　脱出マップとかあるからマイクラが好きな人はやってみるといいかも</p>
-        <h3>おすすめリンク</h3>
-            <p><a href="https://rumiserver.com/" alt="rumiserver">rumiserver</a>私の師匠のサーバー この256serverの名前はここから来てる。内容がとても濃い</p>
-            <p><a href="https://sites.google.com/view/kamera-room/%E3%83%9B%E3%83%BC%E3%83%A0" alt="かめらのおへや">かめらのおへや</a>ツイッターで人気な鳥ちゃんを撮ってる人のサイト ここからツイッターに行きましょう。</p> 
-            <p>相互リンク募集してます。</p>
-            <p>ここをたくさんのリンクでやっぱり埋め尽くしたいって言う私の願望を叶えさせてくれ！
-                このサイト一日に20ぐらいしかアクセスないけど、少しは宣伝になると思うからもしサイト持ってたりしたらツイッターの@256_daisuki にDMちょうだいね！</p>
+        <div class="sentence">
+            <h3><a href="/banner/index.html">バナー</a>画像の読み込み速度とかなんやらで別ページに移行しました。</h3>
         </div>
+
+        <h3>相互リンク</h3>
+        <p class="mini-p">リンクを貼られてない方のページは非表示にしました。相互じゃないのでね！</p>
+        <ul>
+            <li><p><a href="https://www.activetk.jp" alt="activeTK" target="_blank">activeTK</a> 技術お化け　rustとか書いてるらしい　つよつよすぎる</p></li>
+            <li><p><a href="https://doremire-server.com/" alt="doremire" target="_blank">doremire-server</a> 私の友達のサーバー この人も自宅鯖 古いノートパソコンでサーバーを立ててるらしいよ すごいよね</p></li>
+            <li><p><a href="https://keichankotaro.com/" alt="keichankotaro" target="_blank">keichankotaro</a> 私の鯖のRTX1200の設定方法を教えてくださった方</p></li>
+            <li><p><a href="http://21emon.wjg.jp" alt="21emon.wjg.jp" target="_blank">プシューサービスゲートウェイ</a> BBSで出会ったプシューさんのサイト！</p></li>
+            <li><p><a href="https://mcflurryoreo.github.io/" alt="mcflurryoreo" target="_blank"> mcflurryoreo</a> 私のdiscord鯖で出会った人の鯖。PC推奨</p></li>
+            <li><p><a href="https://sites.google.com/view/minecraft-canon-world" alt="脱出マップ" target="_blank"> Canon World</a> 私の友のマイクラ好きな人のHP　脱出マップとかあるからマイクラが好きな人はやってみるといいかも</p></li>
+            <li><p><a href="http://mozero.shop" alt="mozero" target="_blank">mozero</a> 私の友の鯖　ここの鯖みたいに好きなものを作ってる感じっぽい</p></li>
+            <li><p><a href="https://p-nsk.com" alt="p_nsk" target="_blank"> p_nsk</a> p_nskのサイト（直球）　今はまだ空っぽ</p></li>
+            <!--<li><p><a href="https://ame-x.net" alt="amex" target="_blank">amex</a> デザインがマジですごい　企業みたい　マジで</p></li>-->
+            <li><p><a href="https://nanasi-rasi.net/" alt="ななしぃ" target="_blank">ななしぃ</a> 鯖を破壊したときによくお世話になる人の鯖　こいつにアクセスカウンター荒らされてる</p></li>
+            <li><p><a href="https://koneruhome.com/" alt="koneruhome" target="_blank">koneruhome</a> 自鯖勢仲間　激遅回線をキャッシュとか駆使してななしぃと頑張ってる</p></li>
+            <li><p><a href="https://lolineko3.net" alt="ろりねこ" target="_blank">ろりねこ</a> ろりねこの運営してる鯖　多分女　`使い道なくても高性能な自宅鯖を追い求める系？の人。`って書かれてるけど、メモリはカツカツなのです( ˘•ω•˘ ).｡oஇ</p></li>
+            <li><p><a href="https://satsuki-blog.neocities.org" alt="szk(ramune)" target="_blank"> satsuki-blog</a> szkさんのサイト　レトロを感じれてとても良き　</p></li>
+            <li><p><a href="https://nekokawa.net/" alt="nekokawa 風緑" target="_blank">nekokawa</a> 風緑のサイト　2000年をとても感じられる　見ていて落ち着くサイト</p></li>
+            <li><p><a href="http://www.lifebookert935k.f5.si/" alt="lifebooker" target="_blank">らいふぶっかー</a> 担任ガチ恋勢の人の鯖　これからに期待</p></li>
+            <li><p><a href="https://nextpatch.net" alt="さいおんG nextpatch" target="_blank">さいおんG</a> デザインが良すぎる　最近絶滅危惧種なあのデザイン！！！！！</p></li>
+        </ul>
+
+        <h3>おすすめリンク</h3>
+        <ul>
+            <li><p><a href="https://sites.google.com/view/kamera-room/%E3%83%9B%E3%83%BC%E3%83%A0" alt="かめらのおへや" target="_blank">かめらのおへや</a> ツイッターで人気な鳥ちゃんを撮ってる人のサイト ここからツイッターに行きましょう。</p></li>
+            <li><p><a href="https://google.co.jp" alt="google" target="_blank">Google</a> 世界中の情報を整理してるとてもすごいサイト　このサイトもインデックスされてる　半導体とかネットワークとかスマホとかクラウドとか広告とか　一国レベルの力を持ってるサイト</p></li>
+            <li><p><a href="https://www.ipsj.or.jp/index.html" alt="情報処理学会 IPSJ" target="_blank">情報処理学会</a> ジュニア会員なら無料だし、たまにazureとかくれる　読んでて面白いし、興味があるなら登録しよう</p></li>
+            <li><p><a href="https://www.dream-library.org/index.html" alt="夢の図書館 マイコン博物館" target="_blank">夢の図書館(マイコン博物館)</a> 私がたまに<a href="https://uruzunyaa.com" alt="ウルズニャー uruzunyaa">ウルズニャー</a>と行く図書館　いにしえのマイコンとか情報とか　ハンダとか　いろいろできる　私の好きが詰まった場所　みんなも行こう！</p></li>
+            <li><p><a href="https://majinkz.moe/" alt="majinkz" target="_blank">majinkz</a> かわいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいい</p></li>
+        </ul>
+
+        <h3>相互リンク募集してます。</h3>
+        <p>ここをたくさんのリンクでやっぱり埋め尽くしたいって言う私の願望を叶えさせて　このサイト一日にそんなアクセスないけど、少しは宣伝になると思うからもしサイト持ってたりしたら<a href="https://twitter.com/256_daisuke">@256_daisuke</a>に</p>
     </main>
-    <footer class="footer03">
-        <ul class="menu">
+    <footer class="footer" id="footer">
+        <ul class="footer-menu">
             <li><a href="https://twitter.com/256_daisuke">twitter</a></li>
             <li><a href="https://youtube.com/@_256">youtube</a></li>
             <li><a href="https://github.com/256-daisuki">github</a></li>
+            <li><a href="https://gyougetsu.com/">ブログ</a></li>
         </ul>
-        <ul class="menu">
+        <ul class="footer-menu">
             <li><a href="/terms.html">利用規約</a></li>
-            
             <li><a href="/profile.html">プロフィール</a></li>
         </ul>
         <p class="copyright">&copy; 256大好き!</p>
-        <div id="usage"></div>
     </footer>
-    </main>
+    <script>
+        const client_h = document.getElementById('footer').clientHeight;
+            document.querySelector('main').style.minHeight = `calc(100vh - 39px - 33.5px - ${client_h}px)`;
+            
+            console.log(client_h + 'px');
+    </script>
 </body>
 </html>
