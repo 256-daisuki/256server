@@ -95,6 +95,9 @@ h2 {
     margin-left: -2%;
 }
 
+p {
+    font-size: 1em;
+}
 /*==========フッター==========*/
 
 .footer_iframe {
@@ -217,8 +220,31 @@ iframe.html {
     
 }
 
-/* TOP PAGE */
+/*==========トップページ==========*/
 
 .top-h1 {
     font-size: 50px;
+}
+
+/* リンク */
+.status {
+    margin: auto;
+    display: inline-block;
+    border-radius: 50%;
+    width: 0.7em;
+    height: 0.7em;
+    margin-right: 0.5em;
+}
+
+.up {
+    background-color: green;
+}
+
+.down {
+    background-color: red;
+}
+
+.link-list {
+    list-style: none;
+    padding-left: 0;
 }
