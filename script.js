@@ -4,22 +4,16 @@ document.querySelector('main').style.minHeight = `calc(100vh - 39px - 33.5px - $
 
 console.log(client_h + 'px');
 
-// リンク疎通確認用
-async function updateStatuses() {
-  try {
-    const response = await fetch('status.json');
-    const statuses = await response.json();
-                  
-    document.querySelectorAll('#link-list li').forEach(li => {
-      const name = li.getAttribute('data-name');
-      const status = statuses[name] || 'down'; // デフォルトは'down'
-      const statusDot = li.querySelector('.status');
-      statusDot.className = `status ${status}`;
-    });
-  } catch (error) {
-    console.error('ステータスを取得できませんでした:', error);
-  }
-}
-  // 初回更新と一定間隔での更新
-updateStatuses();
-setInterval(updateStatuses, 300000); // 5分ごとに更新
+fetch('https://256server.com/system_info.json')
+.then(response => response.json())
+.then(data => {
+  // Webサーバーの情報を表示
+  const webServer = data.web_server;
+  document.getElementById('web-server-cpu').textContent = webServer.cpu_usage;
+  document.getElementById('web-server-ram').textContent = webServer.ram_usage;
+  console.log(document.getElementById('web-server-cpu').textContent);
+})
+
+.catch(error => {
+  console.error('データの取得に失敗しました:', error);
+});
