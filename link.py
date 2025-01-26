@@ -46,4 +46,4 @@ def check_links():
 if __name__ == "__main__":
     while True:
         check_links()
-        sleep(1800)  # 30分ごと
+        sleep(600)  # 10分に一度更新する 
