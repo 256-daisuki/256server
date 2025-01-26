@@ -10,7 +10,7 @@ links = [
     {"name": "21emon", "url": "http://21emon.wjg.jp"},
     {"name": "tenohira", "url": "https://mcflurryoreo.github.io/"},
     {"name": "canon", "url": "https://sites.google.com/view/minecraft-canon-world"},
-    {"name": "mozero", "url": "http://mozero.shop"},
+    {"name": "mozero", "url": "https://mozero.net"},
     {"name": "p-nsk", "url": "https://p-nsk.com"},
     {"name": "nanasi", "url": "https://nanasi-rasi.net/"},
     {"name": "koneru", "url": "https://koneruhome.com/"},
@@ -25,6 +25,7 @@ links = [
     {"name": "ipsj", "url": "https://www.ipsj.or.jp/"},
     {"name": "dream-library", "url": "https://www.dream-library.org/"},
     {"name": "majinkz", "url": "https://majinkz.moe/"},
+    {"name": "hassy", "url": "http://hassy1216.f5.si/"},
 ]
 
 # ステータスチェックと保存
