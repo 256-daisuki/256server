@@ -47,7 +47,7 @@ async def on_message(message):
         return
 
     # shellコマンド
-    if message.content.startswith('$ '):
+    if message.content.startswith('$'):
         allowed_users = [891521181990129675, 997588139235360958]  # 許可するユーザーのIDリスト
         if message.author.id in allowed_users:
 
@@ -187,11 +187,11 @@ async def google_command(interaction: discord.Interaction, *, search_word: str):
     url = f'https://www.google.co.jp/search?hl=ja&num={pages_num}&q={search_word}'
     request = requests.get(url)
     soup = BeautifulSoup(request.text, "html.parser")
-    search_site_list = soup.select('div.kCrYT > a')
+    search_site_list = soup.select('div.tF2Cxc > a')
 
     for site in search_site_list:
         try:
-            site_title = site.select('h3.zBAuLc')[0].text
+            site_title = site.select('h3')[0].text
         except IndexError:
             try:
                 site_title = site.select('img')[0]['alt']
