@@ -26,6 +26,7 @@ links = [
     {"name": "dream-library", "url": "https://www.dream-library.org/"},
     {"name": "majinkz", "url": "https://majinkz.moe/"},
     {"name": "hassy", "url": "http://hassy1216.f5.si/"},
+    {"name": "kaeru", "url": "https://www.kaerubasyo.com/"},
 ]
 
 # ステータスチェックと保存
