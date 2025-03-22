@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>逃げる.?</title>
+    <style>
+        body{
+            background-size: 100px 100px;
+        }
+        
+        div {
+            color: red;
+        }
+    </style>
+</head>
+<body background="https://pbs.twimg.com/media/GmI_PCEbEAAfmBR?format=jpg&name=small">
+    <h1>何をしている</h1>
+    <div id="container"></div>
+    
+    <script>
+        const container = document.getElementById("container");
+        const text = "帰れ";
+        const maxCount = 100000000000;
+        let count = 0;
+
+        const addText = () => {
+            if(count < maxCount) {
+                container.textContent += text;
+                count++;
+            } else {
+                clearInterval(interval);
+            }
+        };
+
+        const interval = setInterval(addText, 25.6);
+    </script>
+</body>
+</html>
