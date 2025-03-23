@@ -7,7 +7,9 @@ import os
 import aiohttp
 import asyncio
 import aiofiles
+from aiohttp import ClientSession, ClientResponseError
 import uuid
+import json
 import logging
 from discord import app_commands
 from discord.ext import commands
@@ -143,13 +145,14 @@ async def help_command(interaction: discord.Interaction):
     command_list = [
         ("/test", "Botの動作が怪しいときに使ってください　適当に返答します"),
         ("/ping", "Botにpingを打ちます。応答するかどうか　testとほぼ一緒です"),
-        ("/echo", "好きなことを言わすことができます"),
+        # ("/echo", "好きなことを言わすことができます"),
         ("/omikuji", "凶しか入ってないおみくじです"),
         ("/google", "google検索します　そのまま"),
         ("/yahoo", "yahooニュースを表示します"),
         ("/embed", "Botがユーザーの代わりにembedを送信します"),
         # ("/screenshot", "Webサイトのスクリーンショットを送信します(httpsをちゃんとつけてください)")
-        ("/tw_img_archive", "Twitter(X)の画像を保存し、表示します 保存をするのでツイートが削除されても残ります")
+        ("/tw_img_archive", "Twitter(X)の画像を保存し、表示します 保存をするのでツイートが削除されても、凍結されても残ります"),
+        ("/set_auto_tw_img_archive", "設定したテキストチャンネルに貼られたTwitter(X)の画像に対し自動的に/tw_img_archiveを実行します　イラスト共有チャンネルなどに")
     ]
 
     # Embedを作成
@@ -300,6 +303,19 @@ async def embed_command(interaction: discord.Interaction, text: str, title: str 
 SAVE_DIR = "/var/www/html/images"
 COMBINED_DIR = "/var/www/html/combined"
 BASE_URL = "https://discord.256server.com"
+CONFIG_FILE = "config.json"
+
+###           Twitter画像保存関係           ###
+# 設定の読み書き
+def load_config():
+    if os.path.exists(CONFIG_FILE):
+        with open(CONFIG_FILE, 'r') as f:
+            return json.load(f)
+    return {}
+
+def save_config(config):
+    with open(CONFIG_FILE, 'w') as f:
+        json.dump(config, f)
 
 # 画像URLのパラメータを修正する関数
 def clean_image_url(url):
@@ -329,7 +345,7 @@ async def save_tweet_image(interaction: discord.Interaction, url: str):
         url = "https://" + url
 
     if "x.com" not in url and "twitter.com" not in url:
-        await interaction.followup.send("エラー: X (Twitter) のURLのみ対応しています。`x.com` または `twitter.com` を含むURLを入力してください。")
+        await interaction.followup.send("エラー: Twitter (X) のURLのみ対応しています。")
         return
 
     async with async_playwright() as p:
@@ -337,7 +353,7 @@ async def save_tweet_image(interaction: discord.Interaction, url: str):
         page = await browser.new_page()
 
         await page.goto(url)
-        await page.wait_for_selector("article", timeout=10000)  # タイムアウトを10秒に短縮
+        await page.wait_for_selector("article", timeout=10000) 
 
         try:
             tweet_text = await page.locator("article div[lang]").text_content()
@@ -361,7 +377,7 @@ async def save_tweet_image(interaction: discord.Interaction, url: str):
     os.makedirs(COMBINED_DIR, exist_ok=True)
     saved_images = []
 
-    # 画像を並列ダウンロード　これはgrokがつけてきたやつ　私知りません
+    # 画像を並列ダウンロード　これはgrokがつけてきたやつ　私知りません　勝手に並列にして来やがりました
     async with aiohttp.ClientSession() as session:
         tasks = []
         for image_url in image_urls:
@@ -462,6 +478,143 @@ async def save_tweet_image(interaction: discord.Interaction, url: str):
         embed.set_image(url=original_image_urls[0])
 
     await interaction.followup.send(embed=embed)
+
+# 自動のチャンネル設定のソレ
+@tree.command(name="set_auto_tw_img_archive", description="設定したテキストチャンネルに貼られたTwitter(X)の画像に対し自動的に/tw_img_archiveを実行します")
+@app_commands.describe(textchannel="監視するテキストチャンネル")
+async def hekta_command(interaction: discord.Interaction, textchannel: discord.TextChannel):
+    config = load_config()
+    config[str(interaction.guild.id)] = textchannel.id
+    save_config(config)
+    await interaction.response.send_message(f"{textchannel.mention} に貼られたツイートの画像をアーカイブ化します", ephemeral=False)
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+    
+    config = load_config()
+    monitored_channel = config.get(str(message.guild.id))
+    
+    if monitored_channel and message.channel.id == monitored_channel:
+        if re.search(r'(https?://)?(x|twitter)\.com', message.content):
+            await message.delete()
+            
+            webhooks = await message.channel.webhooks()
+            webhook = next((w for w in webhooks if w.name == "TweetArchiver"), None)
+            if not webhook:
+                webhook = await message.channel.create_webhook(name="TweetArchiver")
+            
+            url = next((u for u in message.content.split() if re.search(r'(https?://)?(x|twitter)\.com', u)), None)
+            if not url:
+                return
+            if not url.startswith("http"):
+                url = "https://" + url
+
+            async with async_playwright() as p:
+                browser = await p.chromium.launch()
+                page = await browser.new_page()
+                await page.goto(url)
+                
+                # タイムアウトを60秒に延長し、例外処理を追加 by grok
+                try:
+                    await page.wait_for_selector("article", timeout=5000)
+                    tweet_text_elem = page.locator("article div[lang]").first
+                    tweet_text = await tweet_text_elem.text_content(timeout=5000) or ""
+                except Exception as e:
+                    # logging.warning(f"ツイート本文の取得に失敗: {e}")
+                    tweet_text = ""
+                
+                try:
+                    author_name = await page.locator("article a[role='link'] span").nth(0).text_content(timeout=5000)
+                    author_id = await page.locator("article span").filter(has_text=re.compile(r"^@")).first.text_content(timeout=5000)
+                    author_icon = await page.locator("article img").first.get_attribute("src", timeout=5000)
+                    images = await page.locator("article img").all()
+                    image_urls = [await img.get_attribute("src", timeout=5000) for img in images if await img.get_attribute("src", timeout=5000)]
+                except Exception as e:
+                    logging.error(f"ツイート情報の取得に失敗: {e}")
+                    await browser.close()
+                    return
+
+                await browser.close()
+
+            if not image_urls:
+                return
+
+            os.makedirs(SAVE_DIR, exist_ok=True)
+            os.makedirs(COMBINED_DIR, exist_ok=True)
+            saved_images = []
+
+            async with aiohttp.ClientSession() as session:
+                tasks = []
+                for image_url in image_urls:
+                    if "profile_images" in image_url or "twemoji" in image_url or ".svg" in image_url:
+                        continue
+                    image_url = clean_image_url(image_url)
+                    match = re.search(r"format=(\w+)", image_url)
+                    ext = f".{match.group(1)}" if match else ".jpg"
+                    filename = image_url.split("/")[-1].split("?")[0] + ext
+                    save_path = os.path.join(SAVE_DIR, filename)
+                    tasks.append(download_image(session, image_url, save_path))
+                saved_images = [result for result in await asyncio.gather(*tasks) if result]
+
+            if not saved_images:
+                return
+
+            original_image_urls = [BASE_URL + '/images/' + os.path.basename(img) for img in saved_images]
+
+            combined_image_path = None
+            if len(saved_images) > 1:
+                images_to_merge = []
+                for img_path in saved_images[:4]:
+                    try:
+                        img = Image.open(img_path)
+                        images_to_merge.append(img)
+                    except:
+                        continue
+
+                if images_to_merge:
+                    if len(images_to_merge) == 2:
+                        img1, img2 = images_to_merge
+                        total_width = img1.width + img2.width
+                        total_height = max(img1.height, img2.height)
+                        new_image = Image.new('RGB', (total_width, total_height), (255, 255, 255))
+                        y1_offset = (total_height - img1.height) // 2
+                        y2_offset = (total_height - img2.height) // 2
+                        new_image.paste(img1, (0, y1_offset))
+                        new_image.paste(img2, (img1.width, y2_offset))
+                    else:
+                        max_width = max(img.width for img in images_to_merge)
+                        max_height = max(img.height for img in images_to_merge)
+                        cols = 2
+                        rows = (len(images_to_merge) + 1) // 2
+                        total_width = max_width * cols
+                        total_height = max_height * rows
+                        new_image = Image.new('RGB', (total_width, total_height), (255, 255, 255))
+                        for i, img in enumerate(images_to_merge):
+                            x_offset = (i % 2) * max_width + (max_width - img.width) // 2
+                            y_offset = (i // 2) * max_height + (max_height - img.height) // 2
+                            new_image.paste(img, (x_offset, y_offset))
+
+                    combined_image_filename = f"{uuid.uuid4().hex}.jpg"
+                    combined_image_path = os.path.join(COMBINED_DIR, combined_image_filename)
+                    new_image.save(combined_image_path, quality=95)
+                    logging.info(f"Saved combined image: {combined_image_path}")
+
+            image_urls_text = "".join([f"[{i+1}枚目]({url}) " for i, url in enumerate(original_image_urls)]) if len(original_image_urls) > 1 else f"[リンク]({original_image_urls[0]})"
+            
+            embed = discord.Embed(
+                description=f"{tweet_text[:4000]}\n\n[元ツイート]({url})\n{image_urls_text}",
+                color=0x1DA1F2
+            )
+            embed.set_author(name=f"{author_name} ({author_id})", icon_url=author_icon)
+            embed.set_image(url=BASE_URL + '/combined/' + os.path.basename(combined_image_path) if combined_image_path else original_image_urls[0])
+
+            await webhook.send(
+                embed=embed,
+                username=message.author.display_name,
+                avatar_url=message.author.avatar.url if message.author.avatar else None
+            )
 
 # トークン
 client.run(os.getenv("TOKEN"))
