@@ -304,6 +304,13 @@ SAVE_DIR = "/var/www/html/images"
 COMBINED_DIR = "/var/www/html/combined"
 BASE_URL = "https://discord.256server.com"
 CONFIG_FILE = "config.json"
+STATE_FILE = "twitter_state.json"
+SENSITIVE_EYE_PATH = "M3.693 21.707l-1.414-1.414 2.429-2.429c-2.479-2.421-3.606-5.376-3.658-5.513l-.131-.352.131-.352c.133-.353 3.331-8.648 10.937-8.648 2.062 0 3.989.621 5.737 1.85l2.556-2.557 1.414 1.414L3.693 21.707zm-.622-9.706c.356.797 1.354 2.794 3.051 4.449l2.417-2.418c-.361-.609-.553-1.306-.553-2.032 0-2.206 1.794-4 4-4 .727 0 1.424.192 2.033.554l2.263-2.264C14.953 5.434 13.512 5 11.986 5c-5.416 0-8.258 5.535-8.915 7.001zM11.986 10c-1.103 0-2 .897-2 2 0 .178.023.352.067.519l2.451-2.451c-.167-.044-.341-.067-.519-.067zm10.951 1.647l.131.352-.131.352c-.133.353-3.331 8.648-10.937 8.648-.709 0-1.367-.092-2-.223v-2.047c.624.169 1.288.27 2 .27 5.415 0 8.257-5.533 8.915-7-.252-.562-.829-1.724-1.746-2.941l1.438-1.438c1.53 1.971 2.268 3.862 2.33 4.027z"
+## 雑とか言わないで
+
+# ログ(デバッグ用だったけどかっこいいから残す)
+logging.basicConfig(level=logging.INFO)
+
 
 ###           Twitter画像保存関係           ###
 # 設定の読み書き
@@ -335,66 +342,133 @@ async def download_image(session, image_url, save_path):
             return save_path
         return None
 
+async def download_image(session, image_url, save_path):
+    async with session.get(image_url) as resp:
+        if resp.status == 200:
+            async with aiofiles.open(save_path, "wb") as f:
+                await f.write(await resp.read())
+            logging.info(f"Saved image: {save_path}")
+            return save_path
+        return None
+    
 # tw保存
 @tree.command(name="tw_img_archive", description="ツイートの画像を保存し、表示します")
 @app_commands.describe(url="ツイートのURLを入力")
 async def save_tweet_image(interaction: discord.Interaction, url: str):
     await interaction.response.defer()
+    logging.info(f"Command invoked: tw_img_archive with URL: {url}")
 
     if not url.startswith("http://") and not url.startswith("https://"):
         url = "https://" + url
 
     if "x.com" not in url and "twitter.com" not in url:
         await interaction.followup.send("エラー: Twitter (X) のURLのみ対応しています。")
+        logging.warning("Invalid URL: not a Twitter/X URL")
         return
 
-    async with async_playwright() as p:
-        browser = await p.chromium.launch()
-        page = await browser.new_page()
+    # ツイートIDを抽出 grok作
+    tweet_id_match = re.search(r'status/(\d+)', url)
+    if not tweet_id_match:
+        await interaction.followup.send("エラー: ツイートIDが見つかりませんでした。")
+        logging.warning("Tweet ID not found in URL")
+        return
+    tweet_id = tweet_id_match.group(1)
+    base_url = f"https://x.com{url.split('x.com')[1].split('?')[0]}"
 
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=True)
+        try:
+            context = await browser.new_context(storage_state=STATE_FILE)
+        except json.JSONDecodeError as e:
+            logging.error(f"twitter_state.jsonの読み込みに失敗: {e}")
+            await interaction.followup.send("Twitterログイン状態ファイルが壊れています。管理者に連絡してください。")
+            await browser.close()
+            return
+        except FileNotFoundError:
+            logging.error(f"{STATE_FILE} が見つかりません")
+            await interaction.followup.send("Twitterログイン状態が設定されていません。管理者に連絡してください。")
+            await browser.close()
+            return
+
+        page = await context.new_page()
         await page.goto(url)
-        await page.wait_for_selector("article", timeout=10000) 
 
         try:
-            tweet_text = await page.locator("article div[lang]").text_content()
-        except:
-            tweet_text = None
+            # 最初のarticle（ターゲットのツイート）を待つ　
+            await page.wait_for_selector("article", timeout=10000)
+            main_article = page.locator("article").first  # 最初のarticleに限定
+            tweet_text_elem = main_article.locator('div[data-testid="tweetText"]').first
+            tweet_text = await tweet_text_elem.text_content(timeout=5000) or ""
+            
+            sensitive_eye = await main_article.locator(f"svg path[d='{SENSITIVE_EYE_PATH}']").count()
+            is_sensitive = sensitive_eye > 0
+            logging.info(f"Sensitive check: {is_sensitive}, Eye count: {sensitive_eye}")
+        except Exception as e:
+            logging.warning(f"ツイート本文の取得に失敗: {e}")
+            tweet_text = ""
+            is_sensitive = False
 
-        author_name = await page.locator("article a[role='link'] span").nth(0).text_content()
-        author_id = await page.locator("article span").filter(has_text=re.compile(r"^@")).first.text_content()
-        author_icon = await page.locator("article img").first.get_attribute("src")
+        try:
+            author_name = await main_article.locator("a[role='link'] span").nth(0).text_content(timeout=5000)
+            author_id = await main_article.locator("span").filter(has_text=re.compile(r"^@")).first.text_content(timeout=5000)
+            author_icon = await main_article.locator("img").first.get_attribute("src", timeout=5000)
+        except Exception as e:
+            logging.error(f"ツイート情報の取得に失敗: {e}")
+            await browser.close()
+            return
 
-        images = await page.locator("article img").all()
-        image_urls = [await img.get_attribute("src") for img in images]
+        # メイン画像を特定（最初のarticle内のみ）　これ無いともっと見るの画像取得してくる　ちなみに引用元の画像は取得してくる
+        image_urls = []
+        try:
+            # ツイート本文に近い画像のみを取得
+            images = await main_article.locator('div[data-testid="tweetPhoto"] img[alt="Image"]').all()
+            for img in images:
+                src = await img.get_attribute("src")
+                if src and "pbs.twimg.com/media/" in src:
+                    image_urls.append(src)
+                    logging.info(f"Found main image in tweet: {src}")
+                else:
+                    logging.info(f"Ignored non-media image: {src}")
+            if not image_urls:
+                logging.warning("No media images found in main tweet")
+        except Exception as e:
+            logging.warning(f"画像の取得に失敗: {e}")
 
         await browser.close()
 
     if not image_urls:
         await interaction.followup.send("画像が見つかりませんでした。")
+        logging.warning("No image URLs found")
+        return
+
+    is_nsfw_channel = interaction.channel.is_nsfw()
+    logging.info(f"Channel NSFW status: {is_nsfw_channel}")
+    if is_sensitive and not is_nsfw_channel:
+        await interaction.followup.send(
+            "このツイートにはセンシティブなコンテンツが含まれています。NSFWチャンネルで実行してください。"
+        )
+        logging.info("Blocked due to sensitive content in non-NSFW channel")
         return
 
     os.makedirs(SAVE_DIR, exist_ok=True)
     os.makedirs(COMBINED_DIR, exist_ok=True)
     saved_images = []
 
-    # 画像を並列ダウンロード　これはgrokがつけてきたやつ　私知りません　勝手に並列にして来やがりました
     async with aiohttp.ClientSession() as session:
         tasks = []
         for image_url in image_urls:
-            if "profile_images" in image_url or "twemoji" in image_url or ".svg" in image_url:
-                continue
-
             image_url = clean_image_url(image_url)
             match = re.search(r"format=(\w+)", image_url)
             ext = f".{match.group(1)}" if match else ".jpg"
             filename = image_url.split("/")[-1].split("?")[0] + ext
             save_path = os.path.join(SAVE_DIR, filename)
             tasks.append(download_image(session, image_url, save_path))
-
         saved_images = [result for result in await asyncio.gather(*tasks) if result is not None]
+        logging.info(f"Saved {len(saved_images)} images")
 
     if not saved_images:
         await interaction.followup.send("画像の保存に失敗しました")
+        logging.warning("No images saved")
         return
 
     original_image_urls = [BASE_URL + '/images/' + os.path.basename(img) for img in saved_images]
@@ -406,59 +480,63 @@ async def save_tweet_image(interaction: discord.Interaction, url: str):
             try:
                 img = Image.open(img_path)
                 images_to_merge.append(img)
-            except IOError:
-                print(f"Skipping non-image file: {img_path}")
+            except Exception as e:
+                logging.warning(f"Failed to open image {img_path}: {e}")
                 continue
 
         if not images_to_merge:
             await interaction.followup.send("合成する画像がありません")
+            logging.warning("No valid images to merge")
             return
 
-        # ここ全部grokが書いてきたやつ　私知りません2
-        if len(images_to_merge) == 2:
-            img1, img2 = images_to_merge
-            total_width = img1.width + img2.width
-            total_height = max(img1.height, img2.height)
-            new_image = Image.new('RGB', (total_width, total_height), color=(255, 255, 255))
-            y1_offset = (total_height - img1.height) // 2
-            y2_offset = (total_height - img2.height) // 2
-            new_image.paste(img1, (0, y1_offset))
-            new_image.paste(img2, (img1.width, y2_offset))
-        else:
-            max_width = max(img.width for img in images_to_merge)
-            max_height = max(img.height for img in images_to_merge)
-            total_width = max_width * 2
-            total_height = max_height * 2 if len(images_to_merge) > 2 else max_height
-            new_image = Image.new('RGB', (total_width, total_height), color=(255, 255, 255))
-
-            if len(images_to_merge) == 3:
-                x1_offset = (max_width - images_to_merge[0].width) // 2
-                y1_offset = (max_height - images_to_merge[0].height) // 2
-                new_image.paste(images_to_merge[0], (x1_offset, y1_offset))
-                x2_offset = max_width + (max_width - images_to_merge[1].width) // 2
-                y2_offset = (max_height - images_to_merge[1].height) // 2
-                new_image.paste(images_to_merge[1], (x2_offset, y2_offset))
-                x3_offset = (total_width - images_to_merge[2].width) // 2
-                y3_offset = max_height + (max_height - images_to_merge[2].height) // 2
-                new_image.paste(images_to_merge[2], (x3_offset, y3_offset))
+        # ここ100%grok産です私知りませんきれいに生成できるコード書ける人いたら教えてください　コピペします
+        try:
+            if len(images_to_merge) == 2:
+                img1, img2 = images_to_merge
+                total_width = img1.width + img2.width
+                total_height = max(img1.height, img2.height)
+                new_image = Image.new('RGB', (total_width, total_height), color=(255, 255, 255))
+                y1_offset = (total_height - img1.height) // 2
+                y2_offset = (total_height - img2.height) // 2
+                new_image.paste(img1, (0, y1_offset))
+                new_image.paste(img2, (img1.width, y2_offset))
             else:
-                x1_offset = (max_width - images_to_merge[0].width) // 2
-                y1_offset = (max_height - images_to_merge[0].height) // 2
-                new_image.paste(images_to_merge[0], (x1_offset, y1_offset))
-                x2_offset = max_width + (max_width - images_to_merge[1].width) // 2
-                y2_offset = (max_height - images_to_merge[1].height) // 2
-                new_image.paste(images_to_merge[1], (x2_offset, y2_offset))
-                x3_offset = (max_width - images_to_merge[2].width) // 2
-                y3_offset = max_height + (max_height - images_to_merge[2].height) // 2
-                new_image.paste(images_to_merge[2], (x3_offset, y3_offset))
-                x4_offset = max_width + (max_width - images_to_merge[3].width) // 2
-                y4_offset = max_height + (max_height - images_to_merge[3].height) // 2
-                new_image.paste(images_to_merge[3], (x4_offset, y4_offset))
+                max_width = max(img.width for img in images_to_merge)
+                max_height = max(img.height for img in images_to_merge)
+                total_width = max_width * 2
+                total_height = max_height * 2 if len(images_to_merge) > 2 else max_height
+                new_image = Image.new('RGB', (total_width, total_height), color=(255, 255, 255))
 
-        combined_image_filename = f"{uuid.uuid4().hex}.jpg"
-        combined_image_path = os.path.join(COMBINED_DIR, combined_image_filename)
-        new_image.save(combined_image_path, quality=95)
-        logging.info(f"Saved combined image: {combined_image_path}")
+                if len(images_to_merge) == 3:
+                    x1_offset = (max_width - images_to_merge[0].width) // 2
+                    y1_offset = (max_height - images_to_merge[0].height) // 2
+                    new_image.paste(images_to_merge[0], (x1_offset, y1_offset))
+                    x2_offset = max_width + (max_width - images_to_merge[1].width) // 2
+                    y2_offset = (max_height - images_to_merge[1].height) // 2
+                    new_image.paste(images_to_merge[1], (x2_offset, y2_offset))
+                    x3_offset = (total_width - images_to_merge[2].width) // 2
+                    y3_offset = max_height + (max_height - images_to_merge[2].height) // 2
+                    new_image.paste(images_to_merge[2], (x3_offset, y3_offset))
+                else:
+                    x1_offset = (max_width - images_to_merge[0].width) // 2
+                    y1_offset = (max_height - images_to_merge[0].height) // 2
+                    new_image.paste(images_to_merge[0], (x1_offset, y1_offset))
+                    x2_offset = max_width + (max_width - images_to_merge[1].width) // 2
+                    y2_offset = (max_height - images_to_merge[1].height) // 2
+                    new_image.paste(images_to_merge[1], (x2_offset, y2_offset))
+                    x3_offset = (max_width - images_to_merge[2].width) // 2
+                    y3_offset = max_height + (max_height - images_to_merge[2].height) // 2
+                    new_image.paste(images_to_merge[2], (x3_offset, y3_offset))
+                    x4_offset = max_width + (max_width - images_to_merge[3].width) // 2
+                    y4_offset = max_height + (max_height - images_to_merge[3].height) // 2
+                    new_image.paste(images_to_merge[3], (x4_offset, y4_offset))
+
+            combined_image_filename = f"{uuid.uuid4().hex}.jpg"
+            combined_image_path = os.path.join(COMBINED_DIR, combined_image_filename)
+            new_image.save(combined_image_path, quality=95)
+            logging.info(f"Saved combined image: {combined_image_path}")
+        except Exception as e:
+            logging.error(f"Image merging failed: {e}")
 
     if len(original_image_urls) == 1:
         image_urls_text = f"[リンク]({original_image_urls[0]})"
@@ -478,6 +556,7 @@ async def save_tweet_image(interaction: discord.Interaction, url: str):
         embed.set_image(url=original_image_urls[0])
 
     await interaction.followup.send(embed=embed)
+    logging.info("Embed sent successfully")
 
 # 自動のチャンネル設定のソレ
 @tree.command(name="set_auto_tw_img_archive", description="設定したテキストチャンネルに貼られたTwitter(X)の画像に対し自動的に/tw_img_archiveを実行します")
@@ -486,7 +565,7 @@ async def hekta_command(interaction: discord.Interaction, textchannel: discord.T
     config = load_config()
     config[str(interaction.guild.id)] = textchannel.id
     save_config(config)
-    await interaction.response.send_message(f"{textchannel.mention} に貼られたツイートの画像をアーカイブ化します", ephemeral=False)
+    await interaction.response.send_message(f"{textchannel.mention} を監視チャンネルに設定しました！", ephemeral=True)
 
 @client.event
 async def on_message(message):
@@ -499,6 +578,7 @@ async def on_message(message):
     if monitored_channel and message.channel.id == monitored_channel:
         if re.search(r'(https?://)?(x|twitter)\.com', message.content):
             await message.delete()
+            logging.info(f"Message deleted: {message.content}")
             
             webhooks = await message.channel.webhooks()
             webhook = next((w for w in webhooks if w.name == "TweetArchiver"), None)
@@ -507,30 +587,62 @@ async def on_message(message):
             
             url = next((u for u in message.content.split() if re.search(r'(https?://)?(x|twitter)\.com', u)), None)
             if not url:
+                logging.warning("No valid URL found in message")
                 return
             if not url.startswith("http"):
                 url = "https://" + url
 
             async with async_playwright() as p:
-                browser = await p.chromium.launch()
-                page = await browser.new_page()
+                browser = await p.chromium.launch(headless=True)
+                try:
+                    context = await browser.new_context(storage_state=STATE_FILE)
+                except json.JSONDecodeError as e:
+                    logging.error(f"twitter_state.jsonの読み込みに失敗: {e}")
+                    await webhook.send("Twitterログイン状態ファイルが壊れています。管理者に連絡してください。")
+                    await browser.close()
+                    return
+                except FileNotFoundError:
+                    logging.error(f"{STATE_FILE} が見つかりません")
+                    await webhook.send("Twitterログイン状態が設定されていません。管理者に連絡してください。")
+                    await browser.close()
+                    return
+                
+                page = await context.new_page()
                 await page.goto(url)
                 
-                # タイムアウトを60秒に延長し、例外処理を追加 by grok
                 try:
-                    await page.wait_for_selector("article", timeout=5000)
-                    tweet_text_elem = page.locator("article div[lang]").first
+                    # 最初のarticle（ターゲットのツイート）を待つ
+                    await page.wait_for_selector("article", timeout=10000)
+                    main_article = page.locator("article").first  # 最初のarticleに限定
+                    tweet_text_elem = main_article.locator('div[data-testid="tweetText"]').first
                     tweet_text = await tweet_text_elem.text_content(timeout=5000) or ""
+                    
+                    # センシティブ判定
+                    sensitive_eye = await main_article.locator(f"svg path[d='{SENSITIVE_EYE_PATH}']").count()
+                    is_sensitive = sensitive_eye > 0
+                    logging.info(f"Sensitive check: {is_sensitive}, Eye count: {sensitive_eye}")
                 except Exception as e:
-                    # logging.warning(f"ツイート本文の取得に失敗: {e}")
+                    logging.warning(f"ツイート本文の取得に失敗: {e}")
                     tweet_text = ""
+                    is_sensitive = False
                 
                 try:
-                    author_name = await page.locator("article a[role='link'] span").nth(0).text_content(timeout=5000)
-                    author_id = await page.locator("article span").filter(has_text=re.compile(r"^@")).first.text_content(timeout=5000)
-                    author_icon = await page.locator("article img").first.get_attribute("src", timeout=5000)
-                    images = await page.locator("article img").all()
-                    image_urls = [await img.get_attribute("src", timeout=5000) for img in images if await img.get_attribute("src", timeout=5000)]
+                    author_name = await main_article.locator("a[role='link'] span").nth(0).text_content(timeout=5000)
+                    author_id = await main_article.locator("span").filter(has_text=re.compile(r"^@")).first.text_content(timeout=5000)
+                    author_icon = await main_article.locator("img").first.get_attribute("src", timeout=5000)
+                    
+                    # メイン画像を特定
+                    image_urls = []
+                    images = await main_article.locator('div[data-testid="tweetPhoto"] img[alt="Image"]').all()
+                    for img in images:
+                        src = await img.get_attribute("src")
+                        if src and "pbs.twimg.com/media/" in src:
+                            image_urls.append(src)
+                            logging.info(f"Found main image in tweet: {src}")
+                        else:
+                            logging.info(f"Ignored non-media image: {src}")
+                    if not image_urls:
+                        logging.warning("No media images found in main tweet")
                 except Exception as e:
                     logging.error(f"ツイート情報の取得に失敗: {e}")
                     await browser.close()
@@ -539,6 +651,24 @@ async def on_message(message):
                 await browser.close()
 
             if not image_urls:
+                await webhook.send(
+                    "画像が見つかりませんでした。",
+                    username=message.author.display_name,
+                    avatar_url=message.author.avatar.url if message.author.avatar else None
+                )
+                logging.warning("No image URLs found")
+                return
+
+            # NSFWチャンネルチェック
+            is_nsfw_channel = message.channel.is_nsfw()
+            logging.info(f"Channel NSFW status: {is_nsfw_channel}")
+            if is_sensitive and not is_nsfw_channel:
+                await webhook.send(
+                    "このツイートにはセンシティブなコンテンツが含まれています。NSFWチャンネルで実行してください。",
+                    username=message.author.display_name,
+                    avatar_url=message.author.avatar.url if message.author.avatar else None
+                )
+                logging.info("Blocked due to sensitive content in non-NSFW channel")
                 return
 
             os.makedirs(SAVE_DIR, exist_ok=True)
@@ -548,8 +678,6 @@ async def on_message(message):
             async with aiohttp.ClientSession() as session:
                 tasks = []
                 for image_url in image_urls:
-                    if "profile_images" in image_url or "twemoji" in image_url or ".svg" in image_url:
-                        continue
                     image_url = clean_image_url(image_url)
                     match = re.search(r"format=(\w+)", image_url)
                     ext = f".{match.group(1)}" if match else ".jpg"
@@ -557,8 +685,15 @@ async def on_message(message):
                     save_path = os.path.join(SAVE_DIR, filename)
                     tasks.append(download_image(session, image_url, save_path))
                 saved_images = [result for result in await asyncio.gather(*tasks) if result]
+                logging.info(f"Saved {len(saved_images)} images")
 
             if not saved_images:
+                await webhook.send(
+                    "画像の保存に失敗しました。",
+                    username=message.author.display_name,
+                    avatar_url=message.author.avatar.url if message.author.avatar else None
+                )
+                logging.warning("No images saved")
                 return
 
             original_image_urls = [BASE_URL + '/images/' + os.path.basename(img) for img in saved_images]
@@ -570,36 +705,40 @@ async def on_message(message):
                     try:
                         img = Image.open(img_path)
                         images_to_merge.append(img)
-                    except:
+                    except Exception as e:
+                        logging.warning(f"Failed to open image {img_path}: {e}")
                         continue
 
                 if images_to_merge:
-                    if len(images_to_merge) == 2:
-                        img1, img2 = images_to_merge
-                        total_width = img1.width + img2.width
-                        total_height = max(img1.height, img2.height)
-                        new_image = Image.new('RGB', (total_width, total_height), (255, 255, 255))
-                        y1_offset = (total_height - img1.height) // 2
-                        y2_offset = (total_height - img2.height) // 2
-                        new_image.paste(img1, (0, y1_offset))
-                        new_image.paste(img2, (img1.width, y2_offset))
-                    else:
-                        max_width = max(img.width for img in images_to_merge)
-                        max_height = max(img.height for img in images_to_merge)
-                        cols = 2
-                        rows = (len(images_to_merge) + 1) // 2
-                        total_width = max_width * cols
-                        total_height = max_height * rows
-                        new_image = Image.new('RGB', (total_width, total_height), (255, 255, 255))
-                        for i, img in enumerate(images_to_merge):
-                            x_offset = (i % 2) * max_width + (max_width - img.width) // 2
-                            y_offset = (i // 2) * max_height + (max_height - img.height) // 2
-                            new_image.paste(img, (x_offset, y_offset))
+                    try:
+                        if len(images_to_merge) == 2:
+                            img1, img2 = images_to_merge
+                            total_width = img1.width + img2.width
+                            total_height = max(img1.height, img2.height)
+                            new_image = Image.new('RGB', (total_width, total_height), (255, 255, 255))
+                            y1_offset = (total_height - img1.height) // 2
+                            y2_offset = (total_height - img2.height) // 2
+                            new_image.paste(img1, (0, y1_offset))
+                            new_image.paste(img2, (img1.width, y2_offset))
+                        else:
+                            max_width = max(img.width for img in images_to_merge)
+                            max_height = max(img.height for img in images_to_merge)
+                            cols = 2
+                            rows = (len(images_to_merge) + 1) // 2
+                            total_width = max_width * cols
+                            total_height = max_height * rows
+                            new_image = Image.new('RGB', (total_width, total_height), (255, 255, 255))
+                            for i, img in enumerate(images_to_merge):
+                                x_offset = (i % 2) * max_width + (max_width - img.width) // 2
+                                y_offset = (i // 2) * max_height + (max_height - img.height) // 2
+                                new_image.paste(img, (x_offset, y_offset))
 
-                    combined_image_filename = f"{uuid.uuid4().hex}.jpg"
-                    combined_image_path = os.path.join(COMBINED_DIR, combined_image_filename)
-                    new_image.save(combined_image_path, quality=95)
-                    logging.info(f"Saved combined image: {combined_image_path}")
+                        combined_image_filename = f"{uuid.uuid4().hex}.jpg"
+                        combined_image_path = os.path.join(COMBINED_DIR, combined_image_filename)
+                        new_image.save(combined_image_path, quality=95)
+                        logging.info(f"Saved combined image: {combined_image_path}")
+                    except Exception as e:
+                        logging.error(f"Image merging failed: {e}")
 
             image_urls_text = "".join([f"[{i+1}枚目]({url}) " for i, url in enumerate(original_image_urls)]) if len(original_image_urls) > 1 else f"[リンク]({original_image_urls[0]})"
             
@@ -615,6 +754,7 @@ async def on_message(message):
                 username=message.author.display_name,
                 avatar_url=message.author.avatar.url if message.author.avatar else None
             )
+            logging.info("Embed sent successfully")
 
 # トークン
 client.run(os.getenv("TOKEN"))
