@@ -10,6 +10,7 @@ import aiofiles
 from aiohttp import ClientSession, ClientResponseError
 import uuid
 import json
+from enum import Enum
 import logging
 from discord import app_commands
 from discord.ext import commands
@@ -234,52 +235,6 @@ async def yahoo_news_command(interaction: discord.Interaction):
 
     await interaction.response.send_message(embed=result_embed, ephemeral=False)
 
-@tree.command(name="embed", description="Embedを代わりに送信してくれます")
-async def embed_command(interaction: discord.Interaction, text: str, title: str = None, color: str = None,
-                        author_name: str = None, author_url: str = None, author_icon_url: str = None,
-                        thumbnail_url: str = None, image_url: str = None, footer_text: str = None):
-    user_avatar = interaction.user.display_avatar
-    user_name = interaction.user.display_name
-
-    if color:
-        # カラーコードが指定されている場合、16進数に変換
-        try:
-            color = int(color, 16)
-        except ValueError:
-            await interaction.followup.send("無効なカラーコードです。")
-            return
-    else:
-        # カラーコードが指定されていない場合はデフォルトの色を使用
-        color = 0x00ff00
-
-    embed = discord.Embed(description=text, color=color)
-    await interaction.response.defer()
-    if title:
-        embed.title = title 
-
-    if author_name:
-        embed.set_author(name=author_name, url=author_url, icon_url=author_icon_url)
-
-    if thumbnail_url:
-        embed.set_thumbnail(url=thumbnail_url)
-
-    if image_url:
-        embed.set_image(url=image_url)
-
-    if footer_text:
-        embed.set_footer(text=footer_text)
-
-    webhook = await interaction.channel.create_webhook(name="Embed Webhook")
-
-    await webhook.send(embed=embed, username=user_name, avatar_url=user_avatar)
-    followup_message = await interaction.followup.send("embedを作成しました。")
-
-    # 3秒後にメッセージを削除
-    await asyncio.sleep(3)
-    await followup_message.delete()
-
-    await webhook.delete()
-
 #@tree.command(name="screenshot", description="指定されたURLのスクリーンショットを撮ります")
 #async def screenshot_command(interaction: discord.Interaction, url: str):
 #    try:
@@ -395,7 +350,7 @@ async def save_tweet_image(interaction: discord.Interaction, url: str):
 
         try:
             # 最初のarticle（ターゲットのツイート）を待つ　
-            await page.wait_for_selector("article", timeout=10000)
+            await page.wait_for_selector("article", timeout=5000)
             main_article = page.locator("article").first  # 最初のarticleに限定
             tweet_text_elem = main_article.locator('div[data-testid="tweetText"]').first
             tweet_text = await tweet_text_elem.text_content(timeout=5000) or ""
@@ -559,13 +514,50 @@ async def save_tweet_image(interaction: discord.Interaction, url: str):
     logging.info("Embed sent successfully")
 
 # 自動のチャンネル設定のソレ
-@tree.command(name="set_auto_tw_img_archive", description="設定したテキストチャンネルに貼られたTwitter(X)の画像に対し自動的に/tw_img_archiveを実行します")
-@app_commands.describe(textchannel="監視するテキストチャンネル")
-async def hekta_command(interaction: discord.Interaction, textchannel: discord.TextChannel):
+# 選択肢用のEnum
+class ActionChoice(Enum):
+    add = "add"
+    remove = "remove"
+
+# 同時実行を制限するためのセマフォ
+semaphore = asyncio.Semaphore(2)
+
+@tree.command(name="set_auto_tw_img_archive", description="Twitter(X)の画像自動保存の監視チャンネルを設定します")
+@app_commands.describe(
+    textchannel="監視するテキストチャンネル",
+    action="監視リストに追加(add)するか削除(remove)するか選択"
+)
+async def set_auto_tw_img_archive(interaction: discord.Interaction, textchannel: discord.TextChannel, action: ActionChoice):
     config = load_config()
-    config[str(interaction.guild.id)] = textchannel.id
-    save_config(config)
-    await interaction.response.send_message(f"{textchannel.mention} を監視チャンネルに設定しました！", ephemeral=True)
+    
+    # サーバーごとの監視チャンネルリストを初期化（なければ空リスト）
+    guild_id = str(interaction.guild.id)
+    if guild_id not in config:
+        config[guild_id] = []
+
+    monitored_channels = config[guild_id]
+
+    if action == ActionChoice.add:
+        # 追加する場合
+        if textchannel.id in monitored_channels:
+            await interaction.response.send_message(f"{textchannel.mention} はすでに監視リストに含まれています。", ephemeral=True)
+            return
+        monitored_channels.append(textchannel.id)
+        config[guild_id] = monitored_channels
+        save_config(config)
+        await interaction.response.send_message(f"{textchannel.mention} を監視チャンネルに追加しました！", ephemeral=True)
+        logging.info(f"Added channel {textchannel.id} to monitored channels for guild {guild_id}")
+
+    elif action == ActionChoice.remove:
+        # 削除する場合
+        if textchannel.id not in monitored_channels:
+            await interaction.response.send_message(f"{textchannel.mention} は監視リストに含まれていません。", ephemeral=True)
+            return
+        monitored_channels.remove(textchannel.id)
+        config[guild_id] = monitored_channels
+        save_config(config)
+        await interaction.response.send_message(f"{textchannel.mention} を監視チャンネルから削除しました。", ephemeral=True)
+        logging.info(f"Removed channel {textchannel.id} from monitored channels for guild {guild_id}")
 
 @client.event
 async def on_message(message):
@@ -573,188 +565,204 @@ async def on_message(message):
         return
     
     config = load_config()
-    monitored_channel = config.get(str(message.guild.id))
+    guild_id = str(message.guild.id)
+    monitored_channels = config.get(guild_id, [])  # サーバーごとの監視チャンネルリストを取得
     
-    if monitored_channel and message.channel.id == monitored_channel:
-        if re.search(r'(https?://)?(x|twitter)\.com', message.content):
-            await message.delete()
-            logging.info(f"Message deleted: {message.content}")
-            
-            webhooks = await message.channel.webhooks()
-            webhook = next((w for w in webhooks if w.name == "TweetArchiver"), None)
-            if not webhook:
-                webhook = await message.channel.create_webhook(name="TweetArchiver")
-            
-            url = next((u for u in message.content.split() if re.search(r'(https?://)?(x|twitter)\.com', u)), None)
-            if not url:
-                logging.warning("No valid URL found in message")
-                return
+    # メッセージが監視対象チャンネルにあるかチェック
+    if message.channel.id in monitored_channels:
+        # メッセージからすべてのTwitter(X) URLを抽出
+        urls = [u for u in message.content.split() if re.search(r'(https?://)?(x|twitter)\.com', u)]
+        if not urls:
+            return
+
+        # 元のメッセージを削除
+        await message.delete()
+        logging.info(f"Message deleted: {message.content}")
+
+        webhooks = await message.channel.webhooks()
+        webhook = next((w for w in webhooks if w.name == "TweetArchiver"), None)
+        if not webhook:
+            webhook = await message.channel.create_webhook(name="TweetArchiver")
+
+        # URLを1つずつ処理（セマフォで同時実行を制限）
+        for url in urls:
             if not url.startswith("http"):
                 url = "https://" + url
 
-            async with async_playwright() as p:
-                browser = await p.chromium.launch(headless=True)
-                try:
-                    context = await browser.new_context(storage_state=STATE_FILE)
-                except json.JSONDecodeError as e:
-                    logging.error(f"twitter_state.jsonの読み込みに失敗: {e}")
-                    await webhook.send("Twitterログイン状態ファイルが壊れています。管理者に連絡してください。")
-                    await browser.close()
-                    return
-                except FileNotFoundError:
-                    logging.error(f"{STATE_FILE} が見つかりません")
-                    await webhook.send("Twitterログイン状態が設定されていません。管理者に連絡してください。")
-                    await browser.close()
-                    return
-                
-                page = await context.new_page()
-                await page.goto(url)
-                
-                try:
-                    # 最初のarticle（ターゲットのツイート）を待つ
-                    await page.wait_for_selector("article", timeout=10000)
-                    main_article = page.locator("article").first  # 最初のarticleに限定
-                    tweet_text_elem = main_article.locator('div[data-testid="tweetText"]').first
-                    tweet_text = await tweet_text_elem.text_content(timeout=5000) or ""
-                    
-                    # センシティブ判定
-                    sensitive_eye = await main_article.locator(f"svg path[d='{SENSITIVE_EYE_PATH}']").count()
-                    is_sensitive = sensitive_eye > 0
-                    logging.info(f"Sensitive check: {is_sensitive}, Eye count: {sensitive_eye}")
-                except Exception as e:
-                    logging.warning(f"ツイート本文の取得に失敗: {e}")
-                    tweet_text = ""
-                    is_sensitive = False
-                
-                try:
-                    author_name = await main_article.locator("a[role='link'] span").nth(0).text_content(timeout=5000)
-                    author_id = await main_article.locator("span").filter(has_text=re.compile(r"^@")).first.text_content(timeout=5000)
-                    author_icon = await main_article.locator("img").first.get_attribute("src", timeout=5000)
-                    
-                    # メイン画像を特定
-                    image_urls = []
-                    images = await main_article.locator('div[data-testid="tweetPhoto"] img[alt="Image"]').all()
-                    for img in images:
-                        src = await img.get_attribute("src")
-                        if src and "pbs.twimg.com/media/" in src:
-                            image_urls.append(src)
-                            logging.info(f"Found main image in tweet: {src}")
-                        else:
-                            logging.info(f"Ignored non-media image: {src}")
-                    if not image_urls:
-                        logging.warning("No media images found in main tweet")
-                except Exception as e:
-                    logging.error(f"ツイート情報の取得に失敗: {e}")
-                    await browser.close()
-                    return
-
-                await browser.close()
-
-            if not image_urls:
-                await webhook.send(
-                    "画像が見つかりませんでした。",
-                    username=message.author.display_name,
-                    avatar_url=message.author.avatar.url if message.author.avatar else None
-                )
-                logging.warning("No image URLs found")
-                return
-
-            # NSFWチャンネルチェック
-            is_nsfw_channel = message.channel.is_nsfw()
-            logging.info(f"Channel NSFW status: {is_nsfw_channel}")
-            if is_sensitive and not is_nsfw_channel:
-                await webhook.send(
-                    "このツイートにはセンシティブなコンテンツが含まれています。NSFWチャンネルで実行してください。",
-                    username=message.author.display_name,
-                    avatar_url=message.author.avatar.url if message.author.avatar else None
-                )
-                logging.info("Blocked due to sensitive content in non-NSFW channel")
-                return
-
-            os.makedirs(SAVE_DIR, exist_ok=True)
-            os.makedirs(COMBINED_DIR, exist_ok=True)
-            saved_images = []
-
-            async with aiohttp.ClientSession() as session:
-                tasks = []
-                for image_url in image_urls:
-                    image_url = clean_image_url(image_url)
-                    match = re.search(r"format=(\w+)", image_url)
-                    ext = f".{match.group(1)}" if match else ".jpg"
-                    filename = image_url.split("/")[-1].split("?")[0] + ext
-                    save_path = os.path.join(SAVE_DIR, filename)
-                    tasks.append(download_image(session, image_url, save_path))
-                saved_images = [result for result in await asyncio.gather(*tasks) if result]
-                logging.info(f"Saved {len(saved_images)} images")
-
-            if not saved_images:
-                await webhook.send(
-                    "画像の保存に失敗しました。",
-                    username=message.author.display_name,
-                    avatar_url=message.author.avatar.url if message.author.avatar else None
-                )
-                logging.warning("No images saved")
-                return
-
-            original_image_urls = [BASE_URL + '/images/' + os.path.basename(img) for img in saved_images]
-
-            combined_image_path = None
-            if len(saved_images) > 1:
-                images_to_merge = []
-                for img_path in saved_images[:4]:
+            async with semaphore:  # セマフォで1つずつ処理
+                async with async_playwright() as p:
+                    browser = await p.chromium.launch(headless=True)
                     try:
-                        img = Image.open(img_path)
-                        images_to_merge.append(img)
-                    except Exception as e:
-                        logging.warning(f"Failed to open image {img_path}: {e}")
-                        continue
-
-                if images_to_merge:
+                        context = await browser.new_context(storage_state=STATE_FILE)
+                    except json.JSONDecodeError as e:
+                        logging.error(f"twitter_state.jsonの読み込みに失敗: {e}")
+                        await webhook.send("Twitterログイン状態ファイルが壊れています。管理者に連絡してください。")
+                        await browser.close()
+                        return
+                    except FileNotFoundError:
+                        logging.error(f"{STATE_FILE} が見つかりません")
+                        await webhook.send("Twitterログイン状態が設定されていません。管理者に連絡してください。")
+                        await browser.close()
+                        return
+                    
+                    page = await context.new_page()
+                    await page.goto(url)
+                    
+                    main_article = None  # main_articleを初期化
                     try:
-                        if len(images_to_merge) == 2:
-                            img1, img2 = images_to_merge
-                            total_width = img1.width + img2.width
-                            total_height = max(img1.height, img2.height)
-                            new_image = Image.new('RGB', (total_width, total_height), (255, 255, 255))
-                            y1_offset = (total_height - img1.height) // 2
-                            y2_offset = (total_height - img2.height) // 2
-                            new_image.paste(img1, (0, y1_offset))
-                            new_image.paste(img2, (img1.width, y2_offset))
-                        else:
-                            max_width = max(img.width for img in images_to_merge)
-                            max_height = max(img.height for img in images_to_merge)
-                            cols = 2
-                            rows = (len(images_to_merge) + 1) // 2
-                            total_width = max_width * cols
-                            total_height = max_height * rows
-                            new_image = Image.new('RGB', (total_width, total_height), (255, 255, 255))
-                            for i, img in enumerate(images_to_merge):
-                                x_offset = (i % 2) * max_width + (max_width - img.width) // 2
-                                y_offset = (i // 2) * max_height + (max_height - img.height) // 2
-                                new_image.paste(img, (x_offset, y_offset))
-
-                        combined_image_filename = f"{uuid.uuid4().hex}.jpg"
-                        combined_image_path = os.path.join(COMBINED_DIR, combined_image_filename)
-                        new_image.save(combined_image_path, quality=95)
-                        logging.info(f"Saved combined image: {combined_image_path}")
+                        await page.wait_for_selector("article", timeout=10000)
+                        main_article = page.locator("article").first  # 最初のarticleに限定
+                        tweet_text_elem = main_article.locator('div[data-testid="tweetText"]').first
+                        tweet_text = await tweet_text_elem.text_content(timeout=5000) or ""
+                        
+                        # センシティブ判定
+                        sensitive_eye = await main_article.locator(f"svg path[d='{SENSITIVE_EYE_PATH}']").count()
+                        is_sensitive = sensitive_eye > 0
+                        logging.info(f"Sensitive check: {is_sensitive}, Eye count: {sensitive_eye}")
                     except Exception as e:
-                        logging.error(f"Image merging failed: {e}")
+                        logging.warning(f"ツイート本文の取得に失敗: {e}")
+                        tweet_text = ""
+                        is_sensitive = False
+                    
+                    if not main_article:  # main_articleが取得できなかった場合
+                        await webhook.send(
+                            "ツイートの情報を取得できませんでした。",
+                            username=message.author.display_name,
+                            avatar_url=message.author.avatar.url if message.author.avatar else None
+                        )
+                        await browser.close()
+                        continue  # 次のURLへ
 
-            image_urls_text = "".join([f"[{i+1}枚目]({url}) " for i, url in enumerate(original_image_urls)]) if len(original_image_urls) > 1 else f"[リンク]({original_image_urls[0]})"
-            
-            embed = discord.Embed(
-                description=f"{tweet_text[:4000]}\n\n[元ツイート]({url})\n{image_urls_text}",
-                color=0x1DA1F2
-            )
-            embed.set_author(name=f"{author_name} ({author_id})", icon_url=author_icon)
-            embed.set_image(url=BASE_URL + '/combined/' + os.path.basename(combined_image_path) if combined_image_path else original_image_urls[0])
+                    try:
+                        author_name = await main_article.locator("a[role='link'] span").nth(0).text_content(timeout=5000)
+                        author_id = await main_article.locator("span").filter(has_text=re.compile(r"^@")).first.text_content(timeout=5000)
+                        author_icon = await main_article.locator("img").first.get_attribute("src", timeout=5000)
+                        
+                        # メイン画像を特定
+                        image_urls = []
+                        images = await main_article.locator('div[data-testid="tweetPhoto"] img[alt="Image"]').all()
+                        for img in images:
+                            src = await img.get_attribute("src")
+                            if src and "pbs.twimg.com/media/" in src:
+                                image_urls.append(src)
+                                logging.info(f"Found main image in tweet: {src}")
+                            else:
+                                logging.info(f"Ignored non-media image: {src}")
+                        if not image_urls:
+                            logging.warning("No media images found in main tweet")
+                    except Exception as e:
+                        logging.error(f"ツイート情報の取得に失敗: {e}")
+                        await browser.close()
+                        continue  # 次のURLへ
 
-            await webhook.send(
-                embed=embed,
-                username=message.author.display_name,
-                avatar_url=message.author.avatar.url if message.author.avatar else None
-            )
-            logging.info("Embed sent successfully")
+                    await browser.close()
+
+                if not image_urls:
+                    await webhook.send(
+                        "画像が見つかりませんでした。",
+                        username=message.author.display_name,
+                        avatar_url=message.author.avatar.url if message.author.avatar else None
+                    )
+                    logging.warning("No image URLs found")
+                    continue
+
+                # NSFWチャンネルチェック
+                is_nsfw_channel = message.channel.is_nsfw()
+                logging.info(f"Channel NSFW status: {is_nsfw_channel}")
+                if is_sensitive and not is_nsfw_channel:
+                    await webhook.send(
+                        "このツイートにはセンシティブなコンテンツが含まれています。NSFWチャンネルで実行してください。",
+                        username=message.author.display_name,
+                        avatar_url=message.author.avatar.url if message.author.avatar else None
+                    )
+                    logging.info("Blocked due to sensitive content in non-NSFW channel")
+                    continue
+
+                os.makedirs(SAVE_DIR, exist_ok=True)
+                os.makedirs(COMBINED_DIR, exist_ok=True)
+                saved_images = []
+
+                async with aiohttp.ClientSession() as session:
+                    tasks = []
+                    for image_url in image_urls:
+                        image_url = clean_image_url(image_url)
+                        match = re.search(r"format=(\w+)", image_url)
+                        ext = f".{match.group(1)}" if match else ".jpg"
+                        filename = image_url.split("/")[-1].split("?")[0] + ext
+                        save_path = os.path.join(SAVE_DIR, filename)
+                        tasks.append(download_image(session, image_url, save_path))
+                    saved_images = [result for result in await asyncio.gather(*tasks) if result]
+                    logging.info(f"Saved {len(saved_images)} images")
+
+                if not saved_images:
+                    await webhook.send(
+                        "画像の保存に失敗しました。",
+                        username=message.author.display_name,
+                        avatar_url=message.author.avatar.url if message.author.avatar else None
+                    )
+                    logging.warning("No images saved")
+                    continue
+
+                original_image_urls = [BASE_URL + '/images/' + os.path.basename(img) for img in saved_images]
+
+                combined_image_path = None
+                if len(saved_images) > 1:
+                    images_to_merge = []
+                    for img_path in saved_images[:4]:
+                        try:
+                            img = Image.open(img_path)
+                            images_to_merge.append(img)
+                        except Exception as e:
+                            logging.warning(f"Failed to open image {img_path}: {e}")
+                            continue
+
+                    if images_to_merge:
+                        try:
+                            if len(images_to_merge) == 2:
+                                img1, img2 = images_to_merge
+                                total_width = img1.width + img2.width
+                                total_height = max(img1.height, img2.height)
+                                new_image = Image.new('RGB', (total_width, total_height), (255, 255, 255))
+                                y1_offset = (total_height - img1.height) // 2
+                                y2_offset = (total_height - img2.height) // 2
+                                new_image.paste(img1, (0, y1_offset))
+                                new_image.paste(img2, (img1.width, y2_offset))
+                            else:
+                                max_width = max(img.width for img in images_to_merge)
+                                max_height = max(img.height for img in images_to_merge)
+                                cols = 2
+                                rows = (len(images_to_merge) + 1) // 2
+                                total_width = max_width * cols
+                                total_height = max_height * rows
+                                new_image = Image.new('RGB', (total_width, total_height), (255, 255, 255))
+                                for i, img in enumerate(images_to_merge):
+                                    x_offset = (i % 2) * max_width + (max_width - img.width) // 2
+                                    y_offset = (i // 2) * max_height + (max_height - img.height) // 2
+                                    new_image.paste(img, (x_offset, y_offset))
+
+                            combined_image_filename = f"{uuid.uuid4().hex}.jpg"
+                            combined_image_path = os.path.join(COMBINED_DIR, combined_image_filename)
+                            new_image.save(combined_image_path, quality=95)
+                            logging.info(f"Saved combined image: {combined_image_path}")
+                        except Exception as e:
+                            logging.error(f"Image merging failed: {e}")
+
+                image_urls_text = "".join([f"[{i+1}枚目]({url}) " for i, url in enumerate(original_image_urls)]) if len(original_image_urls) > 1 else f"[リンク]({original_image_urls[0]})"
+                
+                embed = discord.Embed(
+                    description=f"{tweet_text[:4000]}\n\n[元ツイート]({url})\n{image_urls_text}",
+                    color=0x1DA1F2
+                )
+                embed.set_author(name=f"{author_name} ({author_id})", icon_url=author_icon)
+                embed.set_image(url=BASE_URL + '/combined/' + os.path.basename(combined_image_path) if combined_image_path else original_image_urls[0])
+
+                await webhook.send(
+                    embed=embed,
+                    username=message.author.display_name,
+                    avatar_url=message.author.avatar.url if message.author.avatar else None
+                )
+                logging.info("Embed sent successfully")
+
 
 # トークン
 client.run(os.getenv("TOKEN"))
