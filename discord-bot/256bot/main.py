@@ -32,20 +32,36 @@ bot = commands.Bot(command_prefix='/', intents=intents)
 
 @client.event
 async def on_ready():
-
+    logging.info(f'Logged in as {client.user} (ID: {client.user.id})')
+    logging.info('------')
+    
     # 認識しているサーバーをlist型で取得し、その要素の数を 変数:guild_count に格納しています。
     guild_count = len(client.guilds)
     # 関数:lenは、引数に指定したオブジェクトの長さや要素の数を取得します。
     
-    game = discord.Game(f'{guild_count} サーバー数の人たちを監視中')
-    # game = discord.Game(f'お前らを監視中')
+    # game = discord.Game(f'{guild_count} サーバー数の人たちを監視中')
+    game = discord.Game(f'お前らを監視中')
     # f文字列(フォーマット済み文字列リテラル)は、Python3.6からの機能です。
     
     # BOTのステータスを変更する
     await client.change_presence(status=discord.Status.online, activity=game)
     # パラメーターの status でステータス状況(オンライン, 退席中など)を変更できます。
 
-    print("起動完了")
+    # ブラウザ周り
+    global global_browser, global_context
+    logging.info("Bot is ready. Launching browser with persistent context...")
+    playwright = await async_playwright().start()
+    browser = await playwright.chromium.launch(headless=True)
+    # STATE_FILE からストレージ状態を読み込み
+    state = None
+    if os.path.exists(STATE_FILE):
+        with open(STATE_FILE, "r") as f:
+            state = json.load(f)
+    global_context = await browser.new_context(storage_state=state)
+    global_browser = playwright
+    logging.info("Browser with persistent context launched.")
+
+    logging.info("sterted")
     await tree.sync()#スラッシュコマンドを同期
 
 # メッセージを受信した時に呼ばれる
@@ -266,7 +282,6 @@ SENSITIVE_EYE_PATH = "M3.693 21.707l-1.414-1.414 2.429-2.429c-2.479-2.421-3.606-
 # ログ(デバッグ用だったけどかっこいいから残す)
 logging.basicConfig(level=logging.INFO)
 
-
 ###           Twitter画像保存関係           ###
 # 設定の読み書き
 def load_config():
@@ -305,7 +320,7 @@ async def download_image(session, image_url, save_path):
             logging.info(f"Saved image: {save_path}")
             return save_path
         return None
-    
+
 # tw保存
 @tree.command(name="tw_img_archive", description="ツイートの画像を保存し、表示します")
 @app_commands.describe(url="ツイートのURLを入力")
@@ -313,7 +328,7 @@ async def save_tweet_image(interaction: discord.Interaction, url: str):
     await interaction.response.defer()
     logging.info(f"Command invoked: tw_img_archive with URL: {url}")
 
-    if not url.startswith("http://") and not url.startswith("https://"):
+    if not (url.startswith("http://") or url.startswith("https://")):
         url = "https://" + url
 
     if "x.com" not in url and "twitter.com" not in url:
@@ -321,7 +336,7 @@ async def save_tweet_image(interaction: discord.Interaction, url: str):
         logging.warning("Invalid URL: not a Twitter/X URL")
         return
 
-    # ツイートIDを抽出 grok作
+    # ツイートIDの抽出
     tweet_id_match = re.search(r'status/(\d+)', url)
     if not tweet_id_match:
         await interaction.followup.send("エラー: ツイートIDが見つかりませんでした。")
@@ -330,66 +345,57 @@ async def save_tweet_image(interaction: discord.Interaction, url: str):
     tweet_id = tweet_id_match.group(1)
     base_url = f"https://x.com{url.split('x.com')[1].split('?')[0]}"
 
-    async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=True)
-        try:
-            context = await browser.new_context(storage_state=STATE_FILE)
-        except json.JSONDecodeError as e:
-            logging.error(f"twitter_state.jsonの読み込みに失敗: {e}")
-            await interaction.followup.send("Twitterログイン状態ファイルが壊れています。管理者に連絡してください。")
-            await browser.close()
-            return
-        except FileNotFoundError:
-            logging.error(f"{STATE_FILE} が見つかりません")
-            await interaction.followup.send("Twitterログイン状態が設定されていません。管理者に連絡してください。")
-            await browser.close()
-            return
+    # persistent な global_context を利用して新たなページを作成
+    try:
+        page = await global_context.new_page()
+    except Exception as e:
+        logging.error(f"Persistent browser context not available: {e}")
+        await interaction.followup.send("内部エラーが発生しました。")
+        return
 
-        page = await context.new_page()
-        await page.goto(url)
+    await page.goto(url)
 
-        try:
-            # 最初のarticle（ターゲットのツイート）を待つ　
-            await page.wait_for_selector("article", timeout=5000)
-            main_article = page.locator("article").first  # 最初のarticleに限定
-            tweet_text_elem = main_article.locator('div[data-testid="tweetText"]').first
-            tweet_text = await tweet_text_elem.text_content(timeout=5000) or ""
-            
-            sensitive_eye = await main_article.locator(f"svg path[d='{SENSITIVE_EYE_PATH}']").count()
-            is_sensitive = sensitive_eye > 0
-            logging.info(f"Sensitive check: {is_sensitive}, Eye count: {sensitive_eye}")
-        except Exception as e:
-            logging.warning(f"ツイート本文の取得に失敗: {e}")
-            tweet_text = ""
-            is_sensitive = False
+    try:
+        # 最初のarticle（対象ツイート）を待つ
+        await page.wait_for_selector("article", timeout=10000)
+        main_article = page.locator("article").first
+        tweet_text_elem = main_article.locator('div[data-testid="tweetText"]').first
+        tweet_text = await tweet_text_elem.text_content(timeout=10000) or ""
+        
+        sensitive_eye = await main_article.locator(f"svg path[d='{SENSITIVE_EYE_PATH}']").count()
+        is_sensitive = sensitive_eye > 0
+        logging.info(f"Sensitive check: {is_sensitive}, Eye count: {sensitive_eye}")
+    except Exception as e:
+        logging.warning(f"ツイート本文の取得に失敗: {e}")
+        tweet_text = ""
+        is_sensitive = False
 
-        try:
-            author_name = await main_article.locator("a[role='link'] span").nth(0).text_content(timeout=5000)
-            author_id = await main_article.locator("span").filter(has_text=re.compile(r"^@")).first.text_content(timeout=5000)
-            author_icon = await main_article.locator("img").first.get_attribute("src", timeout=5000)
-        except Exception as e:
-            logging.error(f"ツイート情報の取得に失敗: {e}")
-            await browser.close()
-            return
+    try:
+        author_name = await main_article.locator("a[role='link'] span").nth(0).text_content(timeout=10000)
+        author_id = await main_article.locator("span").filter(has_text=re.compile(r"^@")).first.text_content(timeout=10000)
+        author_icon = await main_article.locator("img").first.get_attribute("src", timeout=10000)
+    except Exception as e:
+        logging.error(f"ツイート情報の取得に失敗: {e}")
+        await page.close()
+        return
 
-        # メイン画像を特定（最初のarticle内のみ）　これ無いともっと見るの画像取得してくる　ちなみに引用元の画像は取得してくる
-        image_urls = []
-        try:
-            # ツイート本文に近い画像のみを取得
-            images = await main_article.locator('div[data-testid="tweetPhoto"] img[alt="Image"]').all()
-            for img in images:
-                src = await img.get_attribute("src")
-                if src and "pbs.twimg.com/media/" in src:
-                    image_urls.append(src)
-                    logging.info(f"Found main image in tweet: {src}")
-                else:
-                    logging.info(f"Ignored non-media image: {src}")
-            if not image_urls:
-                logging.warning("No media images found in main tweet")
-        except Exception as e:
-            logging.warning(f"画像の取得に失敗: {e}")
+    # メイン画像の取得
+    image_urls = []
+    try:
+        images = await main_article.locator('div[data-testid="tweetPhoto"] img[alt="Image"]').all()
+        for img in images:
+            src = await img.get_attribute("src")
+            if src and "pbs.twimg.com/media/" in src:
+                image_urls.append(src)
+                logging.info(f"Found main image in tweet: {src}")
+            else:
+                logging.info(f"Ignored non-media image: {src}")
+        if not image_urls:
+            logging.warning("No media images found in main tweet")
+    except Exception as e:
+        logging.warning(f"画像の取得に失敗: {e}")
 
-        await browser.close()
+    await page.close()
 
     if not image_urls:
         await interaction.followup.send("画像が見つかりませんでした。")
@@ -444,7 +450,6 @@ async def save_tweet_image(interaction: discord.Interaction, url: str):
             logging.warning("No valid images to merge")
             return
 
-        # ここ100%grok産です私知りませんきれいに生成できるコード書ける人いたら教えてください　コピペします
         try:
             if len(images_to_merge) == 2:
                 img1, img2 = images_to_merge
@@ -520,7 +525,7 @@ class ActionChoice(Enum):
     remove = "remove"
 
 # 同時実行を制限するためのセマフォ
-semaphore = asyncio.Semaphore(2)
+semaphore = asyncio.Semaphore(10)
 
 @tree.command(name="set_auto_tw_img_archive", description="Twitter(X)の画像自動保存の監視チャンネルを設定します")
 @app_commands.describe(
@@ -530,7 +535,6 @@ semaphore = asyncio.Semaphore(2)
 async def set_auto_tw_img_archive(interaction: discord.Interaction, textchannel: discord.TextChannel, action: ActionChoice):
     config = load_config()
     
-    # サーバーごとの監視チャンネルリストを初期化（なければ空リスト）
     guild_id = str(interaction.guild.id)
     if guild_id not in config:
         config[guild_id] = []
@@ -538,7 +542,6 @@ async def set_auto_tw_img_archive(interaction: discord.Interaction, textchannel:
     monitored_channels = config[guild_id]
 
     if action == ActionChoice.add:
-        # 追加する場合
         if textchannel.id in monitored_channels:
             await interaction.response.send_message(f"{textchannel.mention} はすでに監視リストに含まれています。", ephemeral=True)
             return
@@ -549,7 +552,6 @@ async def set_auto_tw_img_archive(interaction: discord.Interaction, textchannel:
         logging.info(f"Added channel {textchannel.id} to monitored channels for guild {guild_id}")
 
     elif action == ActionChoice.remove:
-        # 削除する場合
         if textchannel.id not in monitored_channels:
             await interaction.response.send_message(f"{textchannel.mention} は監視リストに含まれていません。", ephemeral=True)
             return
@@ -561,21 +563,19 @@ async def set_auto_tw_img_archive(interaction: discord.Interaction, textchannel:
 
 @client.event
 async def on_message(message):
-    if message.author == client.user:
+    # Bot自身のメッセージは無視
+    if message.author == bot.user:
         return
     
     config = load_config()
     guild_id = str(message.guild.id)
-    monitored_channels = config.get(guild_id, [])  # サーバーごとの監視チャンネルリストを取得
+    monitored_channels = config.get(guild_id, [])
     
-    # メッセージが監視対象チャンネルにあるかチェック
     if message.channel.id in monitored_channels:
-        # メッセージからすべてのTwitter(X) URLを抽出
         urls = [u for u in message.content.split() if re.search(r'(https?://)?(x|twitter)\.com', u)]
         if not urls:
             return
 
-        # 元のメッセージを削除
         await message.delete()
         logging.info(f"Message deleted: {message.content}")
 
@@ -584,78 +584,57 @@ async def on_message(message):
         if not webhook:
             webhook = await message.channel.create_webhook(name="TweetArchiver")
 
-        # URLを1つずつ処理（セマフォで同時実行を制限）
         for url in urls:
             if not url.startswith("http"):
                 url = "https://" + url
 
-            async with semaphore:  # セマフォで1つずつ処理
-                async with async_playwright() as p:
-                    browser = await p.chromium.launch(headless=True)
-                    try:
-                        context = await browser.new_context(storage_state=STATE_FILE)
-                    except json.JSONDecodeError as e:
-                        logging.error(f"twitter_state.jsonの読み込みに失敗: {e}")
-                        await webhook.send("Twitterログイン状態ファイルが壊れています。管理者に連絡してください。")
-                        await browser.close()
-                        return
-                    except FileNotFoundError:
-                        logging.error(f"{STATE_FILE} が見つかりません")
-                        await webhook.send("Twitterログイン状態が設定されていません。管理者に連絡してください。")
-                        await browser.close()
-                        return
+            async with semaphore:
+                # persistentなブラウザから新しいページを作成する
+                page = await global_context.new_page()
+                try:
+                    await page.goto(url, wait_until="domcontentloaded")
                     
-                    page = await context.new_page()
-                    await page.goto(url)
-                    
-                    main_article = None  # main_articleを初期化
+                    # DOMが読み込まれるのを待つ
+                    await page.wait_for_selector("article", timeout=10000)
+                    main_article = page.locator("article").first
+                    tweet_text_elem = main_article.locator('div[data-testid="tweetText"]').first
                     try:
-                        await page.wait_for_selector("article", timeout=10000)
-                        main_article = page.locator("article").first  # 最初のarticleに限定
-                        tweet_text_elem = main_article.locator('div[data-testid="tweetText"]').first
                         tweet_text = await tweet_text_elem.text_content(timeout=5000) or ""
-                        
-                        # センシティブ判定
-                        sensitive_eye = await main_article.locator(f"svg path[d='{SENSITIVE_EYE_PATH}']").count()
-                        is_sensitive = sensitive_eye > 0
-                        logging.info(f"Sensitive check: {is_sensitive}, Eye count: {sensitive_eye}")
                     except Exception as e:
-                        logging.warning(f"ツイート本文の取得に失敗: {e}")
+                        logging.debug(f"ツイート本文の取得に失敗: {e}")
                         tweet_text = ""
-                        is_sensitive = False
                     
-                    if not main_article:  # main_articleが取得できなかった場合
-                        await webhook.send(
-                            "ツイートの情報を取得できませんでした。",
-                            username=message.author.display_name,
-                            avatar_url=message.author.avatar.url if message.author.avatar else None
-                        )
-                        await browser.close()
-                        continue  # 次のURLへ
+                    sensitive_eye = await main_article.locator(f"svg path[d='{SENSITIVE_EYE_PATH}']").count()
+                    is_sensitive = sensitive_eye > 0
+                    logging.info(f"Sensitive check: {is_sensitive}, Eye count: {sensitive_eye}")
+                except Exception as e:
+                    logging.warning(f"ツイート本文の取得に失敗: {e}")
+                    tweet_text = ""
+                    is_sensitive = False
+                
+                try:
+                    author_name = await main_article.locator("a[role='link'] span").nth(0).text_content(timeout=5000)
+                    author_id = await main_article.locator("span").filter(has_text=re.compile(r"^@")).first.text_content(timeout=5000)
+                    author_icon = await main_article.locator("img").first.get_attribute("src", timeout=5000)
+                    
+                    image_urls = []
+                    images = await main_article.locator('div[data-testid="tweetPhoto"] img[alt="Image"]').all()
+                    for img in images:
+                        src = await img.get_attribute("src")
+                        if src and "pbs.twimg.com/media/" in src:
+                            image_urls.append(src)
+                            logging.info(f"Found main image in tweet: {src}")
+                        else:
+                            logging.info(f"Ignored non-media image: {src}")
+                    if not image_urls:
+                        logging.warning("No media images found in main tweet")
+                except Exception as e:
+                    logging.error(f"ツイート情報の取得に失敗: {e}")
+                    await page.close()
+                    continue
 
-                    try:
-                        author_name = await main_article.locator("a[role='link'] span").nth(0).text_content(timeout=5000)
-                        author_id = await main_article.locator("span").filter(has_text=re.compile(r"^@")).first.text_content(timeout=5000)
-                        author_icon = await main_article.locator("img").first.get_attribute("src", timeout=5000)
-                        
-                        # メイン画像を特定
-                        image_urls = []
-                        images = await main_article.locator('div[data-testid="tweetPhoto"] img[alt="Image"]').all()
-                        for img in images:
-                            src = await img.get_attribute("src")
-                            if src and "pbs.twimg.com/media/" in src:
-                                image_urls.append(src)
-                                logging.info(f"Found main image in tweet: {src}")
-                            else:
-                                logging.info(f"Ignored non-media image: {src}")
-                        if not image_urls:
-                            logging.warning("No media images found in main tweet")
-                    except Exception as e:
-                        logging.error(f"ツイート情報の取得に失敗: {e}")
-                        await browser.close()
-                        continue  # 次のURLへ
-
-                    await browser.close()
+                # ページは使い終わったので閉じる
+                await page.close()
 
                 if not image_urls:
                     await webhook.send(
@@ -666,7 +645,6 @@ async def on_message(message):
                     logging.warning("No image URLs found")
                     continue
 
-                # NSFWチャンネルチェック
                 is_nsfw_channel = message.channel.is_nsfw()
                 logging.info(f"Channel NSFW status: {is_nsfw_channel}")
                 if is_sensitive and not is_nsfw_channel:
@@ -717,36 +695,54 @@ async def on_message(message):
                             continue
 
                     if images_to_merge:
-                        try:
-                            if len(images_to_merge) == 2:
-                                img1, img2 = images_to_merge
-                                total_width = img1.width + img2.width
-                                total_height = max(img1.height, img2.height)
-                                new_image = Image.new('RGB', (total_width, total_height), (255, 255, 255))
-                                y1_offset = (total_height - img1.height) // 2
-                                y2_offset = (total_height - img2.height) // 2
-                                new_image.paste(img1, (0, y1_offset))
-                                new_image.paste(img2, (img1.width, y2_offset))
-                            else:
-                                max_width = max(img.width for img in images_to_merge)
-                                max_height = max(img.height for img in images_to_merge)
-                                cols = 2
-                                rows = (len(images_to_merge) + 1) // 2
-                                total_width = max_width * cols
-                                total_height = max_height * rows
-                                new_image = Image.new('RGB', (total_width, total_height), (255, 255, 255))
-                                for i, img in enumerate(images_to_merge):
-                                    x_offset = (i % 2) * max_width + (max_width - img.width) // 2
-                                    y_offset = (i // 2) * max_height + (max_height - img.height) // 2
-                                    new_image.paste(img, (x_offset, y_offset))
+                                try:
+                                    if len(images_to_merge) == 2:
+                                        img1, img2 = images_to_merge
+                                        total_width = img1.width + img2.width
+                                        total_height = max(img1.height, img2.height)
+                                        new_image = Image.new('RGB', (total_width, total_height), color=(255, 255, 255))
+                                        y1_offset = (total_height - img1.height) // 2
+                                        y2_offset = (total_height - img2.height) // 2
+                                        new_image.paste(img1, (0, y1_offset))
+                                        new_image.paste(img2, (img1.width, y2_offset))
+                                    else:
+                                        max_width = max(img.width for img in images_to_merge)
+                                        max_height = max(img.height for img in images_to_merge)
+                                        total_width = max_width * 2
+                                        total_height = max_height * 2 if len(images_to_merge) > 2 else max_height
+                                        new_image = Image.new('RGB', (total_width, total_height), color=(255, 255, 255))
 
-                            combined_image_filename = f"{uuid.uuid4().hex}.jpg"
-                            combined_image_path = os.path.join(COMBINED_DIR, combined_image_filename)
-                            new_image.save(combined_image_path, quality=95)
-                            logging.info(f"Saved combined image: {combined_image_path}")
-                        except Exception as e:
-                            logging.error(f"Image merging failed: {e}")
+                                        if len(images_to_merge) == 3:
+                                            x1_offset = (max_width - images_to_merge[0].width) // 2
+                                            y1_offset = (max_height - images_to_merge[0].height) // 2
+                                            new_image.paste(images_to_merge[0], (x1_offset, y1_offset))
+                                            x2_offset = max_width + (max_width - images_to_merge[1].width) // 2
+                                            y2_offset = (max_height - images_to_merge[1].height) // 2
+                                            new_image.paste(images_to_merge[1], (x2_offset, y2_offset))
+                                            x3_offset = (total_width - images_to_merge[2].width) // 2
+                                            y3_offset = max_height + (max_height - images_to_merge[2].height) // 2
+                                            new_image.paste(images_to_merge[2], (x3_offset, y3_offset))
+                                        else:
+                                            x1_offset = (max_width - images_to_merge[0].width) // 2
+                                            y1_offset = (max_height - images_to_merge[0].height) // 2
+                                            new_image.paste(images_to_merge[0], (x1_offset, y1_offset))
+                                            x2_offset = max_width + (max_width - images_to_merge[1].width) // 2
+                                            y2_offset = (max_height - images_to_merge[1].height) // 2
+                                            new_image.paste(images_to_merge[1], (x2_offset, y2_offset))
+                                            x3_offset = (max_width - images_to_merge[2].width) // 2
+                                            y3_offset = max_height + (max_height - images_to_merge[2].height) // 2
+                                            new_image.paste(images_to_merge[2], (x3_offset, y3_offset))
+                                            x4_offset = max_width + (max_width - images_to_merge[3].width) // 2
+                                            y4_offset = max_height + (max_height - images_to_merge[3].height) // 2
+                                            new_image.paste(images_to_merge[3], (x4_offset, y4_offset))
 
+                                    combined_image_filename = f"{uuid.uuid4().hex}.jpg"
+                                    combined_image_path = os.path.join(COMBINED_DIR, combined_image_filename)
+                                    new_image.save(combined_image_path, quality=95)
+                                    logging.info(f"Saved combined image: {combined_image_path}")
+                                except Exception as e:
+                                    logging.error(f"Image merging failed: {e}")
+        
                 image_urls_text = "".join([f"[{i+1}枚目]({url}) " for i, url in enumerate(original_image_urls)]) if len(original_image_urls) > 1 else f"[リンク]({original_image_urls[0]})"
                 
                 embed = discord.Embed(
@@ -762,7 +758,6 @@ async def on_message(message):
                     avatar_url=message.author.avatar.url if message.author.avatar else None
                 )
                 logging.info("Embed sent successfully")
-
 
 # トークン
 client.run(os.getenv("TOKEN"))
