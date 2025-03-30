@@ -4,12 +4,15 @@ import requests
 import subprocess
 import re
 import os
+import math
 import aiohttp
 import asyncio
 import aiofiles
 from aiohttp import ClientSession, ClientResponseError
 import uuid
 import json
+import time
+import psutil
 from enum import Enum
 import logging
 from discord import app_commands
@@ -32,15 +35,22 @@ bot = commands.Bot(command_prefix='/', intents=intents)
 
 @client.event
 async def on_ready():
+    logging.info(" ____  ____   __   _           _")
+    logging.info("|___ \| ___| / /_ | |__   ___ | |_")
+    logging.info("  __) |___ \| '_ \| '_ \ / _ \| __|")
+    logging.info(" / __/ ___) | (_) | |_) | (_) | |_")
+    logging.info("|_____|____/ \___/|_.__/ \___/ \__|")
+
+
     logging.info(f'Logged in as {client.user} (ID: {client.user.id})')
     logging.info('------')
-    
+
     # 認識しているサーバーをlist型で取得し、その要素の数を 変数:guild_count に格納しています。
     guild_count = len(client.guilds)
     # 関数:lenは、引数に指定したオブジェクトの長さや要素の数を取得します。
     
-    # game = discord.Game(f'{guild_count} サーバー数の人たちを監視中')
-    game = discord.Game(f'お前らを監視中')
+    game = discord.Game(f'{guild_count} サーバー数の人たちを監視中')
+    # game = discord.Game(f'お前らを監視中')
     # f文字列(フォーマット済み文字列リテラル)は、Python3.6からの機能です。
     
     # BOTのステータスを変更する
@@ -61,7 +71,7 @@ async def on_ready():
     global_browser = playwright
     logging.info("Browser with persistent context launched.")
 
-    logging.info("sterted")
+    logging.info("sterted!")
     await tree.sync()#スラッシュコマンドを同期
 
 # メッセージを受信した時に呼ばれる
@@ -150,11 +160,15 @@ async def on_message_edit(before, after):
                     with open(f'/home/discord/python/saved_images/{attachment.filename}', 'rb') as image_file:
                         image = discord.File(image_file)
                         await after.channel.send('😏',file=image)
+
+                        logging.info("Quote sent successfully")
             pass
 
 @tree.command(name="test",description="テストコマンドです。")
 async def test_command(interaction: discord.Interaction):
     await interaction.response.send_message("しらすじゅーす！",ephemeral=False)
+
+    logging.info("Test command executed")
 
 @tree.command(name="help", description="コマンドのヘルプを表示します")
 async def help_command(interaction: discord.Interaction):
@@ -182,6 +196,8 @@ async def help_command(interaction: discord.Interaction):
     # メッセージを送信
     await interaction.response.send_message(embed=embed, ephemeral=True)
 
+    logging.info("Help command executed")
+
 @tree.command(name="ping", description="BOTにpingを打ちます")
 async def ping_command(interaction: discord.Interaction):
     # Ping値を秒単位で取得
@@ -202,35 +218,38 @@ async def ping_command(interaction: discord.Interaction):
     omikuji = ["大凶","中凶","小凶","末凶","吉凶","凶"]
     await interaction.response.send_message(f"今日のお前の運勢 {random.choice(omikuji)}")
 
+    logging.info("Omikuji command executed")
+
 #@tree.command(name="echo", description="あんなことやそんなことまで言います")
 #async def echo_command(interaction: discord.Interaction, *, text: str):
 #    await interaction.response.send_message(text, ephemeral=False)
 
-@tree.command(name="google", description="Googleで検索結果を表示します")
-async def google_command(interaction: discord.Interaction, *, search_word: str):
-    pages_num = 10 + 1  # 上位から何件までのサイトを抽出するか指定
-    result_embed = discord.Embed(title=f"Google検索結果: {search_word}", color=0xfabb05)
+#@tree.command(name="google", description="Googleで検索結果を表示します")
+#async def google_command(interaction: discord.Interaction, *, search_word: str):
+#    pages_num = 10 + 1  # 上位から何件までのサイトを抽出するか指定
+#    result_embed = discord.Embed(title=f"Google検索結果: {search_word}", color=0xfabb05)
+#
+#    url = f'https://www.google.co.jp/search?hl=ja&num={pages_num}&q={search_word}'
+#    request = requests.get(url)
+#    soup = BeautifulSoup(request.text, "html.parser")
+#    search_site_list = soup.select('div.tF2Cxc > a')
+#
+#    for site in search_site_list:
+#        try:
+#            site_title = site.select('h3')[0].text
+#        except IndexError:
+#            try:
+#                site_title = site.select('img')[0]['alt']
+#            except IndexError:
+#                site_title = "No title available"
+#
+#        site_url = site['href'].replace('/url?q=', '').split('&')[0]
+#
+#        link_text = f"[{site_title}]({site_url})"
+#        result_embed.add_field(name='\u200b', value=link_text, inline=False)
+#
+#    await interaction.response.send_message(embed=result_embed, ephemeral=False)
 
-    url = f'https://www.google.co.jp/search?hl=ja&num={pages_num}&q={search_word}'
-    request = requests.get(url)
-    soup = BeautifulSoup(request.text, "html.parser")
-    search_site_list = soup.select('div.tF2Cxc > a')
-
-    for site in search_site_list:
-        try:
-            site_title = site.select('h3')[0].text
-        except IndexError:
-            try:
-                site_title = site.select('img')[0]['alt']
-            except IndexError:
-                site_title = "No title available"
-
-        site_url = site['href'].replace('/url?q=', '').split('&')[0]
-
-        link_text = f"[{site_title}]({site_url})"
-        result_embed.add_field(name='\u200b', value=link_text, inline=False)
-
-    await interaction.response.send_message(embed=result_embed, ephemeral=False)
 
 @tree.command(name="yahoo", description="yahooニュースの記事を出力します")
 async def yahoo_news_command(interaction: discord.Interaction):
@@ -250,6 +269,74 @@ async def yahoo_news_command(interaction: discord.Interaction):
         result_embed.add_field(name='\u200b', value=link_text, inline=False)
 
     await interaction.response.send_message(embed=result_embed, ephemeral=False)
+    
+    logging.info("Yahoo news command executed")
+
+@tree.command(name="server_info", description="サーバーの情報を表示します")
+async def server_info_command(interaction: discord.Interaction):
+    guild = interaction.guild
+    embed = discord.Embed(title=f"{guild.name} の情報", color=0x00ff00)
+    embed.add_field(name="サーバー名", value=guild.name, inline=False)
+    embed.add_field(name="サーバーID", value=guild.id, inline=False)
+    embed.add_field(name="サーバー人数", value=guild.member_count, inline=False)
+    embed.add_field(name="サーバー作成日", value=guild.created_at.strftime("%Y/%m/%d %H:%M:%S"), inline=False)
+    await interaction.response.send_message(embed=embed, ephemeral=False)
+
+    logging.info("Server info command executed")
+
+@tree.command(name="server_usage", description="botの使用率を表示します")
+async def server_usage_command(interaction: discord.Interaction):
+    # プログレスバーを作成する関数
+    def create_progress_bar(percentage, width=30):
+        filled = math.floor(width * (percentage / 100))
+        empty = width - filled
+        return '[' + '|' * filled + ' ' * empty + ']'
+
+    # CPU使用率
+    cpu_percent = psutil.cpu_percent(interval=1)
+    
+    # RAM使用率
+    memory = psutil.virtual_memory()
+    ram_used = memory.used / (1024 ** 3)  # GiBに変換
+    ram_total = memory.total / (1024 ** 3)  # GiBに変換
+    ram_percent = memory.percent
+    
+    # ディスク使用率
+    disk = psutil.disk_usage('/')
+    disk_used = disk.used / (1024 ** 3)  # GiBに変換
+    disk_total = disk.total / (1024 ** 3)  # GiBに変換
+    disk_percent = disk.percent
+    
+    # メッセージの構築
+    embed = discord.Embed(title="サーバーステータス", color=0x00ff00)
+    
+    # CPU
+    cpu_bar = create_progress_bar(cpu_percent)
+    embed.add_field(
+        name="CPU使用率",
+        value=f"```{cpu_bar} [{cpu_percent:.1f}%]```",
+        inline=False
+    )
+    
+    # RAM
+    ram_bar = create_progress_bar(ram_percent)
+    embed.add_field(
+        name="RAM使用率",
+        value=f"[{ram_used:.2f}GiB / {ram_total:.2f}GiB]\n```{ram_bar} [{ram_percent:.1f}%]```",
+        inline=False
+    )
+    
+    # Disk
+    disk_bar = create_progress_bar(disk_percent)
+    embed.add_field(
+        name="ディスク使用率",
+        value=f"[{disk_used:.2f}GiB / {disk_total:.2f}GiB]\n```{disk_bar} [{disk_percent:.1f}%]```",
+        inline=False
+    )
+
+    await interaction.response.send_message(embed=embed, ephemeral=False)
+
+    logging.info("Server usage command executed")
 
 #@tree.command(name="screenshot", description="指定されたURLのスクリーンショットを撮ります")
 #async def screenshot_command(interaction: discord.Interaction, url: str):
@@ -541,25 +628,29 @@ async def set_auto_tw_img_archive(interaction: discord.Interaction, textchannel:
 
     monitored_channels = config[guild_id]
 
-    if action == ActionChoice.add:
-        if textchannel.id in monitored_channels:
-            await interaction.response.send_message(f"{textchannel.mention} はすでに監視リストに含まれています。", ephemeral=True)
-            return
-        monitored_channels.append(textchannel.id)
-        config[guild_id] = monitored_channels
-        save_config(config)
-        await interaction.response.send_message(f"{textchannel.mention} を監視チャンネルに追加しました！", ephemeral=True)
-        logging.info(f"Added channel {textchannel.id} to monitored channels for guild {guild_id}")
+    # 管理者権限を持っているかチェック
+    if interaction.user.guild_permissions.administrator:
+        if action == ActionChoice.add:
+            if textchannel.id in monitored_channels:
+                await interaction.response.send_message(f"{textchannel.mention} はすでに監視リストに含まれています。", ephemeral=False)
+                return
+            monitored_channels.append(textchannel.id)
+            config[guild_id] = monitored_channels
+            save_config(config)
+            await interaction.response.send_message(f"{textchannel.mention} を監視チャンネルに追加しました！", ephemeral=False)
+            logging.info(f"Added channel {textchannel.id} to monitored channels for guild {guild_id}")
 
-    elif action == ActionChoice.remove:
-        if textchannel.id not in monitored_channels:
-            await interaction.response.send_message(f"{textchannel.mention} は監視リストに含まれていません。", ephemeral=True)
-            return
-        monitored_channels.remove(textchannel.id)
-        config[guild_id] = monitored_channels
-        save_config(config)
-        await interaction.response.send_message(f"{textchannel.mention} を監視チャンネルから削除しました。", ephemeral=True)
-        logging.info(f"Removed channel {textchannel.id} from monitored channels for guild {guild_id}")
+        elif action == ActionChoice.remove:
+            if textchannel.id not in monitored_channels:
+                await interaction.response.send_message(f"{textchannel.mention} は監視リストに含まれていません。", ephemeral=False)
+                return
+            monitored_channels.remove(textchannel.id)
+            config[guild_id] = monitored_channels
+            save_config(config)
+            await interaction.response.send_message(f"{textchannel.mention} を監視チャンネルから削除しました。", ephemeral=False)
+            logging.info(f"Removed channel {textchannel.id} from monitored channels for guild {guild_id}")
+    else:
+        await interaction.response.send_message("このコマンドを実行するには管理者権限が必要です。", ephemeral=False)
 
 @client.event
 async def on_message(message):
@@ -567,6 +658,10 @@ async def on_message(message):
     if message.author == bot.user:
         return
     
+    # DM（ダイレクトメッセージ）の場合は処理をスキップ
+    if message.guild is None:
+        return  # ダイレクトメッセージの場合は処理しない
+
     config = load_config()
     guild_id = str(message.guild.id)
     monitored_channels = config.get(guild_id, [])
@@ -576,6 +671,17 @@ async def on_message(message):
         if not urls:
             return
 
+        logging.info(f"Tweet Archiver invoked in channel {message.channel.id} by {message.author.id}")
+        
+        ######### 計測開始 #########
+        start = 0
+        end = 0
+        ac_start = 0
+        ac_end = 0
+
+        start = time.perf_counter()
+        ###########################
+
         await message.delete()
         logging.info(f"Message deleted: {message.content}")
 
@@ -583,6 +689,10 @@ async def on_message(message):
         webhook = next((w for w in webhooks if w.name == "TweetArchiver"), None)
         if not webhook:
             webhook = await message.channel.create_webhook(name="TweetArchiver")
+
+        ###########################    
+        ac_start = time.perf_counter()
+        ###########################        
 
         for url in urls:
             if not url.startswith("http"):
@@ -607,6 +717,11 @@ async def on_message(message):
                     sensitive_eye = await main_article.locator(f"svg path[d='{SENSITIVE_EYE_PATH}']").count()
                     is_sensitive = sensitive_eye > 0
                     logging.info(f"Sensitive check: {is_sensitive}, Eye count: {sensitive_eye}")
+
+                    ###########################    
+                    ac_end = time.perf_counter()
+                    ###########################
+
                 except Exception as e:
                     logging.warning(f"ツイート本文の取得に失敗: {e}")
                     tweet_text = ""
@@ -653,7 +768,6 @@ async def on_message(message):
                         username=message.author.display_name,
                         avatar_url=message.author.avatar.url if message.author.avatar else None
                     )
-                    logging.info("Blocked due to sensitive content in non-NSFW channel")
                     continue
 
                 os.makedirs(SAVE_DIR, exist_ok=True)
@@ -671,7 +785,7 @@ async def on_message(message):
                         tasks.append(download_image(session, image_url, save_path))
                     saved_images = [result for result in await asyncio.gather(*tasks) if result]
                     logging.info(f"Saved {len(saved_images)} images")
-
+    
                 if not saved_images:
                     await webhook.send(
                         "画像の保存に失敗しました。",
@@ -742,7 +856,7 @@ async def on_message(message):
                                     logging.info(f"Saved combined image: {combined_image_path}")
                                 except Exception as e:
                                     logging.error(f"Image merging failed: {e}")
-        
+
                 image_urls_text = "".join([f"[{i+1}枚目]({url}) " for i, url in enumerate(original_image_urls)]) if len(original_image_urls) > 1 else f"[リンク]({original_image_urls[0]})"
                 
                 embed = discord.Embed(
@@ -758,6 +872,14 @@ async def on_message(message):
                     avatar_url=message.author.avatar.url if message.author.avatar else None
                 )
                 logging.info("Embed sent successfully")
+
+        ######### 計測終了 #########
+        end = time.perf_counter()
+        elapsed = end - start
+        elapsed_dl = ac_end - ac_start
+        
+        logging.info(f"processing time: {elapsed:.2f}sec, access time: {elapsed_dl:.2f}sec")
+        ###########################
 
 # トークン
 client.run(os.getenv("TOKEN"))
