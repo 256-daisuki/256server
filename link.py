@@ -27,7 +27,8 @@ links = [
     {"name": "majinkz", "url": "https://majinkz.moe/"},
     {"name": "hassy", "url": "http://hassy1216.f5.si/"},
     {"name": "kaeru", "url": "https://www.kaerubasyo.com/"},
-    {"name": "atshift", "url": "https://global.atserver186.jp/index.html"},
+    {"name": "atshift", "url": "https://global.atserver186.jp/"},
+    {"name": "linkserver", "url": "https://linkserver.jp/"},
 ]
 
 # ステータスチェックと保存
