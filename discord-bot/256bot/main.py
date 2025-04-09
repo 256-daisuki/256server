@@ -33,6 +33,8 @@ tree = app_commands.CommandTree(client)
 
 bot = commands.Bot(command_prefix='/', intents=intents)
 
+browser = None
+
 @client.event
 async def on_ready():
     logging.info(" ____  ____   __   _           _")
@@ -76,14 +78,14 @@ async def on_ready():
 
 # メッセージを受信した時に呼ばれる
 @client.event
-async def on_message(message):
+async def handle_commands(message):
     # 自分のメッセージを無効
     if message.author == client.user:
         return
 
     # shellコマンド
     if message.content.startswith('$'):
-        allowed_users = [891521181990129675, 997588139235360958]  # 許可するユーザーのIDリスト
+        allowed_users = [891521181990129675, 997588139235360958, 664814874328563712]  # 許可するユーザーのIDリスト
         if message.author.id in allowed_users:
 
             cmd = message.content[2:]
@@ -109,7 +111,6 @@ async def on_message(message):
             await message.channel.send(response)
         else:
             await message.channel.send('許してぇてぇ')
-
     if message.content.startswith('/send_message'):
         allowed_users = [891521181990129675, 997588139235360958]  # 許可するユーザーのIDリスト
         if message.author.id in allowed_users:
@@ -131,7 +132,7 @@ async def on_message(message):
             await channel.send(message_content)
         else:
             await message.channel.send('許してぇてぇ')
-            
+
 @client.event
 async def on_message_edit(before, after):
     # メッセージがBOTのIDによって編集された場合
@@ -178,12 +179,12 @@ async def help_command(interaction: discord.Interaction):
         ("/ping", "Botにpingを打ちます。応答するかどうか　testとほぼ一緒です"),
         # ("/echo", "好きなことを言わすことができます"),
         ("/omikuji", "凶しか入ってないおみくじです"),
-        ("/google", "google検索します　そのまま"),
+        # ("/google", "google検索します　そのまま"),
         ("/yahoo", "yahooニュースを表示します"),
         ("/embed", "Botがユーザーの代わりにembedを送信します"),
         # ("/screenshot", "Webサイトのスクリーンショットを送信します(httpsをちゃんとつけてください)")
-        ("/tw_img_archive", "Twitter(X)の画像を保存し、表示します 保存をするのでツイートが削除されても、凍結されても残ります"),
-        ("/set_auto_tw_img_archive", "設定したテキストチャンネルに貼られたTwitter(X)の画像に対し自動的に/tw_img_archiveを実行します　イラスト共有チャンネルなどに")
+        ("/tw_img_archive", "Twitter(X)の画像を保存し、表示します サーバーに保存をするのでツイートが削除されても、凍結されても残ります。魚拓用にどうぞ"),
+        ("/set_auto_tw_img_archive", "設定したテキストチャンネルに貼られたTwitter(X)の画像に対し自動的に/tw_img_archiveを実行します　イラスト共有チャンネルなどに如何でしょう？")
     ]
 
     # Embedを作成
@@ -338,6 +339,76 @@ async def server_usage_command(interaction: discord.Interaction):
 
     logging.info("Server usage command executed")
 
+@tree.command(name="filecount",description="あ")
+async def test_command(interaction: discord.Interaction):
+
+    total_file_count = 0
+    total_file_size = 0
+
+    def get_directory_stats(path):
+        total_size = 0
+        file_count = 0
+        
+        try:
+            for root, dirs, files in os.walk(path):
+                file_count += len(files)
+                for file in files:
+                    file_path = os.path.join(root, file)
+                    try:
+                        total_size += os.path.getsize(file_path)
+                    except (OSError, PermissionError):
+                        continue
+            return file_count, total_size
+        except (OSError, PermissionError):
+            return 0, 0
+
+    directories = {
+        '/home/discord/python/saved_images': 'Make it a Quote',
+        '/var/www/html/images': 'Twitterの画像',
+        '/var/www/html/combined': 'Twitterの画像（合成）'
+    }
+    
+    embed = discord.Embed(title="画像保存状況", color=0x00ff00)
+    
+    for path, display_name in directories.items():
+        file_count, total_size = get_directory_stats(path)
+        total_file_count += file_count
+        total_file_size += total_size
+
+        if total_size >= 1024 ** 3:
+            size_str = f"{total_size / (1024 ** 3):.2f} GiB"
+        elif total_size >= 1024 ** 2:
+            size_str = f"{total_size / (1024 ** 2):.2f} MiB"
+        elif total_size >= 1024:
+            size_str = f"{total_size / 1024:.2f} KiB"
+        else:
+            size_str = f"{total_size} B"
+        
+        embed.add_field (
+            name=display_name,
+            value=f"ファイル数: {file_count}\n合計サイズ: {size_str}",
+            inline=False,
+        )
+
+    if total_file_size >= 1024 ** 3:
+        total_size_str = f"{total_file_size / (1024 ** 3):.2f} GiB"
+    elif total_file_size >= 1024 ** 2:
+        total_size_str = f"{total_file_size / (1024 ** 2):.2f} MiB"
+    elif total_file_size >= 1024:
+        total_size_str = f"{total_file_size / 1024:.2f} KiB"
+    else:
+        total_size_str = f"{total_file_size} B"
+    
+    embed.add_field (
+        name="合計",
+        value=f"総ファイル数: {total_file_count}\n総サイズ: {total_size_str}",
+        inline=False
+    )
+    
+    await interaction.response.send_message(embed=embed, ephemeral=False)
+
+    logging.info("file count command executed")
+
 #@tree.command(name="screenshot", description="指定されたURLのスクリーンショットを撮ります")
 #async def screenshot_command(interaction: discord.Interaction, url: str):
 #    try:
@@ -451,7 +522,7 @@ async def save_tweet_image(interaction: discord.Interaction, url: str):
         
         sensitive_eye = await main_article.locator(f"svg path[d='{SENSITIVE_EYE_PATH}']").count()
         is_sensitive = sensitive_eye > 0
-        logging.info(f"Sensitive check: {is_sensitive}, Eye count: {sensitive_eye}")
+        # logging.info(f"Sensitive check: {is_sensitive}, Eye count: {sensitive_eye}")
     except Exception as e:
         logging.warning(f"ツイート本文の取得に失敗: {e}")
         tweet_text = ""
@@ -490,7 +561,7 @@ async def save_tweet_image(interaction: discord.Interaction, url: str):
         return
 
     is_nsfw_channel = interaction.channel.is_nsfw()
-    logging.info(f"Channel NSFW status: {is_nsfw_channel}")
+    # logging.info(f"Channel NSFW status: {is_nsfw_channel}")
     if is_sensitive and not is_nsfw_channel:
         await interaction.followup.send(
             "このツイートにはセンシティブなコンテンツが含まれています。NSFWチャンネルで実行してください。"
@@ -654,6 +725,8 @@ async def set_auto_tw_img_archive(interaction: discord.Interaction, textchannel:
 
 @client.event
 async def on_message(message):
+    await handle_commands(message)
+
     # Bot自身のメッセージは無視
     if message.author == bot.user:
         return
@@ -716,11 +789,9 @@ async def on_message(message):
                     
                     sensitive_eye = await main_article.locator(f"svg path[d='{SENSITIVE_EYE_PATH}']").count()
                     is_sensitive = sensitive_eye > 0
-                    logging.info(f"Sensitive check: {is_sensitive}, Eye count: {sensitive_eye}")
-
-                    ###########################    
+                    # logging.info(f"Sensitive check: {is_sensitive}, Eye count: {sensitive_eye}")
+   
                     ac_end = time.perf_counter()
-                    ###########################
 
                 except Exception as e:
                     logging.warning(f"ツイート本文の取得に失敗: {e}")
@@ -761,7 +832,7 @@ async def on_message(message):
                     continue
 
                 is_nsfw_channel = message.channel.is_nsfw()
-                logging.info(f"Channel NSFW status: {is_nsfw_channel}")
+                # logging.info(f"Channel NSFW status: {is_nsfw_channel}")
                 if is_sensitive and not is_nsfw_channel:
                     await webhook.send(
                         "このツイートにはセンシティブなコンテンツが含まれています。NSFWチャンネルで実行してください。",
