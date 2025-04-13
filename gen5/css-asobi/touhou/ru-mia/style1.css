@@ -1,0 +1,134 @@
+.main {
+    position:  relative;        /* 要素の配置方法をと子要素の起点を指定 */
+    /*border: solid 2px red;      /* 枠線指定 */
+    height:  520px;             /* 高さ指定 */
+    width: 500px;               /* 幅指定 */
+}
+
+.handL {
+    position:  absolute;
+    background-color: #fff0d7;
+    width: 100px;
+    height: 50px;
+    left: 0px;
+    top: 210px;
+}
+
+.handR {
+    position:  absolute;
+    background-color: #fff0d7;
+    width: 100px;
+    height: 50px;
+    left: 400px;
+    top: 210px;
+}
+
+.handL1 {
+    position:  absolute;
+    background-color: #fff;
+    width: 100px;
+    height: 50px;
+    left: 100px;
+    top: 210px;
+}
+
+.handR1 {
+    position:  absolute;
+    background-color: #fff;
+    width: 100px;
+    height: 50px;
+    left: 300px;
+    top: 210px;
+}
+
+.body {
+    position:  absolute;
+    background-color: #000;
+    width: 100px;
+    height: 100px;
+    left: 200px;
+    top: 190px;
+}
+
+.collar {
+    position:  absolute;
+    background-color: #fff;
+    width: 70px;
+    height: 70px;
+    left: 215px;
+    top: 140px;
+    transform: rotate(45deg);
+}
+
+.ribbon {
+    position:  absolute;
+    background-color: red;
+    width: 30px;
+    height: 60px;
+    left: 235px;
+    top: 210px;
+}
+
+.neck {
+    position:  absolute;
+    background-color: #fff;
+    width: 100px;
+    height: 20px;
+    left: 200px;
+    top: 170px;
+}
+
+.hairOrnaments {
+    position:  absolute;
+    background-color: red;
+    width: 70px;
+    height: 70px;
+    left: 280px;
+    top: 0px;
+}
+
+.hair {
+    position:  absolute;
+    background-color: #ffefb1;
+    width: 150px;
+    height: 150px;
+    left: 175px;
+    top: 20px;
+}
+
+.head {
+    position:  absolute;
+    background-color: #fff0d7;
+    width: 100px;
+    height: 100px;
+    left: 200px;
+    top: 70px;
+}
+
+.shirt {
+    position:  absolute;
+    background-color: #fff;
+    width: 100px;
+    height: 10px;
+    left: 200px;
+    top: 290px;
+}
+
+.skirt {
+    position:  absolute;
+    background-color: #000;
+    width: 100px;
+    height: 100px;
+    left: 200px;
+    top: 300px;
+}
+
+.skirt1 {
+    position:  absolute;
+    background-color: #000;
+    transform: rotate(45deg);
+    width: 150px;
+    height: 150px;
+    left: 175px;
+    top: 332px;
+}

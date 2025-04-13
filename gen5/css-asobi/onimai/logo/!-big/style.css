@@ -1,0 +1,25 @@
+body {
+    background-color: #fff;
+    margin: auto;
+}
+
+.a {
+    background-color: #896055;
+    position:  absolute;
+    width: 10vh;
+    height: 10vh;
+    left: 0vh;
+    top: 50vh;
+    border-radius: 50%;
+}
+
+.b {
+    background-color: #896055;
+    position:  absolute;
+    width: 10vh;
+    height: 48vh;
+    left: 8vh;
+    top: 1vh;
+    border-radius: 1vh;
+    transform: rotate(15deg);
+}

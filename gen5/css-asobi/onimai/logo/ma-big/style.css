@@ -1,0 +1,160 @@
+body {
+    background-color: #fff;
+    margin: auto;
+}
+
+.a {
+    background-color: #896055;
+    position:  absolute;
+    width: 50vh;
+    height: 10vh;
+    left: 4vh;
+    top: 4vh;
+    border-radius: 1vh;
+}
+
+.b {
+    background-color: #896055;
+    position:  absolute;
+    width: 50vh;
+    height: 10vh;
+    left: 4vh;
+    top: 18vh;
+    border-radius: 1vh;
+}
+
+.c {
+    background-color: #896055;
+    position:  absolute;
+    width: 10vh;
+    height: 52vh;
+    left: 30vh;
+    top: 0vh;
+    border-radius: 1vh;
+}
+
+.d {
+    background-color: #896055;
+    position:  absolute;
+    width: 10vh;
+    height: 10vh;
+    left: 30vh;
+    top: 50vh;
+    border-radius: 0 0 100% 0;
+}
+
+.e {
+    background-color: #896055;
+    position:  absolute;
+    width: 24vh;
+    height: 10vh;
+    left: 8vh;
+    top: 50vh;
+    border-radius: 1vh;
+}
+
+.f {
+    background-color: #896055;
+    position:  absolute;
+    width: 10vh;
+    height: 10vh;
+    left: 0vh;
+    top: 50vh;
+    border-radius: 0 0 0 100%;
+}
+
+.g {
+    background-color: #896055;
+    position:  absolute;
+    width: 10vh;
+    height: 10vh;
+    left: 0vh;
+    top: 42vh;
+}
+
+.h {
+    background-color: #896055;
+    position:  absolute;
+    width: 10vh;
+    height: 10vh;
+    left: 0vh;
+    top: 33vh;
+    border-radius: 100% 0 0 0;
+}
+
+.i {
+    background-color: #896055;
+    position:  absolute;
+    width: 30vh;
+    height: 10vh;
+    left: 8vh;
+    top: 33vh;
+    border-radius: 1vh;
+}
+
+.j {
+    background-color: #896055;
+    position:  absolute;
+    width: 9vh;
+    height: 10vh;
+    left: 45vh;
+    top: 33vh;
+    border-radius: 1vh;
+}
+
+.edge-1 {
+    background-color: #896055;
+    position:  absolute;
+    width: 2vh;
+    height: 2vh;
+    left: 28vh;
+    top: 48vh;
+}
+
+.edge-2 {
+    background-color: #fff;
+    position:  absolute;
+    width: 2vh;
+    height: 2vh;
+    left: 28vh;
+    top: 48vh;
+    border-radius: 0 0 100% 0;
+}
+
+.edge-3 {
+    background-color: #896055;
+    position:  absolute;
+    width: 2vh;
+    height: 2vh;
+    left: 10vh;
+    top: 48vh;
+}
+
+.edge-4 {
+    background-color: #fff;
+    position:  absolute;
+    width: 2vh;
+    height: 2vh;
+    left: 10vh;
+    top: 48vh;
+    border-radius: 0 0 0 100%;
+}
+
+.edge-5 {
+    background-color: #896055;
+    position:  absolute;
+    width: 2vh;
+    height: 2vh;
+    left: 10vh;
+    top: 43vh;
+}
+
+.edge-6 {
+    background-color: #fff;
+    position:  absolute;
+    width: 2vh;
+    height: 2vh;
+    left: 10vh;
+    top: 43vh;
+    border-radius: 100% 0 0 0;
+}

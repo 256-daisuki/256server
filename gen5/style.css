@@ -1,0 +1,257 @@
+/*なんでCSSなんて見てるんだい？　f12で確認したほうが楽だろ*/
+/*==========ヘッダー==========*/
+
+body {
+    background-color: #ebebeb;
+    word-break: break-all;
+}
+
+header {
+    top: 0;
+    width: 100%;
+    padding: 0px;
+    position: fixed;
+    background-color: #686868;
+    background-color: rgb(22 22 22 / 30%);
+    backdrop-filter: blur(10px);
+}
+
+.header-ul {
+    margin: 0px;
+    padding: 0px;
+    padding-left: 15px;
+    list-style: none;
+    display: flex;
+}
+
+.title-256 {
+    margin-top: 3px;
+    margin-right: auto;
+}
+
+.title-256 a {
+    margin: 0px;
+    margin-top: 0px;
+    padding: 0px;
+    height: 40px;
+    color: #e5e5e5;
+    font-size: 1.5em;
+    text-decoration: none;
+}
+
+nav {
+    margin-top: 7px;
+    margin-right: 20px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul a {
+    color: #e5e5e5;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.nav-link {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.nav ul {
+    display: flex;
+    margin-right: 3%;
+    justify-content: flex-end;
+}
+
+li {
+    height: auto;
+}
+
+/*==========main==========*/
+
+body {
+    margin: auto;
+}
+
+main {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.top {
+    text-align: center;
+    margin-left: -5%;
+}
+
+h1 {
+    margin-top: 33.5px;
+}
+
+.mini-p {
+    font-size: 0.5em;
+    color: #989898;
+}
+
+h2 {
+    margin-left: -2%;
+}
+
+p {
+    font-size: 1em;
+}
+/*==========フッター==========*/
+
+.footer_iframe {
+    margin: auto;
+    padding: auto;
+    height: 24px;
+}
+
+iframe.html {
+    margin: auto;
+}
+
+.footer {
+    padding-left: 30px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    color: #e5e5e5;
+    background: #9f9f9f;
+    position: sticky;
+    margin-top: auto;
+}
+
+.footer a {
+    color: #e5e5e5;
+    text-decoration: none;
+    font-family: sans-serif;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.footer .footer-menu {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.footer .footer-menu li {
+    margin: 0;
+    padding: 0 10px;
+}
+
+.footer .footer-menu li:first-child {
+    padding-left: 0;
+    border: none;
+}
+
+.footer .copyright {
+    margin: 0;
+    padding: 20px 0 0 0;
+}
+
+    @media only screen and (max-width: 599px) {
+        .footer .footer-menu li {
+        width: 50%;
+        padding: 0 20px 0 0;
+        box-sizing: border-box;
+        border: none;
+        }
+    }
+
+    @media (min-width: 599px)/*PC用*/ {
+
+    main {
+        min-height: calc(100vh - 78px - 131px);
+    }
+    .title {
+        text-align: center;
+        margin-top: 5vw;
+        font-size: 256%;
+    }
+    
+    .sub-title {
+        text-align: center;
+    }
+
+    .top-h2 {
+        margin-top: 70px;
+    }
+
+    .counter {
+        padding-top: 10px;
+    }
+}
+
+/*FontAwesomeを使用しています。*/
+.header-8 {
+    box-sizing: border-box;
+    width: 100%;
+    height: 120px;
+}
+
+.box {
+    box-sizing: border-box;
+}
+
+/*===ダークモード===*/
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #272727;
+        color: #ebebeb;
+    }
+
+    header {
+        color: #ebebeb;
+        background-color: rgb(22 22 22 / 30%);
+        backdrop-filter: blur(10px);
+    }
+
+    a {
+        color: #00a8fc;
+    }
+    
+    .footer {
+        color: #ebebeb;
+        background: #161616;
+    }
+    
+}
+
+/*==========トップページ==========*/
+
+.top-h1 {
+    margin-bottom: 10px;
+    padding-top: 10px;
+    font-size: 50px;
+}
+
+/* リンク */
+.status {
+    margin: auto;
+    display: inline-block;
+    border-radius: 50%;
+    width: 0.6em;
+    height: 0.6em;
+    margin-right: 0.5em;
+}
+
+.up {
+    background-color: green;
+}
+
+.down {
+    background-color: red;
+}
+
+.link-list {
+    list-style: none;
+    padding-left: 0;
+}

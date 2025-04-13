@@ -1,0 +1,19 @@
+.a1 {
+    position:  absolute;
+    background-color: #0000FF;
+    width: 4vw;
+    height: 16vw;
+    top: 0;
+    left: calc(50vw - 14vw);
+    transform: rotate(45deg);
+}
+
+.a2 {
+    position:  absolute;
+    background-color: #0000FF;
+    width: 4vw;
+    height: 16vw;
+    top: 0;
+    left: calc(50vw - 14vw);
+    transform: rotate(-45deg);
+}
