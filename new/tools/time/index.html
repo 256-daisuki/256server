@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>time</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BN5KGMB0GN"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-BN5KGMB0GN');
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Ubuntu+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lekton&family=Montserrat:wght@300&family=Ubuntu+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cousine&family=Fira+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cousine&family=Fira+Mono&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: aliceblue;
+            background-image: url(data:image/png;base64,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);
+        }
+        /* 時計の共通スタイル */
+        .clock {
+            text-shadow: 0 0 20px #808080;
+            line-height: 1.2;
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        /* 文字サイズ調整 */
+        @media screen and (max-width: 500px) {
+        .clock-date {
+            font-size: 5vw;
+        }
+        .clock-time {
+            font-size: 20vw;
+        }
+        }
+
+        #slider {
+            width: 100%;
+            margin: 2em 0;
+        }
+        
+        .color-picker {
+            margin-top: 10px;
+            display: none;
+        }
+
+        #nav {
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+        
+        nav {
+            backdrop-filter: blur(3px);
+            position: absolute;
+            bottom: 3%;
+            width: 98vw;
+            height: 97vh;
+        }
+
+        .content {
+            position: absolute;
+            bottom: 0;
+            height: 5em;
+        }
+
+        .range {
+            width: 40vw;
+        }
+
+        #text-container {
+            position: relative;
+            top: 0;
+            transition: top 0.1s ease-in-out;
+        }
+
+        #text-slider {
+            display: block;
+            margin: 10px 0;
+        }
+
+        #main {
+            position: relative;
+            top: 0;
+            transition: top 0.1s ease-in-out;
+        }
+
+        #slider {
+            display: block;
+            margin: 10px 0;
+        }
+
+        button {
+            border: 1px solid #eee; /* 枠線 */
+            background-color: #fff; /* 背景色 */
+            box-shadow: 1px 1px 2px #f9f9f9;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #161616;
+            }
+
+            .clock-date, .clock-time {
+                color: #c3c3c3;
+            }
+        }
+    </style>
+</head>
+<body id="all">
+
+    <main id="main">
+        <div id="text-container">
+            <div class="clock">
+                <p class="clock-date"></p>
+                <p class="clock-time"></p>
+            </div>
+        </div>
+    </main>
+
+    <nav id="nav" class="nav">
+        <div class="content">
+            <input type="range" id="slider" min="20" max="256" value="1" class="range">
+            <input type="range" id="text-slider" min="-128" max="512" value="1" class="range">
+            <input type="color" id="bg-color-picker" name="bg-color-picker" class="color-picker">
+            <input type="color" id="text-color-picker" name="text-color-picker" class="color-picker">
+            <button id="bg-color-button">background</button>
+            <button id="text-color-button">text</button>
+            <button id="fullscreen-btn">full</button>
+            <button id="format-toggle">12</button>
+            <select id="font-select">
+                <option value="">--fonts--</option>
+                <option value="Arial">Arial</option>
+                <option value="Helvetica">Helvetica</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Ubuntu Mono">Ubuntu Mono</option>
+                <option value="Lekton">Lekton</option>
+                <option value="Fira Mono">Fira Mono</option>
+                <option value="Cousine">Cousine</option>
+                <option value="Share Tech Mono">Share Tech Mono</option>
+                <option value="Inconsolata">Inconsolata</option>
+            </select>
+        </div>
+    </nav> 
+
+    <script>
+        //色変え
+        const bgColorPicker = document.getElementById('bg-color-picker');
+        const textColorPicker = document.getElementById('text-color-picker');
+        const contentElement = document.getElementById('all');
+        
+        bgColorPicker.addEventListener('input', function() {
+            const bgColor = this.value;
+            contentElement.style.backgroundColor = bgColor;
+        });
+        
+        textColorPicker.addEventListener('input', function() {
+            const textColor = this.value;
+            contentElement.style.color = textColor;
+        });
+
+        //文字サイズ変更
+        //JSとHTMLの紐付け
+        let test = document.querySelector("#main");
+        let slider = document.querySelector("#slider");
+
+        //「トリガー」の設定
+        slider.addEventListener("input", changeFontSize);
+
+        //「アクション」の設定
+        function changeFontSize(e) {
+        test.style.fontSize = e.target.value + "px";
+        }
+
+        //一番大事な時間のやつ
+        const clock = () => {
+        // 現在の日時・時刻の情報を取得
+        const d = new Date();
+
+        // 年を取得
+        let year = d.getFullYear();
+        // 月を取得
+        let month = d.getMonth() + 1;
+        // 日を取得
+        let date = d.getDate();
+        // 曜日を取得
+        let dayNum = d.getDay();
+        const weekday = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+        let day = weekday[dayNum];
+        // 時を取得
+        let hour = d.getHours();
+        // 分を取得
+        let min = d.getMinutes();
+        // 秒を取得
+        let sec = d.getSeconds();
+
+        // 1桁の場合は0を足して2桁に
+        month = month < 10 ? "0" + month : month;
+        date = date < 10 ? "0" + date : date;
+        hour = hour < 10 ? "0" + hour : hour;
+        min = min < 10 ? "0" + min : min;
+        sec = sec < 10 ? "0" + sec : sec;
+
+        // 日付・時刻の文字列を作成
+        let today = `${year}.${month}.${date} ${day}`;
+        let time = "";
+
+        // 12時間表示と24時間表示を切り替える
+        const formatToggle = document.getElementById('format-toggle');
+        if (formatToggle.dataset.format === '12') {
+            // 12時間表示の場合
+            let period = hour < 12 ? 'AM' : 'PM';
+            hour = hour % 12 || 12;
+            time = `${period} ${hour}:${min}:${sec}`;
+        } else {
+            // 24時間表示の場合
+            time = `${hour}:${min}:${sec}`;
+        }
+
+        // 文字列を出力
+        document.querySelector(".clock-date").innerText = today;
+        document.querySelector(".clock-time").innerText = time;
+        };
+
+        // 1秒ごとにclock関数を呼び出す
+        setInterval(clock, 1000);
+
+        // 切り替えボタンのクリックイベント
+        const formatToggle = document.getElementById('format-toggle');
+        formatToggle.addEventListener('click', function() {
+            // 現在のフォーマットを取得
+            const currentFormat = formatToggle.dataset.format;
+
+            // フォーマットを切り替え
+            if (currentFormat === '12') {
+                formatToggle.dataset.format = '24';
+                formatToggle.textContent = '12';
+            } else {
+                formatToggle.dataset.format = '12';
+                formatToggle.textContent = '24';
+            }
+        });
+
+        //フォントを変えるやつ
+        const fontSelect = document.getElementById('font-select');
+        const main = document.getElementById('main');
+
+        fontSelect.addEventListener('change', (event) => {
+        const selectedFont = event.target.value;
+        main.style.fontFamily = selectedFont;
+        });
+
+        //inputをボタンとして扱うやつ (256memoからの盗み)
+        //背景色変え
+        const fileButton = document.getElementById("bg-color-picker");
+		const testImgButton = document.getElementById("bg-color-button");
+		testImgButton.addEventListener("click",function(){
+			console.log(fileButton);
+			fileButton.click();
+		},false)
+
+        //文字色変え
+        const fileButton2 = document.getElementById("text-color-picker");
+		const testImgButton2 = document.getElementById("text-color-button");
+		testImgButton2.addEventListener("click",function(){
+			console.log(fileButton2);
+			fileButton2.click();
+		},false)
+        
+        //1.5秒間操作が無かったらフェードアウトさせるやつ
+        const nav = document.getElementById('nav');
+
+        let timer;
+        document.addEventListener('mousemove', function() {
+        clearTimeout(timer);
+        nav.style.opacity = 1;
+        timer = setTimeout(function() {
+            nav.style.opacity = 0;
+        }, 1500);
+        });
+
+        //上下に動かすやつ
+        const textSlider = document.getElementById('text-slider');
+        const textContainer = document.getElementById('text-container');
+  
+        textSlider.oninput = function() {
+        textContainer.style.top = this.value + 'px';
+        }
+
+        //全画面のやつ
+        const fullscreenBtn = document.getElementById('fullscreen-btn');
+        const fullscreenIcon = document.getElementById('fullscreen-icon');
+        const content = document.getElementById('all');
+
+        let isFullscreen = false;
+
+        fullscreenBtn.addEventListener('click', () => {
+        if (isFullscreen) {
+            document.exitFullscreen();
+            isFullscreen = false;
+        } else {
+            document.documentElement.requestFullscreen();
+            isFullscreen = true;
+        }
+        });
+
+        document.addEventListener('fullscreenchange', () => {
+        if (!document.fullscreenElement) {
+            isFullscreen = false;
+        }
+        });
+    </script>
+</body>
+</html>

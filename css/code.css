@@ -1,0 +1,27 @@
+code {
+    padding: 5px;
+    border-radius: 5px;
+    border: solid 1.5px #989898;
+    background-color: #1e1e1e;
+}
+
+.code-than {
+    color: rgb(128, 128, 128);
+}
+
+.code-tag {
+    color: rgb(86, 156, 214);
+}
+
+.code-option {
+    color: rgb(156, 220, 254);
+}
+
+.code-nomal {
+    color: rgb(204, 204, 204);
+}
+
+.code-link {
+    color: rgb(206, 145, 120);
+    text-decoration: underline;
+}

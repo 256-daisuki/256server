@@ -1,0 +1,256 @@
+<!--power by uruzunyaa & 256-daisuki-->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>256memo</title>
+    <style>
+        body {
+            background-color: #ebebeb;
+            width: 95%;
+            height: 95%;
+            margin: 0;
+        }
+
+        textarea {
+            background-color: #ebebeb;
+        }
+
+        .icon_color {
+            fill: #161616;
+            color: #161616;
+        }
+
+        .main {
+            overflow:hidden;
+            resize: none;
+            padding-left: 10vw;
+            width: 100%;
+            border: none;
+            font-size: 30px;
+            font-weight: 100;
+            padding: 10px;
+            outline: none;
+            color: #000000;      /* 文字の色 */
+            font-size: 1.5em;         /* 文字のサイズ */
+        }
+
+        .main::-moz-selection {
+            color: #ebebeb;      /* 選択時の文字色 */
+            background: #767676;
+        }
+
+        .main::selection {
+            color: #ebebeb;      /* 選択時の文字色 */
+            background: #767676;
+        }
+
+        .title {
+            resize: none;
+            margin-left: 5px;
+            width: 90%;
+            border: 1px solid #ccc; /* 枠線 */
+            box-shadow: 1px 1px 2px #ccc;
+            font-size: 2em;
+            height: 1em; 
+            transition: 0.2s;
+        }
+
+        ::placeholder {
+            color: #b2b2b2;
+        }
+
+        .title:hover {
+            opacity: 0.9;
+            transition: 0.3s;
+            box-shadow: 1px 1px 2px #646464;
+        }
+
+        .counter {
+            color: #2c2c2c;
+            text-align: right;
+            width: 5em;
+            margin: 0;
+        }
+
+        th {
+            font-weight: normal;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .normal, .button-red {
+            width: 40px;
+            height: 40px;
+            margin-left: 2px;
+            border: 1px solid #ccc; /* 枠線 */
+            box-shadow: 1px 1px 2px #ccc;
+            transition: 0.2s;
+        }
+
+        .normal:hover {
+            opacity: 0.9;
+            transition: 0.3s;
+            box-shadow: 1px 1px 2px #646464;
+        }
+
+        .button-red:hover {
+            opacity: 0.9;
+            transition: 0.3s;
+            box-shadow: 1px 1px 2px #f0593c;
+        }
+
+        tbody {
+            margin-left: 5px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+        body {
+            background-color: #272727;
+            color: #ebebeb;
+        }
+
+        textarea, .normal, .button-red, .title {
+            background-color: #272727;
+        }
+
+        .normal, .button-red{
+            border: 1px solid #6c6c6c; /* 枠線 */
+        }
+
+        .title {
+            color: #ebebeb;
+            border: 1px solid #6c6c6c; /* 枠線 */
+        }
+
+        .icon_color, ::placeholder{
+            fill: #ccc;
+            color: #c0c0c0;
+        }
+    
+        .main, .counter {
+            color: #ebebeb;
+        }
+    }
+    </style>
+    <script>
+        // ダウンロード
+        function save() { 
+            const txt = document.getElementById('main').value; // テキストエリアより文字列を取得
+            if (!txt) { return; }
+            const blob = new Blob([txt], { type: 'text/plain' }); // 文字列をBlob化
+            const a = document.createElement('a'); // ダウンロード用のaタグ生成
+            a.href =  URL.createObjectURL(blob);
+            const title = document.getElementById('title').value; // タイトルより文字列を取得
+            a.download = title; //ダウンロードしたメモの名前
+            a.click();
+        };
+
+        //文字数のカウント
+        function ShowLength( str ) { 
+            document.getElementById("inputlength").innerHTML = str.length + "文字";
+        }
+
+        //文字の削除
+        function deleteText() {
+            var res = confirm("本当に消しますか？");
+            if( res == true ) {
+                let ta2 = document.getElementById("main");
+                ta2.value = "";
+                let ta3 = document.getElementById("title");
+                ta3.value = "";
+            }
+        }
+
+        // 文字サイズ変更
+        let y = 2;
+        function larger()  { y *= 1.2; document.getElementById("main").style.fontSize = y + 'em'; }
+        function smaller() { y /= 1.2; document.getElementById("main").style.fontSize = y + 'em'; }
+        
+        const selectedText = window.getSelection().toString();
+        console.log(selectedText);
+
+    </script>
+</head>
+<body>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <table>
+        <th class="icon_color"><button class="normal" onclick="save();"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M7 19v-6h10v6h2V7.828L16.172 5H5v14h2zM4 3h13l4 4v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm5 12v4h6v-4H9z"/></svg></button></th>
+        <th class="icon_color"><button class="normal" id="testImg"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M3 19h18v2H3v-2zM13 5.828V17h-2V5.828L4.929 11.9l-1.414-1.414L12 2l8.485 8.485-1.414 1.414L13 5.83z"/></svg></button></th>
+        <th class="icon_color"><button class="button-red"value="削除" onclick="deleteText();"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zM9 4v2h6V4H9z"/></svg></button></th>
+        <th><button class="normal" onclick="smaller()" style="font-size: 20px;"><div class="icon_color">A</div></button></th>
+        <th><button class="normal" onclick="larger()" style="font-size: 28px;"><div class="icon_color">A</div></button></th>
+        <th><p class="counter" id="inputlength">0文字</p></th>
+    </table>
+    <textarea class="title" id="title" cols="1" placeholder="タイトル" style="overflow:hidden;"></textarea>
+    <form name="in">
+        <input type="file" name="select" id="select" onchange="selectFile()" onclick="OnButtonClick();" />
+        <textarea class="main" id="main" cols="32" rows="16" onkeyup="ShowLength(value);" placeholder="ここにメモ"></textarea>
+    </form>
+    <script>
+        document.querySelectorAll(".main").forEach(function(element){
+            element.addEventListener('input',function(e){
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight)+"px";
+            })
+        })
+
+        // ロード系
+        const selectFile = () => {
+
+            // FileListオブジェクト取得
+            const selectFiles = document.querySelector("#select-file").files
+            const file = selectFiles[0] // Fileオブジェクト取得
+            const reader = new FileReader() // FileReaderオブジェクト取得
+            reader.readAsText(file)
+
+            // ファイル読み込み完了時の処理
+            reader.onload = () => {
+					document.querySelector("#main").innerHTML = reader.result
+					console.log(selectFiles[0].name)
+			}
+
+            // ファイル読み込みエラー時の処理
+            reader.onerror = () => {
+				console.log("ファイル読み込みエラー")
+			}
+        }
+
+        //ロード系
+        var form = document.forms.in;
+        form.select.addEventListener('change', function(e) {
+
+            var result = e.target.files[0];
+            var reader = new FileReader(); // FileReaderのインスタンスを作成する
+            reader.readAsText( result ); // 読み込んだファイルの中身を取得する
+            reader.addEventListener('load', function() { //ファイルの中身を取得後に処理を行う
+                form.main.textContent = reader.result; //ファイルの中身をtextarea内に表示する
+            })
+
+            var fileRef = document.getElementById("select");
+            var outFrame = document.getElementById("title");
+    
+            for (i = 0; i < fileRef.files.length; i++) {
+            outFrame.innerHTML = fileRef.files[i].name ;
+            }
+        })
+
+        //inputをbuttonと同じように扱えるようにするやつ
+		const fileButton = document.getElementById("select");
+		const testImgButton = document.getElementById("testImg");
+		testImgButton.addEventListener("click",function(){
+			console.log(fileButton);
+			fileButton.click();
+		},false)
+
+        // リロードしていいか聞くやつ
+        window.addEventListener('beforeunload', function (e) {
+            e.preventDefault();
+            e.returnValue = '';
+        });
+    </script>
+</body>
+</html>

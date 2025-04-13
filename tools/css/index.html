@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>256server｜css</title>
-    <link rel="stylesheet" href="/style.css">
+    <title>256server｜titel</title>
+    <link rel="stylesheet" href="/css/style.css">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BN5KGMB0GN"></script>
     <script>
@@ -15,38 +15,59 @@
 
         gtag('config', 'G-BN5KGMB0GN');
     </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5856031137941875"
+    crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
         <ul class="header-ul">
-            <li class="title-256"><a href="https://256server.com">256</a></li>
+            <li class="nav-titel"><a href="https://256server.com">256</a></li>
             <li class="nav-link">
                 <nav>
                     <ul>
-                        <li><a href="https://256server.com">home</a></li>
-                        <li><a href="/tools/index.html">tools</a></li>
-                        <li><a href="/history/index.html">history</a></li>
+                        <li><div class="nav-content"><a href="https://256server.com">home</a></div></li>
+                        <li><div class="nav-content"><a href="https://256server.com/tools/index.html">tools</a></div></li>
+                        <li><div class="nav-content"><a href="https://256server.com/history/index.html">history</a></div></li>
                     </ul>
                 </nav>
             </li>
         </ul>
     </header>
+    
     <main>
         <h1>CSSまとめ</h1>
+
         <p>CSSの練習のためにいろいろと作ってましてー　それのまとめです。参考にはならないです。いぇい</p>
+        <hr>
+
         <h2>CSSで作ったルーミア（？）</h2>
-        <p>初めてCSSで遊んだ時のやつ　まだ何とか残ってた</p>
-        <iframe src="/css-asobi/touhou/ru-mia/index1.html" frameborder="0" height="550px" width="550px"></iframe>
+        <div class="text">
+            <p>初めてCSSで遊んだ時のやつ　まだ何とか残ってた</p>
+        </div>
+        <iframe src="touhou/ru-mia/index1.html" frameborder="0" height="550px" width="550px"></iframe>
+        <hr>
+
         <h2>CSSで作った大妖精（？）</h2>
-        <p>フランの色を変えただけ（）</p>
-        <iframe src="/css-asobi/touhou/daiyousei/index.html" frameborder="0" height="550px" width="550px"></iframe>
+        <div class="text">
+            <p>フランの色を変えただけ（）</p>
+        </div>
+        <iframe src="touhou/daiyousei/index.html" frameborder="0" height="550px" width="550px"></iframe>
+        <hr>
+
         <h2>CSSで作ったフラン（？）</h2>
-        <p>がんばった</p>
-        <iframe src="/css-asobi/touhou/huran/index.html" frameborder="0" height="550px" width="550px"></iframe>
+        <div class="text">
+            <p>がんばった</p>
+        </div>
+        <iframe src="touhou/huran/index.html" frameborder="0" height="550px" width="550px"></iframe>
+        <hr>
+        
         <h2>CSSで作ったおにまいのタイトル</h2>
-        <p>Twitterウケを狙って作ったなんて言えない　まあ、楽しかったし</p>
-        <p>あぁ、そうだスマホで見るときはPC版サイトを表示ってやらないと崩れる。PCで見ていてもタブの横幅が小さいと崩れるから注意してねー</p>
-        <a href="/css-asobi/onimai/logo/index.html">別ページ</a>
+        <div class="text">
+            <p>Twitterウケを狙って作ったなんて言えない　まあ、楽しかったし</p>
+            <p>あぁ、そうだスマホで見るときはPC版サイトを表示ってやらないと崩れる。PCで見ていてもタブの横幅が小さいと崩れるから注意してねー</p>
+        </div>
+        <a href="logo/">別ページ</a>
+
     </main>
     <footer class="footer" id="footer">
         <ul class="footer-menu">
@@ -63,7 +84,28 @@
             <li><a href="https://256server.com/terms.html">利用規約</a></li>
             <li><a href="https://256server.com/profile.html">プロフィール</a></li>
         </ul>
-        <p class="copyright">&copy; 256大好き!</p>
     </footer>
+    <script src="/js/footer.js"></script>
+    <script>
+        // リンク疎通確認用
+        async function updateStatuses() {
+        try {
+            const response = await fetch('status.json');
+            const statuses = await response.json();
+                        
+            document.querySelectorAll('#link-list li').forEach(li => {
+            const name = li.getAttribute('data-name');
+            const status = statuses[name] || 'down'; // デフォルトは'down'
+            const statusDot = li.querySelector('.status');
+            statusDot.className = `status ${status}`;
+            });
+        } catch (error) {
+            console.error('ステータスを取得できませんでした:', error);
+            }
+        }
+        // 初回更新と一定間隔での更新
+        updateStatuses();
+        setInterval(updateStatuses, 300000); // 5分ごとに更新
+    </script>
 </body>
 </html>

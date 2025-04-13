@@ -1,0 +1,350 @@
+body {
+    top: 0px;
+    margin: 0px;
+    background-color: #ebebeb;
+    word-break: break-all;
+}
+
+/*==========ヘッダー==========*/
+header {
+    margin-top: 0px;
+    top: 0px;
+    width: 100%;
+    height: 50px;
+    padding: 0px;
+    position: fixed;
+    background-color: #686868;
+    background-color: rgb(22 22 22 / 30%);
+    backdrop-filter: blur(10px);
+}
+
+.header-ul {
+    margin: 0px;
+    padding: 0px;
+    height: 50px;
+    padding-left: 15px;
+    list-style: none;
+    display: flex;
+}
+
+.nav-link {
+    margin: 0px;
+    font-size: 16px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.nav-titel {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: auto;
+}
+
+.nav-titel a {
+    font-size: 1.7em;
+    color: #e5e5e5;
+    text-decoration: none;
+}
+
+nav {
+    margin-top: 0px;
+    margin-right: 20px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul a {    
+    margin: 0px;
+    padding: 0px;
+    color: #e5e5e5;
+    font-size: 1em;
+    text-decoration: none;
+}
+
+nav li {
+    margin-top: 0px;
+    height: auto;
+}
+
+nav li:hover {
+    background-color: rgb(104 104 104 / 30%);
+    backdrop-filter: blur(10px);
+    transition: 0.3s;
+}
+
+.nav-content {
+    margin-top: 0px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-top: calc((50px - 24px) / 2); /*50はヘッダーのサイズ　24pxはフォントの高さ*/
+    padding-bottom: calc((50px - 24px) / 2);
+}
+
+/*==========メイン==========*/
+.center h1 {
+    margin-bottom: 10px;
+    font-size: 50px;    
+}
+
+main {
+    margin-top: 50px; /* ヘッダーの分 */
+    margin-left: 3%;
+    margin-right: 3%;
+}
+
+/*==========フッター==========*/
+.footer {
+    padding-left: 30px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    color: #e5e5e5;
+    background: #9f9f9f;
+    position: sticky;
+    margin-top: auto;
+}
+
+.footer a {
+    color: #e5e5e5;
+    text-decoration: none;
+    font-family: sans-serif;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.footer .footer-menu {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.footer .footer-menu li {
+    margin: 0;
+    padding: 0 10px;
+}
+
+.footer .footer-menu li:first-child {
+    padding-left: 0;
+    border: none;
+}
+
+.footer .copyright {
+    margin: 0;
+    padding: 20px 0 0 0;
+}
+
+    @media only screen and (max-width: 599px) {
+        .footer .footer-menu li {
+        width: 50%;
+        padding: 0 20px 0 0;
+        box-sizing: border-box;
+        border: none;
+        }
+    }
+
+    @media (min-width: 599px)/*PC用*/ {
+
+    main {
+        min-height: calc(100vh - 78px - 131px);
+    }
+    .title {
+        text-align: center;
+        margin-top: 5vw;
+        font-size: 256%;
+    }
+    
+    .sub-title {
+        text-align: center;
+    }
+
+    .top-h2 {
+        margin-top: 70px;
+    }
+
+    .counter {
+        padding-top: 10px;
+    }
+}
+
+/*==========要素==========*/
+h1 {
+    margin-top: 12px;
+    padding-top: 10px;
+    color: #252525;
+}
+
+h2, h3, h4, h5, h6 {
+    margin-left: 4px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    color: #252525;
+}
+
+p {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    color: #252525;
+}
+
+a {
+    color: #1c1cee;
+}
+
+.mini-p {
+    font-size: 0.5em;
+    color: #989898;
+}
+
+.center {
+    text-align: center;
+    margin-right: 2%;
+}
+
+.text {
+    margin-left: 16px;
+}
+
+/*==========ダークモード==========*/
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #272727;
+        color: #ebebeb;
+    }
+
+    a {
+        color: #00a8fc;
+    }
+
+    /*==ヘッダー==*/
+    header {
+        color: #ebebeb;
+        background-color: rgb(22 22 22 / 30%);
+        backdrop-filter: blur(10px);
+    }
+
+    /*==要素==*/
+    h1, h2, h3, h4, h5, h6 {
+        color: #ebebeb;
+    }
+
+    p {
+        color: #ebebeb;
+    }
+
+    /*==フッター==*/
+    .footer {
+        color: #ebebeb;
+        background: #222;
+    }
+    
+}
+
+/*==========スクロールバー==========*/
+html::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+    background: none;
+}
+  
+html::-webkit-scrollbar-thumb, html::-webkit-scrollbar-button {
+    width: 16px;
+    height: 16px;
+    background: silver;
+    box-shadow: inset 1px 1px #dfdfdf, inset -1px -1px gray;
+    border: 1px solid;
+    border-color: silver #000 #000 silver;
+}
+  
+html::-webkit-scrollbar-track {
+    image-rendering: optimizeSpeed;
+    image-rendering: pixelated;
+    image-rendering: optimize-contrast;
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgLTAuNSAyIDIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyI+CjxtZXRhZGF0YT5NYWRlIHdpdGggUGl4ZWxzIHRvIFN2ZyBodHRwczovL2NvZGVwZW4uaW8vc2hzaGF3L3Blbi9YYnh2Tmo8L21ldGFkYXRhPgo8cGF0aCBzdHJva2U9IiNjMGMwYzAiIGQ9Ik0wIDBoMU0xIDFoMSIgLz4KPC9zdmc+");
+    background-position: 0 0;
+    background-repeat: repeat;
+    background-size: 2px;
+}
+  
+html::-webkit-scrollbar-button {
+    background-repeat: no-repeat;
+    background-size: 16px;
+}
+  
+html::-webkit-scrollbar-button:single-button:vertical:decrement {
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgLTAuNSAxNiAxNiIgc2hhcGUtcmVuZGVyaW5nPSJjcmlzcEVkZ2VzIj4KPG1ldGFkYXRhPk1hZGUgd2l0aCBQaXhlbHMgdG8gU3ZnIGh0dHBzOi8vY29kZXBlbi5pby9zaHNoYXcvcGVuL1hieHZOajwvbWV0YWRhdGE+CjxwYXRoIHN0cm9rZT0iIzAwMDAwMCIgZD0iTTcgNWgxTTYgNmgzTTUgN2g1TTQgOGg3IiAvPgo8L3N2Zz4=");
+}
+  
+html::-webkit-scrollbar-button:single-button:vertical:increment {
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgLTAuNSAxNiAxNiIgc2hhcGUtcmVuZGVyaW5nPSJjcmlzcEVkZ2VzIj4KPG1ldGFkYXRhPk1hZGUgd2l0aCBQaXhlbHMgdG8gU3ZnIGh0dHBzOi8vY29kZXBlbi5pby9zaHNoYXcvcGVuL1hieHZOajwvbWV0YWRhdGE+CjxwYXRoIHN0cm9rZT0iIzAwMDAwMCIgZD0iTTQgNWg3TTUgNmg1TTYgN2gzTTcgOGgxIiAvPgo8L3N2Zz4=");
+}
+  
+html::-webkit-scrollbar-button:single-button:horizontal:decrement {
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgLTAuNSAxNiAxNiIgc2hhcGUtcmVuZGVyaW5nPSJjcmlzcEVkZ2VzIj4KPG1ldGFkYXRhPk1hZGUgd2l0aCBQaXhlbHMgdG8gU3ZnIGh0dHBzOi8vY29kZXBlbi5pby9zaHNoYXcvcGVuL1hieHZOajwvbWV0YWRhdGE+CjxwYXRoIHN0cm9rZT0iIzAwMDAwMCIgZD0iTTggM2gxTTcgNGgyTTYgNWgzTTUgNmg0TTYgN2gzTTcgOGgyTTggOWgxIiAvPgo8L3N2Zz4=");
+}
+  
+html::-webkit-scrollbar-button:single-button:horizontal:increment {
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgLTAuNSAxNiAxNiIgc2hhcGUtcmVuZGVyaW5nPSJjcmlzcEVkZ2VzIj4KPG1ldGFkYXRhPk1hZGUgd2l0aCBQaXhlbHMgdG8gU3ZnIGh0dHBzOi8vY29kZXBlbi5pby9zaHNoYXcvcGVuL1hieHZOajwvbWV0YWRhdGE+CjxwYXRoIHN0cm9rZT0iIzAwMDAwMCIgZD0iTTYgM2gxTTYgNGgyTTYgNWgzTTYgNmg0TTYgN2gzTTYgOGgyTTYgOWgxIiAvPgo8L3N2Zz4=");
+}
+  
+html::-webkit-scrollbar-corner {
+    background: silver;
+}
+  
+/* 他の要素のスクロールバー用 */
+body *::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+    background: none;
+}
+
+body *::-webkit-scrollbar-thumb, body *::-webkit-scrollbar-button {
+    width: 16px;
+    height: 16px;
+    background: silver;
+    box-shadow: inset 1px 1px #dfdfdf, inset -1px -1px gray;
+    border: 1px solid;
+    border-color: silver #000 #000 silver;
+}
+  
+body *::-webkit-scrollbar-track {
+    image-rendering: optimizeSpeed;
+    image-rendering: pixelated;
+    image-rendering: optimize-contrast;
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgLTAuNSAyIDIiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyI+CjxtZXRhZGF0YT5NYWRlIHdpdGggUGl4ZWxzIHRvIFN2ZyBodHRwczovL2NvZGVwZW4uaW8vc2hzaGF3L3Blbi9YYnh2Tmo8L21ldGFkYXRhPgo8cGF0aCBzdHJva2U9IiNjMGMwYzAiIGQ9Ik0wIDBoMU0xIDFoMSIgLz4KPC9zdmc+");
+    background-position: 0 0;
+    background-repeat: repeat;
+    background-size: 2px;
+}
+  
+body *::-webkit-scrollbar-button {
+    background-repeat: no-repeat;
+    background-size: 16px;
+}
+  
+body *::-webkit-scrollbar-button:single-button:vertical:decrement {
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgLTAuNSAxNiAxNiIgc2hhcGUtcmVuZGVyaW5nPSJjcmlzcEVkZ2VzIj4KPG1ldGFkYXRhPk1hZGUgd2l0aCBQaXhlbHMgdG8gU3ZnIGh0dHBzOi8vY29kZXBlbi5pby9zaHNoYXcvcGVuL1hieHZOajwvbWV0YWRhdGE+CjxwYXRoIHN0cm9rZT0iIzAwMDAwMCIgZD0iTTcgNWgxTTYgNmgzTTUgN2g1TTQgOGg3IiAvPgo8L3N2Zz4=");
+}
+  
+body *::-webkit-scrollbar-button:single-button:vertical:increment {
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgLTAuNSAxNiAxNiIgc2hhcGUtcmVuZGVyaW5nPSJjcmlzcEVkZ2VzIj4KPG1ldGFkYXRhPk1hZGUgd2l0aCBQaXhlbHMgdG8gU3ZnIGh0dHBzOi8vY29kZXBlbi5pby9zaHNoYXcvcGVuL1hieHZOajwvbWV0YWRhdGE+CjxwYXRoIHN0cm9rZT0iIzAwMDAwMCIgZD0iTTQgNWg3TTUgNmg1TTYgN2gzTTcgOGgxIiAvPgo8L3N2Zz4=");}
+
+body *::-webkit-scrollbar-button:single-button:horizontal:decrement {
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgLTAuNSAxNiAxNiIgc2hhcGUtcmVuZGVyaW5nPSJjcmlzcEVkZ2VzIj4KPG1ldGFkYXRhPk1hZGUgd2l0aCBQaXhlbHMgdG8gU3ZnIGh0dHBzOi8vY29kZXBlbi5pby9zaHNoYXcvcGVuL1hieHZOajwvbWV0YWRhdGE+CjxwYXRoIHN0cm9rZT0iIzAwMDAwMCIgZD0iTTggM2gxTTcgNGgyTTYgNWgzTTUgNmg0TTYgN2gzTTcgOGgyTTggOWgxIiAvPgo8L3N2Zz4=");
+}
+
+body *::-webkit-scrollbar-button:single-button:horizontal:increment {
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgLTAuNSAxNiAxNiIgc2hhcGUtcmVuZGVyaW5nPSJjcmlzcEVkZ2VzIj4KPG1ldGFkYXRhPk1hZGUgd2l0aCBQaXhlbHMgdG8gU3ZnIGh0dHBzOi8vY29kZXBlbi5pby9zaHNoYXcvcGVuL1hieHZOajwvbWV0YWRhdGE+CjxwYXRoIHN0cm9rZT0iIzAwMDAwMCIgZD0iTTYgM2gxTTYgNGgyTTYgNWgzTTYgNmg0TTYgN2gzTTYgOGgyTTYgOWgxIiAvPgo8L3N2Zz4=");
+}
+
+body *::-webkit-scrollbar-corner {
+    background: silver;
+}
+/*
+このスクロールバーは https://gist.github.com/Dakedres/0ccda599648833a1c2f65d3967aa131b#file-scrollbar-css から借用
+*/

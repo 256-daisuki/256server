@@ -1,0 +1,22 @@
+/*==========リンク==========*/
+.status {
+    margin: auto;
+    display: inline-block;
+    border-radius: 50%;
+    width: 0.6em;
+    height: 0.6em;
+    margin-right: 0.5em;
+}
+
+.up {
+    background-color: green;
+}
+
+.down {
+    background-color: red;
+}
+
+.link-list {
+    list-style: none;
+    padding-left: 0;
+}
