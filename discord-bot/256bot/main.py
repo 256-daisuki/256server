@@ -285,6 +285,52 @@ async def server_info_command(interaction: discord.Interaction):
 
     logging.info("Server info command executed")
 
+@tree.command(name="embed", description="Embedを代わりに送信してくれます")
+async def embed_command(interaction: discord.Interaction, text: str, title: str = None, color: str = None,
+                        author_name: str = None, author_url: str = None, author_icon_url: str = None,
+                        thumbnail_url: str = None, image_url: str = None, footer_text: str = None):
+    user_avatar = interaction.user.display_avatar
+    user_name = interaction.user.display_name
+
+    if color:
+        # カラーコードが指定されている場合、16進数に変換
+        try:
+            color = int(color, 16)
+        except ValueError:
+            await interaction.followup.send("無効なカラーコードです。")
+            return
+    else:
+        # カラーコードが指定されていない場合はデフォルトの色を使用
+        color = 0x00ff00
+
+    embed = discord.Embed(description=text, color=color)
+    await interaction.response.defer()
+    if title:
+        embed.title = title 
+
+    if author_name:
+        embed.set_author(name=author_name, url=author_url, icon_url=author_icon_url)
+
+    if thumbnail_url:
+        embed.set_thumbnail(url=thumbnail_url)
+
+    if image_url:
+        embed.set_image(url=image_url)
+
+    if footer_text:
+        embed.set_footer(text=footer_text)
+
+    webhook = await interaction.channel.create_webhook(name="Embed Webhook")
+
+    await webhook.send(embed=embed, username=user_name, avatar_url=user_avatar)
+    followup_message = await interaction.followup.send("embedを作成しました。")
+
+    # 3秒後にメッセージを削除
+    await asyncio.sleep(3)
+    await followup_message.delete()
+
+    await webhook.delete()
+
 @tree.command(name="server_usage", description="botの使用率を表示します")
 async def server_usage_command(interaction: discord.Interaction):
     # プログレスバーを作成する関数
