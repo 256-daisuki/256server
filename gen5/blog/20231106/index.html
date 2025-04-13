@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>256server｜blog　CPUの仕組み（覚書）</title>
+    <link rel="stylesheet" href="https://256server.com/style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BN5KGMB0GN"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-BN5KGMB0GN');
+    </script>
+</head>
+<body>
+    <header>
+        <ul class="header-ul">
+            <li class="title-256"><a href="../index.html">256</a></li>
+            <li class="nav-link">
+                <nav>
+                    <ul>
+                        <li><a href="/index.html">home</a></li>
+                        <li><a href="/tools/index.html">tools</a></li>
+                        <li><a href="/history/index.html">history</a></li>
+                    </ul>
+                </nav>
+            </li>
+        </ul>
+    </header>
+    
+    <main>
+        <a href="../index.html">topへ戻る</a>
+        <a href="../20230909//index.html">前回の記事</a>
+        <a href="../20250125/index.html">次回の記事</a>
+        <h1>CPUの仕組み（覚書）</h1>
+        <h2 style="color: red;">この記事は私が深夜テンションで書き上げた馬鹿記事です！　あんま参考にしないで！</h2>
+        <p>
+            ★CPU概要<br>
+            CPU(Central Processing Unit)とは日本語に訳すと中央処理装置と言うのはよく聞きますが、実際どのようなことをするのか<br>
+            CPUは難しい少量の計算・保存などをします。<br>
+            大量の簡単な計算などはGPUに任せます<br>
+            このことからGPUはマニングなどの計算などに使われるのです。<br>
+            CPUは中央処理装置です。　何が中央なのでしょうか<br>
+            CPUはメモリ(RAM)やストレージ(ROM)など CPUのI/Oポートを介してレジスタに格納され処理されます。<br>
+            キーボード、マウス、プリンターなどPCのUSBポートなどに刺して操作するデバイスはチップセットを介してCPUのI/Oポート -> レジスタ　のようにチップセットを介してCPUで処理されます。<br>
+            GPUやサウンドカードなどの拡張カードもチップセットを介してCPUで処理されます。(この辺はあやふやなので信用しないで)<br>
+            <br>
+            ★CPUとレジスタの関係<br>
+            CPUとレジスタはほぼ一緒です(暴論)<br>
+            CPUの中はALUとレジスタの2つで分けることができます。<br>
+            ALUはあなたたちが想像するような計算をする機構です。<br>
+            例えば加算とか減算とかルートとか　ここでの計算はもちろんみんな二進数<br>
+            その計算する前の情報と計算した後の情報などはどこに保存するか<br>
+            それはレジスタという一時的な記憶域に格納されます。<br>
+            メモリ(RAM)と似ていると思いますが、2つ違うところがあります。<br>
+            それはアクセス速度と計算できるかどうか<br>
+            RAMはCPUから数cm離れた場所にあるため、電気の速度から考えればとても遅いのです。レジスタはCPUの内部に置かれているため爆速で書き込みできます。(ですが、容量は小さいためメモリは必要になる(後述))<br>
+            計算できるかどうかとは、レジスタはALUに接続されているため、ALUに計算してもらってレジスタに保存と言う動作が可能です。<br>
+            ですが、メモリ(RAM)はただ保存するための機構なので、<br>
+            計算などをすることはできません。<br>
+            なので、メモリ(RAM)に保存されているデータを計算する場合はレジスタに一度格納してから計算を行います。<br>
+            レジスタの中身は一体何なのかと言えばただのフリップフロップ<br>
+            メモリ(RAM)はよく使われるDRAMはコンデンサーなどの低価格で実現されていますが、フリップフロップは論理ゲートをいくつも使用するため、メモリ(RAM)のように容量を増やすことが難しいのです。<br>
+            <br>
+            ☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
+            ★☆ FLIP＊FLOPってエロゲあるよ ★☆<br>
+            ☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
+            <br>
+            ALUをただのNOTゲートにして考えてみれば<br>
+            ・フリップフロップ -> NOTゲート -> フリップフロップ(原点復帰)<br>
+            関係ないレジスタは<br>
+            ・フリップフロップ -> フリップフロップ(原点回避)<br>
+            (一回のクロックで全てのレジスタを更新するため、同じ値を保持する動作が必要)<br>
+            のようにただフリップフロップに値を書き込んだり保持したりなど、<br>
+            レジスタ・フリップフロップ中心の回路がCPUです。<br>
+            CPUはとてもかみ砕いて言えば値をALUで計算する or 値を保持する を毎クロックづつ(CPUによるが)行う回路です。<br>
+            もしレジスタを無くしたCPUがあればそれは電卓でしょう。<br>
+            連続計算に対応している電卓などは中にDラッチと言う回路が入っていてフリップフロップのような役目を果たしているため、連続計算ができます。<br>
+            関数電卓のような、計算を保存などできる電卓はCPUが内蔵されていると思います。（不確か）<br>
+            <br>
+            特に終わりとかまだないです。<br>
+            GPU関係勉強しますので、少々お待ちを<br>
+        </p>
+        <p>なんでpだけかって？　それはdiscord鯖で書き込んでたものをコピペしたからだよ　この文は<a href="/tools/memo/index.html">256memo</a>で作成されました。　使ってみてね</p>
+    </main>
+    <footer class="footer" id="footer">
+        <ul class="footer-menu">
+            <li>CPU使用率: <span id="web-server-cpu"></span>%</li>
+            <li>RAM使用率: <span id="web-server-ram"></span>%</li>
+        </ul>
+        <ul class="footer-menu">
+            <li><a href="https://twitter.com/256_daisuke">twitter</a></li>
+            <li><a href="https://youtube.com/@_256">youtube</a></li>
+            <li><a href="https://github.com/256-daisuki">github</a></li>
+            <li><a href="https://gyougetsu.com/">ブログ</a></li>
+        </ul>
+        <ul class="footer-menu">
+            <li><a href="/terms.html">利用規約</a></li>
+            <li><a href="/profile.html">プロフィール</a></li>
+        </ul>
+        <p class="copyright">&copy; 256大好き!</p>
+    </footer>
+    <script src="https://256server.com/script.js"></script>
+</body>
+</html>

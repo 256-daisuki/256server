@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>256server｜Blog</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/blog.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/common.min.js"></script>  
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BN5KGMB0GN"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-BN5KGMB0GN');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5856031137941875"
+    crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <ul class="header-ul">
+            <li class="nav-titel"><a href="https://256server.com">256</a></li>
+            <li class="nav-link">
+                <nav>
+                    <ul>
+                        <li><div class="nav-content"><a href="https://256server.com">home</a></div></li>
+                        <li><div class="nav-content"><a href="https://256server.com/tools/index.html">tools</a></div></li>
+                        <li><div class="nav-content"><a href="https://256server.com/history/index.html">history</a></div></li>
+                    </ul>
+                </nav>
+            </li>
+        </ul>
+    </header>
+    
+    <main>
+        <div id="content">読み込み中...</div>
+    </main>
+
+    <footer class="footer" id="footer">
+        <ul class="footer-menu">
+            <li>CPU使用率: <span id="web-server-cpu"></span>%</li>
+            <li>RAM使用率: <span id="web-server-ram"></span>%</li>
+        </ul>
+        <ul class="footer-menu">
+            <li><a href="https://twitter.com/256_daisuke">twitter</a></li>
+            <li><a href="https://youtube.com/@_256">youtube</a></li>
+            <li><a href="https://github.com/256-daisuki">github</a></li>
+            <li><a href="https://gyougetsu.com/">ブログ</a></li>
+        </ul>
+        <ul class="footer-menu">
+            <li><a href="https://256server.com/terms.html">利用規約</a></li>
+            <li><a href="https://256server.com/profile.html">プロフィール</a></li>
+        </ul>
+    </footer>
+    <script src="/js/footer.js"></script>
+    <script>
+        const params = new URLSearchParams(location.search);
+        const file = params.get('file');
+
+        if (!file) {
+        document.getElementById('content').textContent = 'Markdownファイルが指定されていません。';
+        } else {
+        fetch(file)
+            .then(res => {
+            if (!res.ok) throw new Error('Markdownファイルの取得に失敗しました');
+            return res.text();
+            })
+            .then(markdown => {
+            const titleMatch = markdown.match(/^# (.+)/m);
+            if (titleMatch) document.title = titleMatch[1].trim();
+            document.getElementById('content').innerHTML = marked.parse(markdown);
+            })
+            .catch(err => {
+            document.getElementById('content').textContent = err.message;
+            });
+        }
+    </script>
+</body>
+</html>

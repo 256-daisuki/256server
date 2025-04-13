@@ -154,9 +154,9 @@
         // リンク疎通確認用
         async function updateStatuses() {
         try {
-            const response = await fetch('status.json');
-            const statuses = await response.json();
-                        
+            const response = await fetch('/status.json');
+            const statuses = await response.json();            
+                    
             document.querySelectorAll('#link-list li').forEach(li => {
             const name = li.getAttribute('data-name');
             const status = statuses[name] || 'down'; // デフォルトは'down'

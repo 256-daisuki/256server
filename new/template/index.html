@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>256server｜titel</title>
-    <link rel="stylesheet" href="http://192.168.1.200/new/css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BN5KGMB0GN"></script>
     <script>
@@ -55,7 +55,6 @@
         <ul class="footer-menu">
             <li><a href="https://twitter.com/256_daisuke">twitter</a></li>
             <li><a href="https://youtube.com/@_256">youtube</a></li>
-            <li><a href="https://github.com/256-daisuki">github</a></li>
             <li><a href="https://gyougetsu.com/">ブログ</a></li>
         </ul>
         <ul class="footer-menu">
@@ -63,27 +62,6 @@
             <li><a href="https://256server.com/profile.html">プロフィール</a></li>
         </ul>
     </footer>
-    <script src="http://192.168.1.200/new/js/footer.js"></script>
-    <script>
-        // リンク疎通確認用
-        async function updateStatuses() {
-        try {
-            const response = await fetch('status.json');
-            const statuses = await response.json();
-                        
-            document.querySelectorAll('#link-list li').forEach(li => {
-            const name = li.getAttribute('data-name');
-            const status = statuses[name] || 'down'; // デフォルトは'down'
-            const statusDot = li.querySelector('.status');
-            statusDot.className = `status ${status}`;
-            });
-        } catch (error) {
-            console.error('ステータスを取得できませんでした:', error);
-            }
-        }
-        // 初回更新と一定間隔での更新
-        updateStatuses();
-        setInterval(updateStatuses, 300000); // 5分ごとに更新
-    </script>
+    <script src="/js/footer.js"></script>
 </body>
 </html>

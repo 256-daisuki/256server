@@ -4,11 +4,11 @@ import requests
 from time import sleep
 
 # 各サーバーのIPアドレス
-servers = {
-    "hp1": "http://192.168.1.9:2000/system_info",
-    "hp2": "http://192.168.1.5:2000/system_info",
-    "nec1": "http://192.168.1.6:2000/system_info"
-}
+#servers = {
+#    "hp1": "http://192.168.1.9:2000/system_info",
+#    "hp2": "http://192.168.1.5:2000/system_info",
+#    "nec1": "http://192.168.1.6:2000/system_info"
+#}
 
 # 自身のWebサーバー情報を取得
 def get_web_server_info():
@@ -33,14 +33,14 @@ def get_web_server_info():
     }
 
 # 他のサーバーの情報を取得
-def get_server_info(server_url):
-    try:
-        response = requests.get(server_url)
-        response.raise_for_status()  # エラーチェック
-        return response.json()
-    except requests.exceptions.RequestException as e:
-        print(f"Error fetching data from {server_url}: {e}")
-        return None
+#def get_server_info(server_url):
+#    try:
+#        response = requests.get(server_url)
+#        response.raise_for_status()  # エラーチェック
+#        return response.json()
+#    except requests.exceptions.RequestException as e:
+#        print(f"Error fetching data from {server_url}: {e}")
+#        return None
 
 # 全ての情報をまとめてJSONとして保存
 def monitor_system():
@@ -49,10 +49,10 @@ def monitor_system():
         system_info = {"web_server": get_web_server_info()}
         
         # 各サーバーの情報を取得してまとめる
-        for server_name, server_url in servers.items():
-            server_data = get_server_info(server_url)
-            if server_data:
-                system_info[server_name] = server_data
+#        for server_name, server_url in servers.items():
+#            server_data = get_server_info(server_url)
+#            if server_data:
+#                system_info[server_name] = server_data
 
         # JSONファイルに書き込み
         with open("system_info.json", "w") as f:
