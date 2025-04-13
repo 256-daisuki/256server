@@ -15,7 +15,7 @@ links = [
     {"name": "nanasi", "url": "https://nanasi-rasi.net/"},
     {"name": "koneru", "url": "https://koneruhome.com/"},
     {"name": "lolineko", "url": "https://lolineko3.net"},
-    {"name": "szk", "url": "https://satsuki-blog.neocities.org"},
+    {"name": "szk", "url": "http://ramuneserver323.f5.si/"},
     {"name": "nazo", "url": "https://senpai114514.icu"},
     {"name": "kazemidori", "url": "https://nekokawa.net/"},
     {"name": "lifebooker", "url": "http://www.lifebookert935k.f5.si/"},
