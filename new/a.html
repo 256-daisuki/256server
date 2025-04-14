@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Hover Gradient Shadow</title>
+  <style>
+    .box {
+      width: 200px;
+      height: 200px;
+      background-color: rgb(255 255 255 / 30%);
+      backdrop-filter: blur(10px);
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: box-shadow 0.3s ease;
+      margin: 50px auto;
+    }
+
+    .box:hover {
+        background-color: rgba(229, 229, 229, 0.5);
+        box-shadow: 0 10px 20px -5px rgba(255, 99, 71, 0.5),
+                    0 10px 20px -5px rgba(65, 105, 225, 0.5);
+        backdrop-filter: blur(10px);
+    }
+  </style>
+</head>
+<body background="https://pbs.twimg.com/media/Gns1cu4a4AAUa6d?format=jpg&name=240x240">
+  <div class="box">ホバーしてね</div>
+</body>
+</html>
