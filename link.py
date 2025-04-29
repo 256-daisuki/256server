@@ -29,6 +29,7 @@ links = [
     {"name": "kaeru", "url": "https://www.kaerubasyo.com/"},
     {"name": "atshift", "url": "https://global.atserver186.jp/"},
     {"name": "linkserver", "url": "https://linkserver.jp/"},
+    {"name": "t3tra", "url": "https://t3tra.dev/"},
 ]
 
 # ステータスチェックと保存
