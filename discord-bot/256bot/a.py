@@ -1,1 +1,1 @@
-print("hello")
+from pixivapi import Client
