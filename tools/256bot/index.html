@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>256server｜256bot</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BN5KGMB0GN"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-BN5KGMB0GN');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5856031137941875"
+    crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <ul class="header-ul">
+            <li class="nav-titel"><a href="https://256server.com">256</a></li>
+            <li class="nav-link">
+                <nav>
+                    <ul>
+                        <li><div class="nav-content"><a href="https://256server.com">home</a></div></li>
+                        <li><div class="nav-content"><a href="https://256server.com/tools/index.html">tools</a></div></li>
+                        <li><div class="nav-content"><a href="https://256server.com/history/index.html">history</a></div></li>
+                    </ul>
+                </nav>
+            </li>
+        </ul>
+    </header>
+    
+    <main>
+        <div class="center">
+            <h1>256bot</h1>
+        </div>
+
+        <h2>概要</h2>
+        <div class="text">
+            <p>私が私のために作っているdiscordbotです　使ってみてください</p>
+        </div>
+
+        <hr>
+        <h2>256botの機能</h2>
+        <div class="text">
+            <p>最新の情報はbotをサーバーに導入して `/help` コマンドを実行して確認してください</p>
+            <ul>
+                <li>make it a quote削除検知</li>
+                <li>omikuji(凶のみ)</li>
+                <li>yahooニュース見出し</li>
+                <li>embed送信</li>
+                <li>Twitter画像保存</li>
+            </ul>
+            <hr>
+            <p>くだらない文字が見えますよね</p>
+            <h3>make it a quote削除検知</h3>
+                <p>一番くだらないものかもしれない</p>
+                <img src="/image/tools/makeitaquote.png" alt="make it a quote 復活" width="50%">
+                <p>この画像の通り　削除したmakeitを復活させます　これでいやがらせをしましょう　botを入れるとその時から使えます<br>
+                画像を再送信しているので時間が経っても画像が消えないようにしてるのでいやがらせに最適です</p>
+
+            <h3>omikuji(凶のみ)</h3>
+                <p>omikujiは凶しか出ません　凶を引いたら運が悪いです<br>
+                `/omikuji`コマンドで使えます　よくあるpythonのテストコードです　消すのもなんかアレだからナーで残ってる悪しきコマンド</p>
+
+            <h3>yahooニュース見出し</h3>
+                <p>これも上のomikujiと同じ感じでつくられました　過去にだいたいの有名サービスがフィルタリングのブラックリストに登録されてネットがまともに使えないのにdiscordはなぜか使えたって子が外界を知るための少ない手段として用いていました　もともと姉妹コマンドとしてgoogleの検索結果を返すヤツもあったんですけどスクレイピングしてたせいでHTMLの構造が変わったタイミングで取得できなくなったんで消しました<br>
+                `/yahoo`コマンドで使えます</p>
+            
+            <h3>embed送信</h3>
+                <p>なぜかdiscordでは人間はembedを送信できないようにしてるんですよ　それがなんかイヤだったので追加した機能です　まともに作ってないのでできることが少ないです　見て理解してください</p>
+
+            <h3>Twitter画像保存</h3>
+                <p>Twitter魚拓機能です　Twitterは鍵垢になったり凍結されたり垢消しだったりで画像が消えやすいじゃないですか　それを解決するコマンドです<br>
+                `/tw_img_archive`コマンドで使えます　embedのテキストはdiscordのサーバーに保存されるので画像だけ保存します　アイコンは、、保存されませんしembedに表示すらされません<br>
+                それはそうと絵って消えやすいですよね　絵　絵師さんが消すことが多いですしエロを責めすぎて凍結って事も多いですし　それ対策として`/set_auto_tw_img_archive`を用意しました<br>
+                このコマンドで設定したチャンネルにTwitterのリンクが貼られると自動的に`/tw_img_archive`を実行してくれます　設定されたチャンネルにテキストのみのツイートを貼るとbotが怒るのでやめてください　絵保存専用チャンネルみたいなのを用意して使ってください　設定したチャンネルで一つの書き込みにいくつかツイートを貼っても動作します　だいたい1つ0.7 ~ 0.9秒で処理します　画像はすべて256serverに保存されますので、このサーバーが潰れない限りは残り続けます　潰れたら消えます<br>
+            </div>
+        <hr>
+        <h2>権限について</h2>
+        <div class="text">
+            <p>make it a quote, omikuji, yahoo, Twitter画像保存(`/tw_img_archive`)だけを使うなら普通のメンバーと同じロールで十分です　`embed送信`ではembedの送信を許可するbotロールを付与してください `/tw_img_archive`で設定したチャンネルで送信されたツイートURLの削除とembedの送信を行うのでメッセージの削除とembedの送信を許可したbotロールの付与をお願いします　メッセージ削除に関しては、そのチャンネルでのみ有効なロールを新しく作ることをおすすめします　（万が一トークンが流出したときに被害を最小限にするため）</p>
+
+        <h2>導入</h2>
+        <ul>
+            <li><a href="https://discord.com/oauth2/authorize?client_id=1141886417618882620&permissions=191663307840&integration_type=0&scope=bot" target="_blank">権限設定済み</a></li>
+            <li><a href="https://discord.com/oauth2/authorize?client_id=1141886417618882620&permissions=0&integration_type=0&scope=bot" target="_blank">権限未設定</a></li>
+        </ul>
+        <p>上のリンクからサーバーに導入してください　権限未設定を選んだ方は自分でロールを用意、設定してください</p>
+        
+    </main>
+    <footer class="footer" id="footer">
+        <ul class="footer-menu">
+            <li>CPU使用率: <span id="web-server-cpu"></span>%</li>
+            <li>RAM使用率: <span id="web-server-ram"></span>%</li>
+        </ul>
+        <ul class="footer-menu">
+            <li><a href="https://twitter.com/256_daisuke">twitter</a></li>
+            <li><a href="https://youtube.com/@_256">youtube</a></li>
+            <li><a href="https://github.com/256-daisuki">github</a></li>
+            <li><a href="https://gyougetsu.com/">ブログ</a></li>
+        </ul>
+        <ul class="footer-menu">
+            <li><a href="https://256server.com/terms.html">利用規約</a></li>
+            <li><a href="https://256server.com/profile.html">プロフィール</a></li>
+        </ul>
+    </footer>
+    <script src="/js/footer.js"></script>
+
+</body>
+</html>
