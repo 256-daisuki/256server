@@ -1,14 +1,10 @@
 <?php
-// 画像ファイルのリスト
-$images = ['images/1.png', 'images/2.png', 'images/3.png', 'images/4.png', 'images/5.png', 'images/6.png', 'images/7.png', 'images/8.png', 'images/9.png'];
-
-// ランダムに画像を選択
+$images = ['images/0.jpg', 'images/1.jpg', 'images/2.jpg', 'images/3.jpg', 'images/4.jpg', 'images/5.jpg', 'images/6.jpg', 'images/7.jpg', 'images/8.jpg', 'images/9.jpg'];
 $randomImage = $images[array_rand($images)];
-
-// 画像のMIMEタイプを設定
-header('Content-Type: image/png');
-
-// 画像を読み込んで出力
+header('Content-Type: image/jpeg');
+header('Cache-Control: no-cache, no-store, must-revalidate');
+header('Pragma: no-cache');
+header('Expires: 0');
 readfile($randomImage);
 exit;
 ?>

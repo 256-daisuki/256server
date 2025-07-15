@@ -20,3 +20,72 @@
     list-style: none;
     padding-left: 0;
 }
+
+/*==========backimg==========*/
+@media (min-aspect-ratio: 6/4) {
+    @media (prefers-color-scheme: dark) {
+        body {
+            background-image: url("https://256server.com/image/backimg/") !important;
+            background-repeat: no-repeat; /* 繰り返しなし */
+            background-size: cover; /* コンテナ全体を覆う */
+            background-position: center; /* 中央に配置 */
+            background-attachment: fixed; /* 背景画像を固定 */
+        }
+
+        .background-overlay {
+            background-color: rgba(23, 23, 23, 0.8);
+        }
+
+        header {
+            background-color: rgba(22, 22, 22, 0.82);
+            backdrop-filter: blur(1px);
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        body {
+            background-image: url("https://256server.com/image/backimg/images/white.jpg") !important;
+            background-repeat: no-repeat; /* 繰り返しなし */
+            background-size: cover; /* コンテナ全体を覆う */
+            background-position: center; /* 中央に配置 */
+            background-attachment: fixed; /* 背景画像を固定 */
+        }
+
+        .background-overlay {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        header {
+            background-color: rgba(255, 255, 255, 0.82);
+            backdrop-filter: blur(1px);
+        }
+
+        nav ul a {
+            color: #989898 !important;
+        }
+
+        .nav-titel a {
+            color: #989898 !important;
+        }
+    }
+}
+@media (max-aspect-ratio: 6/4) {
+    @media (prefers-color-scheme: dark) {
+        body {
+            background-image: url("https://256server.com/image/backimg/images/tall.jpg") !important;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: top center;
+            background-attachment: fixed;
+        }
+
+        .background-overlay {
+            background-color: rgba(23, 23, 23, 0.8);
+        }
+
+        header {
+            background-color: rgba(22, 22, 22, 0.82);
+            backdrop-filter: blur(1px);
+        }
+    }
+}
