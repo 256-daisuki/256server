@@ -1,8 +1,9 @@
+#!/usr/bin/env python3
 import requests
 import json
 from time import sleep
 
-# list
+# list（変更なし）
 links = [
     {"name": "activetk", "url": "https://www.activetk.jp"},
     {"name": "doremire", "url": "https://doremire-server.com/"},
@@ -23,21 +24,25 @@ links = [
     {"name": "kisetsu", "url": "https://sites.google.com/view/kamera-room/%E3%83%9B%E3%83%BC%E3%83%A0"},
     {"name": "google", "url": "https://google.co.jp"},
     {"name": "ipsj", "url": "https://www.ipsj.or.jp/"},
-    {"name": "dream-library", "url": "https://www.dream-library.org/"},
+    {"name": "dream-libary", "url": "https://www.dream-library.org/"},
     {"name": "majinkz", "url": "https://majinkz.moe/"},
     {"name": "hassy", "url": "http://hassy1216.f5.si/"},
     {"name": "kaeru", "url": "https://www.kaerubasyo.com/"},
     {"name": "atshift", "url": "https://global.atserver186.jp/"},
     {"name": "linkserver", "url": "https://linkserver.jp/"},
     {"name": "t3tra", "url": "https://t3tra.dev/"},
+    {"name": "kinoemon", "url": "https://kinoemon.com/"},
 ]
 
 # ステータスチェックと保存
 def check_links():
     status_data = {}
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+    }  # ← 追加: ブラウザっぽいUser-Agentでボット判定を回避
     for link in links:
         try:
-            response = requests.head(link["url"], timeout=5)
+            response = requests.get(link["url"], timeout=30, headers=headers, allow_redirects=True)  # ← 変更: HEAD→GETに、timeout30秒に、allow_redirects追加
             status_code = response.status_code
             status_data[link["name"]] = "up" if 200 <= status_code < 400 else "down"
         except requests.RequestException:
