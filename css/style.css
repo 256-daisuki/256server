@@ -152,6 +152,7 @@ main {
     main {
         min-height: calc(100vh - 78px - 131px);
     }
+    
     .title {
         text-align: center;
         margin-top: 5vw;

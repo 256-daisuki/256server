@@ -22,7 +22,7 @@
 }
 
 /*==========backimg==========*/
-@media (min-aspect-ratio: 6/4) {
+@media (min-aspect-ratio: 4.5/4) {
     @media (prefers-color-scheme: dark) {
         body {
             background-image: url("https://256server.com/image/backimg/") !important;
@@ -69,7 +69,8 @@
         }
     }
 }
-@media (max-aspect-ratio: 6/4) {
+
+@media (max-aspect-ratio: 4.5/4) {
     @media (prefers-color-scheme: dark) {
         body {
             background-image: url("https://256server.com/image/backimg/images/tall.jpg") !important;
@@ -86,6 +87,15 @@
         header {
             background-color: rgba(22, 22, 22, 0.82);
             backdrop-filter: blur(1px);
+        }
+
+        /*backimgの縦の時に文字の位置を調整するヤツ*/
+        h1 {
+            padding-top: 50vh !important;
+        }
+
+        .titel-mini-sent {
+            margin-bottom: 180px;
         }
     }
 }
