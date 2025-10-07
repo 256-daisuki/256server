@@ -3,7 +3,7 @@ import requests
 import json
 from time import sleep
 
-# list（変更なし）
+# list
 links = [
     {"name": "activetk", "url": "https://www.activetk.jp"},
     {"name": "doremire", "url": "https://doremire-server.com/"},
@@ -24,7 +24,7 @@ links = [
     {"name": "kisetsu", "url": "https://sites.google.com/view/kamera-room/%E3%83%9B%E3%83%BC%E3%83%A0"},
     {"name": "google", "url": "https://google.co.jp"},
     {"name": "ipsj", "url": "https://www.ipsj.or.jp/"},
-    {"name": "dream-libary", "url": "https://www.dream-library.org/"},
+    {"name": "dream-library", "url": "https://scitech.or.jp/micommuseum/"},
     {"name": "majinkz", "url": "https://majinkz.moe/"},
     {"name": "hassy", "url": "http://hassy1216.f5.si/"},
     {"name": "kaeru", "url": "https://www.kaerubasyo.com/"},
@@ -32,6 +32,7 @@ links = [
     {"name": "linkserver", "url": "https://linkserver.jp/"},
     {"name": "t3tra", "url": "https://t3tra.dev/"},
     {"name": "kinoemon", "url": "https://kinoemon.com/"},
+    {"name": "ayane", "url": "https://ayane0857.net/"}
 ]
 
 # ステータスチェックと保存
@@ -55,4 +56,4 @@ def check_links():
 if __name__ == "__main__":
     while True:
         check_links()
-        sleep(600)  # 10分に一度更新する 
+        sleep(3600)  # 60分に一度更新する 
