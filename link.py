@@ -32,7 +32,8 @@ links = [
     {"name": "linkserver", "url": "https://linkserver.jp/"},
     {"name": "t3tra", "url": "https://t3tra.dev/"},
     {"name": "kinoemon", "url": "https://kinoemon.com/"},
-    {"name": "ayane", "url": "https://ayane0857.net/"}
+    {"name": "ayane", "url": "https://ayane0857.net/"},
+    {"name": "shihiro", "url": "https://shihiro.com/"}
 ]
 
 # ステータスチェックと保存
