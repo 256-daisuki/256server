@@ -10,7 +10,7 @@ links = [
     {"name": "keichankotaro", "url": "https://keichankotaro.com/"},
     {"name": "21emon", "url": "http://21emon.wjg.jp"},
     {"name": "tenohira", "url": "https://mcflurryoreo.github.io/"},
-    {"name": "canon", "url": "https://sites.google.com/view/minecraft-canon-world"},
+    {"name": "canon", "url": "https://canonslod.sakura.ne.j"},
     {"name": "mozero", "url": "https://mozero.net"},
     {"name": "p-nsk", "url": "https://p-nsk.com"},
     {"name": "nanasi", "url": "https://nanasi-rasi.net/"},
@@ -33,7 +33,9 @@ links = [
     {"name": "t3tra", "url": "https://t3tra.dev/"},
     {"name": "kinoemon", "url": "https://kinoemon.com/"},
     {"name": "ayane", "url": "https://ayane0857.net/"},
-    {"name": "shihiro", "url": "https://shihiro.com/"}
+    {"name": "shihiro", "url": "https://shihiro.com/"},
+    {"name": "wsn0672", "url": "https://wsn0672.org/"},
+    {"name": "yuito", "url": "https://www.yuito-it.jp/ja"}
 ]
 
 # ステータスチェックと保存
