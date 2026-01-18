@@ -28,6 +28,9 @@ tree = app_commands.CommandTree(client)
 # 保存先ディレクトリとベースURLの設定
 SAVE_DIR = "/var/www/html/test/images"  # 画像保存用ディレクトリ
 COMBINED_DIR = "/var/www/html/test/combined"  # 合成画像用ディレクトリ
+ARCHIVE_DIR = "/var/www/html/test/archive" # ツイート情報格納ディレクトリ
+VIDEO_DIR = "/var/www/html/test/videos" # 動画保存用ディレクトリ
+PREVIEW_DIR = "/var/www/html/test/previews" # プレビュー画像保存用ディレクトリ
 BASE_URL = "https://discord.256server.com/test"  # 公開URLのベース
 CONFIG_FILE = "config.json"  # 設定ファイル
 
@@ -81,6 +84,125 @@ async def download_image(session, url, save_path):
         logging.error(f"画像ダウンロードに失敗しました {url}: {e}")
     return None
 
+# 動画のプレビュー画像をダウンロードする関数
+async def download_file(session, url, save_path):
+    try:
+        async with session.get(url) as resp:
+            if resp.status == 200:
+                with open(save_path, "wb") as f:
+                    f.write(await resp.read())
+                return save_path
+    except Exception as e:
+        logging.error(f"ダウンロード失敗 {url}: {e}")
+    return None
+
+# エラー時の送信関数
+async def send_error(target, message, url, is_interaction, webhook=None):
+    text = f"{message}\n[実行ツイート]({url})"
+    if is_interaction:
+        await target.followup.send(text)
+    else:
+        await webhook.send(
+            text,
+            username=target.author.display_name,
+            avatar_url=target.author.avatar.url if target.author.avatar else None
+        )
+
+# 日付の解析関数
+def parse_created_at(raw: str) -> datetime:
+    return datetime.strptime(
+        raw,
+        "%a %b %d %H:%M:%S %z %Y"
+    ).astimezone(pytz.timezone("Asia/Tokyo"))
+
+# tweet.jsonを保存する関数
+def save_tweet_json(
+    tweet_id: str,
+    tweet_data: dict,
+    created_at: str,
+    image_files=None,
+    video_files=None,
+    preview_files=None,
+):
+    archive_dir = os.path.join(ARCHIVE_DIR, tweet_id)
+    os.makedirs(archive_dir, exist_ok=True)
+
+    path = os.path.join(archive_dir, "tweet.json")
+
+    data = {
+        "tweet_id": tweet_id,
+        "url": f"https://x.com/i/status/{tweet_id}",
+        "author": {
+            "name": tweet_data["author"]["name"],
+            "screen_name": tweet_data["author"]["screen_name"],
+            "avatar_url": tweet_data["author"]["avatar_url"],
+        },
+        "created_at": created_at,  # ISO8601 string
+        "text": tweet_data.get("text", ""),
+        "media": {
+            "images": image_files or [],
+            "videos": video_files or [],
+            "previews": preview_files or [],
+        }
+    }
+
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+
+# 動画ファイルの名前決定関数
+def extract_filename(url: str) -> str:
+    return url.split("/")[-1].split("?")[0]
+
+# metrics スナップショット保存関数
+def save_metrics_snapshot(tweet_id, tweet_data):
+    metrics_dir = os.path.join(ARCHIVE_DIR, tweet_id, "metrics")
+    os.makedirs(metrics_dir, exist_ok=True)
+
+    now = datetime.now(pytz.timezone("Asia/Tokyo"))
+    filename = now.isoformat(timespec="seconds").replace(":", "-") + ".json"
+    path = os.path.join(metrics_dir, filename)
+
+    data = {
+        "captured_at": now.isoformat(),
+        "like": tweet_data.get("likes"),
+        "retweet": tweet_data.get("retweets"),
+        "reply": tweet_data.get("replies"),
+        "view": tweet_data.get("views"),
+    }
+
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+
+# indexを更新する関数
+INDEX_PATH = os.path.join(ARCHIVE_DIR, "index_media.json")
+
+def update_media_index(
+    tweet_id: str,
+    filenames: list[str]
+):
+    if os.path.exists(INDEX_PATH):
+        with open(INDEX_PATH, "r", encoding="utf-8") as f:
+            index = json.load(f)
+    else:
+        index = {}
+
+    for name in filenames:
+        index[name] = tweet_id
+
+    with open(INDEX_PATH, "w", encoding="utf-8") as f:
+        json.dump(index, f, ensure_ascii=False, indent=2)
+
+# 画像からtweetへ逆引きする関数
+def find_tweet_by_image(filename):
+    with open(INDEX_PATH, "r", encoding="utf-8") as f:
+        index = json.load(f)
+
+    tweet_id = index.get(filename)
+    if not tweet_id:
+        return None
+
+    return os.path.join(ARCHIVE_DIR, tweet_id, "tweet.json")
+
 # 複数画像を合成する関数
 def combine_images(image_paths):
     images = [Image.open(path) for path in image_paths]
@@ -94,7 +216,7 @@ def combine_images(image_paths):
     max_height = max(heights)
     grid_size = 2 if len(images) > 2 else 1
     total_width = max_width * grid_size
-    total_height = max_height * grid_size if len(images) > 2 else max_height
+    total_height = max_height * grid_size
 
     new_image = Image.new('RGB', (total_width, total_height), color=(255, 255, 255))
 
@@ -117,157 +239,149 @@ def combine_images(image_paths):
 
 # ツイート画像を処理する共通関数
 async def process_tweet(interaction_or_message, url, webhook=None):
-    # interaction_or_message が interaction の場合は応答用、message の場合は webhook 用
     is_interaction = isinstance(interaction_or_message, discord.Interaction)
     target = interaction_or_message
 
-    # URLの正規化
+    # ========= URL 正規化 =========
     if not url.startswith("http"):
         url = "https://" + url
+
     if "x.com" not in url and "twitter.com" not in url:
-        if is_interaction:
-            await target.followup.send("エラー: Twitter (X) のURLのみ対応しています。")
-        else:
-            await webhook.send(
-                "エラー: Twitter (X) のURLのみ対応しています。",
-                username=target.author.display_name,
-                avatar_url=target.author.avatar.url if target.author.avatar else None
-            )
+        await send_error(target, "Twitter(X)のURLのみ対応しています。", url, is_interaction, webhook)
         return
 
-    # ツイートIDの抽出
-    tweet_id_match = re.search(r'status/(\d+)', url)
-    if not tweet_id_match:
-        if is_interaction:
-            await target.followup.send("エラー: ツイートIDが見つかりませんでした。")
-        else:
-            await webhook.send(
-                "エラー: ツイートIDが見つかりませんでした。",
-                username=target.author.display_name,
-                avatar_url=target.author.avatar.url if target.author.avatar else None
-            )
+    # ========= tweet_id 抽出 =========
+    m = re.search(r"status/(\d+)", url)
+    if not m:
+        await send_error(target, "ツイートIDが見つかりませんでした。", url, is_interaction, webhook)
         return
-    tweet_id = tweet_id_match.group(1)
 
-    # fxtwitter APIでツイートデータを取得
+    tweet_id = m.group(1)
+    tweet_url = f"https://x.com/i/status/{tweet_id}"
+
+    # ========= tweet_data 取得（最重要） =========
     tweet_data = await get_tweet_data(tweet_id)
     if not tweet_data:
-        if is_interaction:
-            await target.followup.send("ツイートデータの取得に失敗しました。")
-        else:
-            await webhook.send(
-                "ツイートデータの取得に失敗しました。",
-                username=target.author.display_name,
-                avatar_url=target.author.avatar.url if target.author.avatar else None
-            )
+        await send_error(target, "ツイートデータの取得に失敗しました。", url, is_interaction, webhook)
         return
 
-    # センシティブチェック
-    is_sensitive = tweet_data.get("possibly_sensitive", False)
-    channel = target.channel
-    if is_sensitive and not channel.is_nsfw():
-        if is_interaction:
-            await target.followup.send("このツイートはセンシティブな内容を含みます。NSFWチャンネルで実行してください。")
-        else:
-            await webhook.send(
-                "このツイートはセンシティブな内容を含みます。NSFWチャンネルで実行してください。",
-                username=target.author.display_name,
-                avatar_url=target.author.avatar.url if target.author.avatar else None
-            )
+    # ========= created_at =========
+    created_at_dt = parse_created_at(tweet_data["created_at"])
+    created_at_str = created_at_dt.isoformat()
+
+    # ========= NSFW =========
+    if tweet_data.get("possibly_sensitive") and not target.channel.is_nsfw():
+        await send_error(target, "センシティブなツイートです。NSFWチャンネルで実行してください。", url, is_interaction, webhook)
         return
 
-    # ツイート情報と画像URLの取得
-    tweet_text = tweet_data.get("text", "")
-    author_name = tweet_data["author"]["name"]
-    author_id = tweet_data["author"]["screen_name"]
-    author_icon = tweet_data["author"]["avatar_url"]
+    # ========= media 抽出 =========
     media = tweet_data.get("media", {})
     photos = media.get("photos", [])
-    image_urls = [photo["url"] for photo in photos if photo["type"] == "photo"]
+    videos = media.get("videos", [])
 
-    # ツイート時間のフォーマット
-    tweet_time_raw = tweet_data.get("created_at", None)
-    if tweet_time_raw:
-        try:
-            tweet_time_dt = datetime.strptime(tweet_time_raw, "%a %b %d %H:%M:%S %z %Y")
-            jst_tz = pytz.timezone("Asia/Tokyo")
-            tweet_time_dt = tweet_time_dt.astimezone(jst_tz)
-            tweet_time = tweet_time_dt.strftime("%Y/%m/%d %H:%M")
-        except ValueError as e:
-            logging.error(f"ツイート時間のパースに失敗しました: {e}")
-            tweet_time = "不明"
-    else:
-        tweet_time = "不明"
+    image_urls = [p["url"] for p in photos]
+    video_urls = []
+    preview_urls = []
 
-    if not image_urls:
-        if is_interaction:
-            await target.followup.send("画像が見つかりませんでした。")
-        else:
-            await webhook.send(
-                "画像が見つかりませんでした。",
-                username=target.author.display_name,
-                avatar_url=target.author.avatar.url if target.author.avatar else None
-            )
-        return
+    for v in videos:
+        mp4s = [f["url"] for f in v.get("formats", []) if f.get("container") == "mp4"]
+        if mp4s:
+            video_urls.append(mp4s[-1])
 
-    # 画像のダウンロード
-    os.makedirs(SAVE_DIR, exist_ok=True)
-    os.makedirs(COMBINED_DIR, exist_ok=True)
+        if v.get("thumbnail_url"):
+            preview_urls.append(v["thumbnail_url"])
+
+    # ========= ダウンロード =========
     saved_images = []
+    saved_videos = []
+    saved_previews = []
 
     async with aiohttp.ClientSession() as session:
         tasks = []
-        for image_url in image_urls:
-            filename = image_url.split("/")[-1].split("?")[0]
-            save_path = os.path.join(SAVE_DIR, filename)
-            tasks.append(download_image(session, image_url, save_path))
-        saved_images = [result for result in await asyncio.gather(*tasks) if result is not None]
 
-    if not saved_images:
-        if is_interaction:
-            await target.followup.send("画像の保存に失敗しました")
+        for u in image_urls:
+            name = extract_filename(u)
+            tasks.append(download_image(session, u, os.path.join(SAVE_DIR, name)))
+
+        for u in video_urls:
+            name = extract_filename(u)
+            tasks.append(download_file(session, u, os.path.join(VIDEO_DIR, name)))
+
+        for u in preview_urls:
+            name = extract_filename(u)
+            tasks.append(download_file(session, u, os.path.join(PREVIEW_DIR, name)))
+
+        results = await asyncio.gather(*tasks)
+
+    for p in results:
+        if not p:
+            continue
+        name = os.path.basename(p)
+        if name.endswith(".mp4"):
+            saved_videos.append(name)
+        elif p.startswith(PREVIEW_DIR):
+            saved_previews.append(name)
         else:
-            await webhook.send(
-                "画像の保存に失敗しました。",
-                username=target.author.display_name,
-                avatar_url=target.author.avatar.url if target.author.avatar else None
-            )
-        return
+            saved_images.append(name)
 
-    # 画像URLの生成
-    if len(saved_images) > 1:
-        combined_image_path = combine_images(saved_images[:4])
-        image_url = f"{BASE_URL}/combined/{os.path.basename(combined_image_path)}"
-        archive_urls = [f"{BASE_URL}/images/{os.path.basename(path)}" for path in saved_images]
-        archive_links = ' '.join([f'[{i+1}枚目]({url})' for i, url in enumerate(archive_urls)])
-    else:
-        image_url = f"{BASE_URL}/images/{os.path.basename(saved_images[0])}"
-        archive_urls = [image_url]
-        archive_links = f'[リンク]({image_url})'
+    # ========= index =========
+    update_media_index(tweet_id, saved_images)
+    update_media_index(tweet_id, saved_videos)
+    update_media_index(tweet_id, saved_previews)
 
-    # 埋め込みの作成
-    embed = discord.Embed(
-        description=f"{tweet_text[:4000]}\n\n[元ツイート]({url})\n{archive_links}",
-        color=0x1DA1F2
+    # ========= JSON =========
+    save_tweet_json(
+        tweet_id,
+        tweet_data,
+        created_at_str,
+        saved_images,
+        saved_videos,
+        saved_previews,
     )
-    embed.set_author(name=f"{author_name} ({author_id})", icon_url=author_icon)
-    embed.set_image(url=image_url)
-    embed.set_footer(text=f"{tweet_time}")
 
-    # 送信
+    # ========= embed =========
+    archive_links = []
+
+    for f in saved_images:
+        archive_links.append(f"[画像]({BASE_URL}/images/{f})")
+
+    for f in saved_videos:
+        archive_links.append(f"[動画]({BASE_URL}/videos/{f})")
+
+    # for f in saved_previews:
+        archive_links.append(f"[Preview]({BASE_URL}/previews/{f})")
+
+    archive_text = " ".join(archive_links)
+
+    embed = discord.Embed(
+        description=(
+            f"{tweet_data.get('text','')[:3000]}"
+            f"\n\n[元ツイート]({tweet_url})"
+            + (f"\n{archive_text}" if archive_links else "")
+        ),
+        timestamp=created_at_dt,
+        color=discord.Color(0x1DA1F2)
+    )
+
+    embed.set_author(
+        name=f"{tweet_data['author']['name']} (@{tweet_data['author']['screen_name']})",
+        icon_url=tweet_data["author"]["avatar_url"]
+    )
+
+    if saved_previews:
+        embed.set_image(url=f"{BASE_URL}/previews/{saved_previews[0]}")
+    elif saved_images:
+        embed.set_image(url=f"{BASE_URL}/images/{saved_images[0]}")
+
+    # ========= 送信 =========
     if is_interaction:
         await target.followup.send(embed=embed)
     else:
-        try:
-            await webhook.send(
-                embed=embed,
-                username=target.author.display_name,
-                avatar_url=target.author.avatar.url if target.author.avatar else None
-            )
-        except ValueError as e:
-            logging.error(f"Webhook送信に失敗: {e}")
-            await target.channel.send("Webhookの送信に失敗しました。管理者に連絡してください。")
-    logging.info("埋め込みメッセージを送信しました")
+        await webhook.send(
+            embed=embed,
+            username=target.author.display_name,
+            avatar_url=target.author.avatar.url if target.author.avatar else None
+        )
 
 # 手動コマンド
 @tree.command(name="tw_img_archive", description="ツイートの画像を保存し、表示します")
@@ -320,7 +434,7 @@ async def set_auto_tw_img_archive(interaction: discord.Interaction, textchannel:
 @client.event
 async def on_message(message):
     # Bot自身のメッセージは無視
-    if message.author == client.user:
+    if message.author.bot or message.webhook_id is not None:
         return
     
     # DM（ダイレクトメッセージ）の場合は処理をスキップ
