@@ -169,8 +169,8 @@ async def help_command(interaction: discord.Interaction):
         ("/yahoo", "yahooニュースを表示します"),
         ("/embed", "Botがユーザーの代わりにembedを送信します"),
         # ("/screenshot", "Webサイトのスクリーンショットを送信します(httpsをちゃんとつけてください)")
-        ("/tw_img_archive", "Twitter(X)の画像を保存し、表示します サーバーに保存をするのでツイートが削除されても、凍結されても残ります。魚拓用にどうぞ"),
-        ("/set_auto_tw_img_archive", "設定したテキストチャンネルに貼られたTwitter(X)の画像に対し自動的に/tw_img_archiveを実行します　イラスト共有チャンネルなどに如何でしょう？")
+        ("/tw_archive", "Twitter(X)の画像を保存し、表示します サーバーに保存をするのでツイートが削除されても、凍結されても残ります。魚拓用にどうぞ"),
+        ("/set_auto_tw_archive", "設定したテキストチャンネルに貼られたTwitter(X)の画像に対し自動的に/tw_img_archiveを実行します　イラスト共有チャンネルなどに如何でしょう？")
     ]
 
     # Embedを作成
@@ -420,7 +420,7 @@ async def test_command(interaction: discord.Interaction):
         
         embed.add_field (
             name=display_name,
-            value=f"ファイル数: {file_count}\n合計サイズ: {size_str}",
+            value=f"ファイル数: {file_count:,}\n合計サイズ: {size_str}",
             inline=False,
         )
 
@@ -435,7 +435,7 @@ async def test_command(interaction: discord.Interaction):
     
     embed.add_field (
         name="合計",
-        value=f"総ファイル数: {total_file_count}\n総サイズ: {total_size_str}",
+        value=f"総ファイル数: {total_file_count:,}\n総サイズ: {total_size_str}",
         inline=False
     )
     
@@ -514,6 +514,10 @@ async def get_tweet_data(tweet_id):
             if data.get("code") != 200:
                 return None
             return data["tweet"]
+
+# ツイートが既にアーカイブされているか確認する関数
+def tweet_already_archived(tweet_id: str) -> bool:
+    return os.path.exists(os.path.join(ARCHIVE_DIR, tweet_id, "tweet.json"))
 
 # 画像をダウンロードする関数
 async def download_image(session, url, save_path):
@@ -681,7 +685,7 @@ def combine_images(image_paths):
     return combined_path
 
 # ツイート画像を処理する共通関数
-async def process_tweet(interaction_or_message, url, webhook=None):
+async def process_tweet(interaction_or_message, url, webhook=None, silent=False,):
     is_interaction = isinstance(interaction_or_message, discord.Interaction)
     target = interaction_or_message
 
@@ -708,6 +712,11 @@ async def process_tweet(interaction_or_message, url, webhook=None):
         await send_error(target, "ツイートデータの取得に失敗しました。", url, is_interaction, webhook)
         return
 
+    # ========= 既存チェック =========
+    if tweet_already_archived(tweet_id):
+        logging.info(f"{tweet_id} already archived, skip")
+        return
+    
     # ========= created_at =========
     created_at_dt = parse_created_at(tweet_data["created_at"])
     created_at_str = created_at_dt.isoformat()
@@ -827,14 +836,15 @@ async def process_tweet(interaction_or_message, url, webhook=None):
         embed.set_image(url=f"{BASE_URL}/images/{saved_images[0]}")
 
     # ========= 送信 =========
-    if is_interaction:
-        await target.followup.send(embed=embed)
-    else:
-        await webhook.send(
-            embed=embed,
-            username=target.author.display_name,
-            avatar_url=target.author.avatar.url if target.author.avatar else None
-        )
+    if not silent:
+        if is_interaction:
+            await target.followup.send(embed=embed)
+        else:
+            await webhook.send(
+                embed=embed,
+                username=target.author.display_name,
+                avatar_url=target.author.avatar.url if target.author.avatar else None
+            )
 
 # 手動コマンド
 @tree.command(name="tw_archive", description="ツイートの画像を保存し、表示します")
