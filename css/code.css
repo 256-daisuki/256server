@@ -1,6 +1,9 @@
 code {
-    padding: 5px;
-    border-radius: 5px;
+    margin-top: .1em;
+    margin-bottom: 0.1em;
+    font-size: 0.9em;
+    padding: 0.2em;
+    border-radius: 0.2em;
     border: solid 1.5px #989898;
     background-color: #1e1e1e;
 }

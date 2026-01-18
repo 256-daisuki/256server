@@ -35,7 +35,10 @@ links = [
     {"name": "ayane", "url": "https://ayane0857.net/"},
     {"name": "shihiro", "url": "https://shihiro.com/"},
     {"name": "wsn0672", "url": "https://wsn0672.org/"},
-    {"name": "yuito", "url": "https://www.yuito-it.jp/ja"}
+    {"name": "yuito", "url": "https://www.yuito-it.jp/ja"},
+    {"name": "koko", "url": "https://kotetsu.dev/"},
+    {"name": "kokorine", "url": "https://koko2rine.com/"},
+    {"name": "dragon_scratch", "url": "https://drsb.f5.si/"}
 ]
 
 # ステータスチェックと保存
