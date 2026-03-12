@@ -210,6 +210,9 @@ a {
     margin-left: 16px;
 }
 
+s {
+    color: gray;
+}
 /*==========ダークモード==========*/
 @media (prefers-color-scheme: dark) {
     body {

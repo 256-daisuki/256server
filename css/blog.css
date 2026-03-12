@@ -1,7 +1,27 @@
-h1, h2, h3, h4, h5, h6 {
-    margin-left: 4px;
+body {
+    background-color: #000 !important; 
 }
 
-p {
+p, .content {
     margin-left: 16px;
+    font-family: 'MS Gothic', 'MS PGothic', 'Hina Mincho', serif !important;
+    
+    text-shadow: 1px 0px 0px rgba(220, 0, 0, 0.5), -1px 0px 0px rgba(0, 0, 190, 0.5), 8px 8px 0px rgba(0, 0, 0, 0.2);
+}
+
+h1, h2, h3, h4, h5, h6, .modoru {
+    margin-left: 4px;
+    font-family: 'Hina Mincho', serif !important;
+
+    text-shadow: 2px 0px 0px rgba(220, 0, 0, 0.5), -2px 0px 0px rgba(0, 0, 190, 0.5), 8px 8px 0px rgba(0, 0, 0, 0.2);
+}
+
+.modoru {
+    margin-bottom: 10px;
+    color: #fff;
+    font-size: 20px;
+}
+
+a {
+    text-shadow: rgb(0, 0, 0) 0px 0px 0px !important;
 }
