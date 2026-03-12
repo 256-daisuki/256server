@@ -711,11 +711,11 @@ async def process_tweet(interaction_or_message, url, webhook=None, silent=False,
     if not tweet_data:
         await send_error(target, "ツイートデータの取得に失敗しました。", url, is_interaction, webhook)
         return
-
+    
     # ========= 既存チェック =========
-    if tweet_already_archived(tweet_id):
-        logging.info(f"{tweet_id} already archived, skip")
-        return
+    #if tweet_already_archived(tweet_id):
+    #    logging.info(f"{tweet_id} already archived, skip")
+    #    return
     
     # ========= created_at =========
     created_at_dt = parse_created_at(tweet_data["created_at"])
@@ -836,15 +836,14 @@ async def process_tweet(interaction_or_message, url, webhook=None, silent=False,
         embed.set_image(url=f"{BASE_URL}/images/{saved_images[0]}")
 
     # ========= 送信 =========
-    if not silent:
-        if is_interaction:
-            await target.followup.send(embed=embed)
-        else:
-            await webhook.send(
-                embed=embed,
-                username=target.author.display_name,
-                avatar_url=target.author.avatar.url if target.author.avatar else None
-            )
+    if is_interaction:
+        await target.followup.send(embed=embed)
+    else:
+        await webhook.send(
+            embed=embed,
+            username=target.author.display_name,
+            avatar_url=target.author.avatar.url if target.author.avatar else None
+        )
 
 # 手動コマンド
 @tree.command(name="tw_archive", description="ツイートの画像を保存し、表示します")
@@ -907,9 +906,23 @@ async def on_message(message):
     config = load_config()
     guild_id = str(message.guild.id)
     monitored_channels = config.get(guild_id, [])
-    
+            
     if message.channel.id in monitored_channels:
-        urls = [u for u in message.content.split() if re.search(r'(https?://)?(x|twitter)\.com', u)]
+
+        # webhook を必ず先に取得
+        webhooks = await message.channel.webhooks()
+        webhook = discord.utils.get(webhooks, name="TweetArchive")
+
+        if webhook is None:
+            webhook = await message.channel.create_webhook(name="TweetArchive")
+
+        content = message.content
+
+        urls = re.findall(
+            r'https?://(?:x|twitter)\.com/(?:i/status|[^/]+/status)/\d+',
+            content
+        )
+
         if not urls:
             return
 
