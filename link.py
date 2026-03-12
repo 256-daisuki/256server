@@ -8,7 +8,7 @@ links = [
     {"name": "activetk", "url": "https://www.activetk.jp"},
     {"name": "doremire", "url": "https://doremire-server.com/"},
     {"name": "keichankotaro", "url": "https://keichankotaro.com/"},
-    {"name": "21emon", "url": "http://21emon.wjg.jp"},
+    {"name": "21emon", "url": "https://isami.moe/"},
     {"name": "tenohira", "url": "https://iamonlyyour-model.net/"},
     {"name": "canon", "url": "https://canonslod.sakura.ne.jp/"},
     {"name": "mozero", "url": "https://mozero.xyz/"},
@@ -16,7 +16,7 @@ links = [
     {"name": "nanasi", "url": "https://nanasi-rasi.net/"},
     {"name": "koneru", "url": "https://koneruhome.com/"},
     {"name": "lolineko", "url": "https://lolineko3.net"},
-    {"name": "szk", "url": "http://ramuneserver323.f5.si/"},
+    {"name": "szk", "url": "http://ramuneserver.net/"},
     {"name": "nazo", "url": "https://senpai114514.icu"},
     {"name": "kazemidori", "url": "https://nekokawa.net/"},
     {"name": "lifebooker", "url": "http://www.lifebookert935k.f5.si/"},
@@ -34,11 +34,13 @@ links = [
     {"name": "kinoemon", "url": "https://kinoemon.com/"},
     {"name": "ayane", "url": "https://ayane0857.net/"},
     {"name": "shihiro", "url": "https://shihiro.com/"},
-    {"name": "wsn0672", "url": "https://wsn0672.org/"},
+    {"name": "wsn0672", "url": "https://wsn0672.jp/"},
     {"name": "yuito", "url": "https://www.yuito-it.jp/ja"},
     {"name": "koko", "url": "https://kotetsu.dev/"},
     {"name": "kokorine", "url": "https://koko2rine.com/"},
-    {"name": "dragon_scratch", "url": "https://drsb.f5.si/"}
+    {"name": "dragon_scratch", "url": "https://drsb.f5.si/"},
+    {"name": "same", "url": "https://tadanosame.com/"},
+    {"name": "chikunizaki", "url": "https://157.f5.si/"},
 ]
 
 # ステータスチェックと保存
