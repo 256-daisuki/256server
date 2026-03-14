@@ -30,6 +30,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 client = discord.Client(intents=intents)
 tree = app_commands.CommandTree(client)
+tweet_queue = asyncio.Queue()
 
 bot = commands.Bot(command_prefix='/', intents=intents)
 
@@ -37,6 +38,9 @@ browser = None
 
 @client.event
 async def on_ready():
+    client.loop.create_task(tweet_worker())
+    logging.info("Tweet worker started")
+
     logging.info(" ____  ____   __   _           _")
     logging.info("|___ \| ___| / /_ | |__   ___ | |_")
     logging.info("  __) |___ \| '_ \| '_ \ / _ \| __|")
@@ -503,6 +507,27 @@ def save_config(config):
     except Exception as e:
         logging.error(f"設定ファイルの保存に失敗: {e}")
 
+# worker
+async def tweet_worker():
+    while True:
+        message, url, webhook, send_embed = await tweet_queue.get()
+
+        logging.info(f"worker start: {url}")
+
+        try:
+            await process_tweet(
+                message,
+                url,
+                webhook if send_embed else None,
+                silent=not send_embed
+            )
+
+        except Exception as e:
+            logging.error(f"Tweet worker error: {e}")
+
+        finally:
+            tweet_queue.task_done()
+
 # fxtwitter APIからツイートデータを取得
 async def get_tweet_data(tweet_id):
     api_url = f"https://api.fxtwitter.com/twitter/status/{tweet_id}"
@@ -712,6 +737,22 @@ async def process_tweet(interaction_or_message, url, webhook=None, silent=False,
         await send_error(target, "ツイートデータの取得に失敗しました。", url, is_interaction, webhook)
         return
     
+    # ======= snapshot ======
+    timestamp = datetime.now().strftime("%Y-%m-%dT%H-%M-%S")
+
+    tweet_dir = os.path.join(ARCHIVE_DIR, tweet_id)
+    metrics_dir = os.path.join(tweet_dir, "metrics")
+
+    os.makedirs(metrics_dir, exist_ok=True)
+
+    snapshot_path = os.path.join(
+        metrics_dir,
+        f"snapshot_{timestamp}.json"
+    )
+
+    with open(snapshot_path, "w", encoding="utf-8") as f:
+        json.dump(tweet_data, f, ensure_ascii=False, indent=2)
+
     # ========= 既存チェック =========
     #if tweet_already_archived(tweet_id):
     #    logging.info(f"{tweet_id} already archived, skip")
@@ -839,11 +880,12 @@ async def process_tweet(interaction_or_message, url, webhook=None, silent=False,
     if is_interaction:
         await target.followup.send(embed=embed)
     else:
-        await webhook.send(
-            embed=embed,
-            username=target.author.display_name,
-            avatar_url=target.author.avatar.url if target.author.avatar else None
-        )
+        if not silent and webhook:
+            await webhook.send(
+                embed=embed,
+                username=target.author.display_name,
+                avatar_url=target.author.avatar.url if target.author.avatar else None
+            )
 
 # 手動コマンド
 @tree.command(name="tw_archive", description="ツイートの画像を保存し、表示します")
@@ -900,15 +942,17 @@ async def on_message(message):
         return
     
     # DM（ダイレクトメッセージ）の場合は処理をスキップ
-    if message.guild is None:
-        return
+    #if message.guild is None:
+    #    return
 
     config = load_config()
     guild_id = str(message.guild.id)
     monitored_channels = config.get(guild_id, [])
-            
-    if message.channel.id in monitored_channels:
 
+    send_embed = message.channel.id in monitored_channels
+    webhook = None
+            
+    if send_embed:
         # webhook を必ず先に取得
         webhooks = await message.channel.webhooks()
         webhook = discord.utils.get(webhooks, name="TweetArchive")
@@ -916,78 +960,95 @@ async def on_message(message):
         if webhook is None:
             webhook = await message.channel.create_webhook(name="TweetArchive")
 
-        content = message.content
+    content = message.content
 
-        urls = re.findall(
-            r'https?://(?:x|twitter)\.com/(?:i/status|[^/]+/status)/\d+',
-            content
-        )
+    content = message.content
 
-        if not urls:
-            return
+    urls = re.findall(
+        r'https?://(?:x|twitter|fxtwitter|vxtwitter)\.com/(?:i/status|[^/]+/status)/\d+',
+        content
+    )
 
-        logging.info(f"Tweet Archiver invoked in channel {message.channel.id} by {message.author.id}")
-        
-        # 計測開始
-        start = time.perf_counter()
+    if not urls:
+        return
 
-        # メッセージ削除
+    logging.info(f"Tweet Archiver invoked in channel {message.channel.id} by {message.author.id}")
+    
+    # 計測開始
+    start = time.perf_counter()
+
+    # メッセージ削除
+    if send_embed:
         try:
             await message.delete()
             logging.info(f"Message deleted: {message.content}")
         except Exception as e:
             logging.error(f"メッセージの削除に失敗: {e}")
 
-        # Webhookの取得または作成
-        webhook = None
-        try:
-            # 権限チェック
-            if not message.channel.permissions_for(message.guild.me).manage_webhooks:
-                await message.channel.send("Webhookの作成に必要な権限がありません。")
-                logging.error("ボットにWebhook管理権限がありません。")
-                return
-
-            # 既存のWebhookを検索
-            webhooks = await message.channel.webhooks()
-            webhook = next((w for w in webhooks if w.name == "TweetArchiver"), None)
-
-            # Webhookが存在する場合、最新の状態を取得
-            if webhook:
-                try:
-                    webhook = await webhook.fetch()  # 最新のWebhook情報を取得
-                    if not webhook.token:
-                        # トークンがない場合、既存のWebhookを削除して再作成
-                        await webhook.delete()
-                        logging.info("トークンのないWebhookを削除しました")
-                        webhook = None
-                except Exception as e:
-                    logging.error(f"Webhookの取得に失敗、削除して再作成します: {e}")
-                    await webhook.delete()
-                    webhook = None
-
-            # Webhookが存在しない、または削除された場合、新規作成
-            if not webhook:
-                webhook = await message.channel.create_webhook(name="TweetArchiver")
-                logging.info("新しいWebhookを作成しました")
-
-        except Exception as e:
-            logging.error(f"Webhookの取得/作成に失敗: {e}")
-            await message.channel.send("Webhookの設定に失敗しました。管理者に連絡してください。")
+    # Webhookの取得または作成
+    webhook = None
+    try:
+        # 権限チェック
+        if not message.channel.permissions_for(message.guild.me).manage_webhooks:
+            await message.channel.send("Webhookの作成に必要な権限がありません。")
+            logging.error("ボットにWebhook管理権限がありません。")
             return
 
-        # アクセス時間計測開始
-        ac_start = time.perf_counter()
+        # 既存のWebhookを検索
+        webhooks = await message.channel.webhooks()
+        webhook = next((w for w in webhooks if w.name == "TweetArchiver"), None)
 
-        for url in urls:
-            async with semaphore:
-                await process_tweet(message, url, webhook)
+        # Webhookが存在する場合、最新の状態を取得
+        if webhook:
+            try:
+                webhook = await webhook.fetch()  # 最新のWebhook情報を取得
+                if not webhook.token:
+                    # トークンがない場合、既存のWebhookを削除して再作成
+                    await webhook.delete()
+                    logging.info("トークンのないWebhookを削除しました")
+                    webhook = None
+            except Exception as e:
+                logging.error(f"Webhookの取得に失敗、削除して再作成します: {e}")
+                await webhook.delete()
+                webhook = None
 
-        # 計測終了
-        ac_end = time.perf_counter()
-        end = time.perf_counter()
-        elapsed = end - start
-        elapsed_dl = ac_end - ac_start
-        logging.info(f"processing time: {elapsed:.2f}sec, access time: {elapsed_dl:.2f}sec")
+        # Webhookが存在しない、または削除された場合、新規作成
+        if not webhook:
+            webhook = await message.channel.create_webhook(name="TweetArchiver")
+            logging.info("新しいWebhookを作成しました")
+
+    except Exception as e:
+        logging.error(f"Webhookの取得/作成に失敗: {e}")
+        await message.channel.send("Webhookの設定に失敗しました。管理者に連絡してください。")
+        return
+
+    # アクセス時間計測開始
+    ac_start = time.perf_counter()
+
+    # 
+    send_embed = message.channel.id in monitored_channels
+
+    webhook = None
+
+    if send_embed:
+        webhooks = await message.channel.webhooks()
+        webhook = discord.utils.get(webhooks, name="TweetArchiver")
+
+        if webhook is None:
+            webhook = await message.channel.create_webhook(name="TweetArchiver")
+
+    for url in urls:
+
+        await tweet_queue.put(
+            (message, url, webhook, send_embed)
+        )
+
+    # 計測終了
+    ac_end = time.perf_counter()
+    end = time.perf_counter()
+    elapsed = end - start
+    elapsed_dl = ac_end - ac_start
+    logging.info(f"processing time: {elapsed:.2f}sec, access time: {elapsed_dl:.2f}sec")
 
 # トークン
 client.run(os.getenv("TOKEN"))
