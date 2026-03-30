@@ -41,6 +41,7 @@ links = [
     {"name": "dragon_scratch", "url": "https://drsb.f5.si/"},
     {"name": "same", "url": "https://tadanosame.com/"},
     {"name": "chikunizaki", "url": "https://157.f5.si/"},
+    {"name": "371tti", "url": "https://371tti.net/"},
 ]
 
 # ステータスチェックと保存
