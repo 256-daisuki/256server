@@ -85,13 +85,22 @@
             <h3>Twitter画像保存</h3>
             <div class="text">
                 <h4>つかいかた</h4>
-                    <p>Twitter(現X)魚拓機能です。鍵垢になったり凍結されたり垢消しされたりでツイートや、画像、動画って消えてしまいますよね。お気に入りの絵だったりするとショックがデカいわけですよ、それを解決するコマンドです。<br>
-                    `/tw_archive`コマンドで使えます。画像なども自動で保存されます。あと、`/set_auto_tw_archive`コマンドでチャンネルを設定すると、そこで送信されたTwitterのリンクに対し自動的に`/tw_archive`を実行してくれます。<br>
-                    あと、256botの閲覧できるチャンネル内にTwitterのリンクが貼られたときに裏ですべてアーカイブします。
-                    `https://discord.256server.com/archive/{tweet_id}/tweet.json`にツイートの情報が保存されます。そこに、`aaaaaaa.jpg`などと画像のファイル名があったら、`https://discord.256server.com/images/{ファイル名}`で画像も見れます。動画の場合は`https://discord.256server.com/videos/{ファイル名}`で見れます。<br>
-                    例: `https://x.com/atuag17/status/2020698029242864035` というツイートをアーカイブしたとき、`https://discord.256server.com/archive/2020698029242864035/tweet.json` にツイートの情報が保存されます。そこに、`HAr2JgtbEAAPY6W.jpg`というファイル名があったら、`https://discord.256server.com/images/HAr2JgtbEAAPY6W.jpg`で画像が見れます。
+                    <p>
+                        256botの閲覧できるチャンネル内にTwitterのリンクが貼られたときに裏ですべてアーカイブします。<br>
+                        鍵垢になったり凍結されたり垢消しされたりでツイートや、画像、動画って消えてしまいますよね。お気に入りの絵だったりするとショックがデカいわけですよ、それを解決するコマンドです。</p>
+
+                    <h5>/tw_archive</h5>
+                    <p>ツイートをアーカイブします　embedの画像は私のサーバーを指しているので私のサーバーが死なない限り表示されます。<br>
+                    
+                    <h5>/tw_archive_archive</h5>
+                    <p>設定されたチャンネルに送信されたTwitterのリンクに対し自動的に`/tw_archive`を実行します</p>
+                    
+                    <h5>/tw_archive_check</h5>
+                    <p>アーカイブされたツイートの情報を確認します。削除されている場合にも有効です。</p>
                     <h5>ああああ</h5>
-                        <p>/tw_archive, /set_auto_tw_archive で埋め込みされたツイートの画像は、私のサーバーに保存されている物を埋め込んでいるので、ツイートが消えていても画像が表示されます。</p>
+                    <p>/tw_archive, /set_auto_tw_archive で埋め込みされたツイートの画像は、私のサーバーに保存されている物を埋め込んでいるので、ツイートが消えていても画像が表示されます。</p>
+                    <p>`https://discord.256server.com/archive/{tweet_id}/tweet.json`にツイートの情報が保存されます。そこに、`aaaaaaa.jpg`などと画像のファイル名があったら、`https://discord.256server.com/images/{ファイル名}`で画像も見れます。動画の場合は`https://discord.256server.com/videos/{ファイル名}`で見れます。<br>
+                        例: `https://x.com/atuag17/status/2020698029242864035` というツイートをアーカイブしたとき、`https://discord.256server.com/archive/2020698029242864035/tweet.json` にツイートの情報が保存されます。そこに、`HAr2JgtbEAAPY6W.jpg`というファイル名があったら、`https://discord.256server.com/images/HAr2JgtbEAAPY6W.jpg`で画像が見れます。
                     </p>
                 <h4>技</h4>
                     <p>
