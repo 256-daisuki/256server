@@ -33,7 +33,7 @@ LINKS = [
     {"name": "doremire", "url": "https://doremire-server.com/"},
     {"name": "keichankotaro", "url": "https://keichankotaro.com/"},
     {"name": "21emon", "url": "https://isami.moe/"},
-    {"name": "tenohira", "url": "https://iamonlyyour-model.net/"},
+    {"name": "tenohira", "url": "https://industrialwastes.org/"},
     {"name": "canon", "url": "https://canonslod.sakura.ne.jp/"},
     {"name": "mozero", "url": "https://mozero.xyz/"},
     {"name": "p-nsk", "url": "https://p-nsk.com/"},
@@ -69,6 +69,7 @@ LINKS = [
     {"name": "ruth", "url": "https://www.ruthoyen.com/"},
     {"name": "koneru", "url": "https://coneruserver.xyz/"},
     {"name": "gigaonion", "url": "https://gigaonion.com"},
+    {"name": "rk0exn", "url": "https://n0xa.f5.si/"},
 ]
 
 

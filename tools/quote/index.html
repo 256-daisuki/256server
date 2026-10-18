@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>random quote</title>
+    <style>
+        :root {
+            color-scheme: light dark;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            background: #ebebeb;
+            color: #252525;
+            font-family: sans-serif;
+        }
+
+        main {
+            width: min(88vw, 720px);
+            text-align: center;
+        }
+
+        #quote {
+            min-height: 5em;
+            margin: 0;
+            font-size: clamp(1.8rem, 6vw, 4rem);
+            line-height: 1.45;
+            font-weight: 700;
+            word-break: keep-all;
+            overflow-wrap: anywhere;
+        }
+
+        button {
+            margin-top: 32px;
+            padding: 10px 18px;
+            border: 1px solid #aaa;
+            background: #fff;
+            color: #252525;
+            box-shadow: 1px 1px 2px #c8c8c8;
+            cursor: pointer;
+        }
+
+        button:hover {
+            box-shadow: 1px 1px 2px #777;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 18px;
+            color: #1c1cee;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #272727;
+                color: #ebebeb;
+            }
+
+            button {
+                border-color: #666;
+                background: #333;
+                color: #ebebeb;
+                box-shadow: 1px 1px 2px #111;
+            }
+
+            a {
+                color: #00a8fc;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <p id="quote"></p>
+        <button type="button" id="next">next</button>
+        <br>
+        <a href="../index.html">tools</a>
+    </main>
+
+    <script>
+        const quotes = [
+            "ここに名言を入れる",
+            "配列に1行追加すると増える",
+            "ボタンを押すとランダムに変わる"
+        ];
+
+        const quoteElement = document.getElementById("quote");
+        const nextButton = document.getElementById("next");
+        let lastIndex = -1;
+
+        function showQuote() {
+            if (quotes.length === 0) {
+                quoteElement.textContent = "";
+                return;
+            }
+
+            let index = Math.floor(Math.random() * quotes.length);
+            if (quotes.length > 1) {
+                while (index === lastIndex) {
+                    index = Math.floor(Math.random() * quotes.length);
+                }
+            }
+
+            lastIndex = index;
+            quoteElement.textContent = quotes[index];
+        }
+
+        nextButton.addEventListener("click", showQuote);
+        showQuote();
+    </script>
+</body>
+</html>
